@@ -1,0 +1,34 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #5b3a29; /* rich coffee brown */
+  background-image: repeating-linear-gradient(
+    45deg,
+    #5b3a29,
+    #5b3a29 10px,
+    #543223 10px,
+    #543223 20px
+  );
+  height: 60px;
+  padding: 0 30px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  color: #fff;
+}
+
+.logo {
+  font-family: "Poppins", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 2px;
+  margin-left: 95px;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
