@@ -1,6 +1,6 @@
 import React from "react";
-import "./Profile.css"; // or ProfileOverview.css if that’s the current name
-import ProfileHeader from "../components/profile-header/ProfileHeader"; // ✅ fixed path
+import "./Profile.css"; 
+import ProfileHeader from "../components/profile-header/ProfileHeader"; // 
 
 const Profile = () => {
   return (
