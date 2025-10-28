@@ -1,7 +1,7 @@
 import React from "react";
 import "./ProfileHeader.css";
-import ProfileAvatar from "./ProfileAvatar";
-import ProfileInfo from "./ProfileInfo";
+import ProfileAvatar from "../base-components/ProfileAvatar";
+import ProfileInfo from "../base-components/ProfileInfo";
 import ProfileSettingsButton from "./ProfileSettingsButton";
 
 const ProfileHeader = () => {
