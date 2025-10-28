@@ -1,12 +1,15 @@
 import React from "react";
 import "./ProfileHeader.css";
-import ProfileAvatar from "../base-components/ProfileAvatar";
-import ProfileInfo from "../base-components/ProfileInfo";
+import ProfileAvatar from "./ProfileAvatar";
+import ProfileInfo from "./ProfileInfo";
 import ProfileSettingsButton from "./ProfileSettingsButton";
+import { useNavigate } from "react-router-dom";
 
 const ProfileHeader = () => {
+  const navigate = useNavigate();
+
   const handleSettingsClick = () => {
-    console.log("Navigating to Profile Settings...");
+    navigate("/profile/settings");
     // add navigation logic here (React Router)
   };
 

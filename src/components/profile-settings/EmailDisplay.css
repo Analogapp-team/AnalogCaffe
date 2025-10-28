@@ -1,0 +1,37 @@
+.email-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.email-display__label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #252b33;
+}
+
+.email-display__field {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 12px;
+  border: 1px solid #b89e91;
+  border-radius: 8px;
+  background-color: #ffffff;
+  font-size: 16px;
+  color: #687384;
+  cursor: not-allowed;
+}
+
+.email-display__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.email-display__text {
+  color: #687384;
+  user-select: none;
+}
