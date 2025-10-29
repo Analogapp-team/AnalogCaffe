@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import TopBar from "../components/top-bar/TopBar";
 import SideBar from "../components/side-bar/SideBar";
+import RecommendedProfiles from "../components/recommended-profiles/RecommendedProfiles";
 
 function MainLayout() {
   return (
@@ -9,9 +10,12 @@ function MainLayout() {
       {/* TopBar at the top */}
       <TopBar />
 
-      {/* Body layout: sidebar + main content + recommended profiles (still need to be made) */}
+      {/* Body layout: sidebar + feed (main content) + recommended profiles */}
       <div style={{ display: "flex", flex: 1 }}>
+        {/*Left Sidebar*/}
         <SideBar />
+
+        {/* Main Feed Area - Scrollable */}
         <main
           style={{
             flex: 1,
@@ -22,6 +26,19 @@ function MainLayout() {
         >
           <Outlet />
         </main>
+
+        {/* Right Sidebar */}
+        <div
+          style={{
+            width: "350px",
+            backgroundColor: "#f7f5f1",
+            borderLeft: "1px solid #ebe8df",
+            padding: "20px",
+            overflowY: "auto",
+          }}
+        >
+          <RecommendedProfiles />
+        </div>
       </div>
     </div>
   );

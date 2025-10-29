@@ -1,0 +1,56 @@
+.recommendedContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #3d2c23;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.profileItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profileItem:last-child {
+  border-bottom: none;
+}
+
+.profileName {
+  color: #3d2c23;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.seeProfileLink {
+  color: #5b3a29;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.seeProfileLink:hover {
+  text-decoration: underline;
+}
+
+.seeMoreLink {
+  display: block;
+  text-align: center;
+  color: #5b3a29;
+  text-decoration: none;
+  margin-top: 12px;
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.seeMoreLink:hover {
+  text-decoration: underline;
+}
