@@ -1,0 +1,23 @@
+.profile-header {
+  display: flex;
+  justify-content: space-between; /* space between left and right sections */
+  align-items: flex-start; /* align top edges */
+  width: 100%;
+  max-width: 630px;
+  padding-bottom: 16px;
+}
+
+/* stack image + info vertically */
+.profile-left {
+  display: flex;
+  flex-direction: column; /* change from row to column */
+  align-items: flex-start; /* text aligned left under image */
+  gap: 0px; 
+}
+
+/* right section for settings button */
+.profile-right {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 24px;   
+}

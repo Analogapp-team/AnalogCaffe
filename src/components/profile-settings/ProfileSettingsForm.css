@@ -1,0 +1,85 @@
+/* ---- Base container ---- */
+.profile-settings-container {
+  background-color: #ffffff;
+  border: 1px solid #e2dcd5;
+  border-radius: 10px;
+  padding-top: 3px;
+  padding-bottom:40px;
+  padding-left: 30px;
+  padding-right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  color: #252b33;
+}
+
+/* ---- Section heading ---- */
+.profile-settings-container h2 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #38404a;
+  margin-bottom: -16px;
+}
+
+.profile-settings-container p.section-description {
+  font-size: 14px;
+  color: #687384;
+  margin-bottom: 0px;
+}
+
+.profile-divider {
+  height: 1px;
+  background-color: #b89e91;
+  opacity: 0.5;
+  margin-bottom: 0px;
+}
+
+/* ---- Avatar + Buttons ---- */
+.profile-header-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-header-section img {
+  width: 96px;
+  height: 96px;
+  border-radius: 59%;
+  object-fit: cover;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+}
+
+/* ---- Input fields ---- */
+.profile-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.name-fields {
+  display: flex;
+  gap: 16px;
+}
+
+.form-input,
+.form-select {
+  flex: 1;
+}
+
+/* ---- Save button ---- */
+.save-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+/* ---- Form card spacing ---- */
+.profile-settings-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
