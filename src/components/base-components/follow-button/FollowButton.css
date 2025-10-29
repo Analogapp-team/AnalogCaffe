@@ -1,0 +1,55 @@
+.follow-button {
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  border: none;
+  /* min-width: 100px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  user-select: none;
+  outline: none;
+}
+
+.follow-button:not(.following) {
+  background-color: #31231D;
+  color: white;
+}
+
+.follow-button:not(.following):hover {
+  background-color: #3f2417;
+}
+
+.follow-button:not(.following):active {
+  transform: scale(0.98);
+}
+
+.follow-button.following {
+  background-color: #fff;
+  color: #2c1810;
+  border: 1px solid #2c1810;
+}
+
+.follow-button.following:hover {
+  background-color: #fff;
+  border-color: #3f2417;
+  color: #3f2417;
+}
+
+.follow-button.following:active {
+  transform: scale(0.98);
+}
+
+.follow-button:focus-visible {
+  outline: 2px solid #2c1810;
+  outline-offset: 2px;
+}
+
+.check-icon {
+  font-size: 12px;
+  font-weight: bold;
+}
