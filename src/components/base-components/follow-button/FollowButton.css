@@ -16,7 +16,7 @@
 }
 
 .follow-button:not(.following) {
-  background-color: #31231D;
+  background-color: var(--button-default-bg);
   color: white;
 }
 
@@ -24,9 +24,9 @@
   background-color: #3f2417;
 }
 
-.follow-button:not(.following):active {
+/* .follow-button:not(.following):active {
   transform: scale(0.98);
-}
+} */
 
 .follow-button.following {
   background-color: #fff;

@@ -5,7 +5,12 @@ import profilePicture from "../assets/images/ProfilePicture.png";  // Add this i
 function Explore() {
   return (
     <div>
-      <h2>Explore new profiles!</h2>
+      <div>
+        <h2>Explore profiles!</h2>
+        <body>Explore profiles you’re interested in!</body>
+      </div>
+      <br />
+      <br />
       <ExploreUserItem 
         imgSrc={profilePicture}
         username="Nama Jeff"
