@@ -14,23 +14,29 @@ function Explore() {
       <ExploreUserItem 
         imgSrc={profilePicture}
         username="Nama Jeff"
+        desc="KDDIT 4rd Semester"
       />
       <ExploreUserItem 
         imgSrc={profilePicture}
-        username="Nama Jeff"
+        username="Ma Nama Jeff"
+        desc="KDDIT 3rd Semester"
       />
       <ExploreUserItem 
         imgSrc={profilePicture}
-        username="Nama Jeff"
+        username="Banana Jeff"
+        desc="KDDIT 2nd Semester"
       />
       <ExploreUserItem 
         imgSrc={profilePicture}
-        username="Nama Jeff"
+        username="Nama Geff"
+        desc="BDDIT 3rd Semester"
       />
       <ExploreUserItem 
         imgSrc={profilePicture}
-        username="Nama Jeff"
+        username="Nama Jæf"
+        desc="SD 1st Semester"
       />
+   
     </div>
   );
 }

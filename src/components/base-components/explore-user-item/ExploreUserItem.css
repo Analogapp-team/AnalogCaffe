@@ -2,14 +2,36 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  padding: 12px 8px;
+  border-radius: 8px;
+  transition: background-color 150ms ease;
   max-width: 570px;
+}
+
+/* grey background on hover for the whole item */
+.userItem:hover {
+  background-color: #f2f2f2; /* light grey */
+}
+
+/* keep hover-like appearance when a child (e.g. FollowButton) has focus */
+.userItem:focus-within {
+  background-color: #f2f2f2;
 }
 
 .userInfo {
   display: flex;
   align-items: center;
   gap: 20px;
+  cursor: pointer; /* clickable */
+  flex: 1 1 auto;   /* allow userInfo to grow and take available space */
+  min-width: 0;     /* allow text to truncate inside flex children */
+}
+
+/* keyboard focus visible */
+.userInfo:focus {
+  outline: 2px solid rgba(44, 24, 16, 0.12);
+  outline-offset: 4px;
+  border-radius: 6px;
 }
 
 .profileAvatar {
@@ -23,6 +45,9 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .userName {
@@ -48,6 +73,8 @@
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  flex: 0 0 auto;
+  margin-left: 12px;
 }
 
 .followbutton:hover {
