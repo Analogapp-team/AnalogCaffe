@@ -33,7 +33,7 @@ function App() {
             <Route path="/dinmor" element={<DinMor />} />
           </Route>
         ) : (
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />
         )}
       </Routes>
     </Router>

@@ -2,31 +2,36 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background-color: #5b3a29; /* rich coffee brown */
-  background-image: repeating-linear-gradient(
-    45deg,
-    #5b3a29,
-    #5b3a29 10px,
-    #543223 10px,
-    #543223 20px
-  );
   height: 60px;
   padding: 0 30px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background: #5b3a29; /* darken slightly */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
   z-index: 100;
-  color: #fff;
 }
 
+.topBar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.topBar img {
+  position: relative;
+}
+
+
+/* Logo styling */
 .logo {
-  font-family: "Poppins", sans-serif;
-  font-size: 22px;
-  font-weight: 600;
-  color: #fff;
+  height: 30px;
+  width: auto;
   cursor: pointer;
-  letter-spacing: 2px;
-  margin-left: 95px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  margin-left: 95px; /* keep alignment consistent with sidebar */
 }
 
 .logo:hover {

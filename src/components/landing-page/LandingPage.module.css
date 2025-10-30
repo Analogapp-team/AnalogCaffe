@@ -1,0 +1,169 @@
+.container {
+  display: flex;
+  height: 100vh;
+  font-family: "Inter", sans-serif;
+  background-color: #faf8f2;
+}
+
+.leftPanel {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  padding: 3rem;
+}
+
+.leftPanel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.logoWrapper {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo {
+  width: 200px;
+  height: 32px;
+}
+
+.logoText {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.heroText {
+  position: relative;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  max-width: 420px;
+}
+
+
+.heroText h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+}
+
+.heroText p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+/* Right Panel */
+.rightPanel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formContainer {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 360px;
+  padding: 2rem;
+}
+
+.tabButtons {
+  display: flex;
+  justify-content: space-between;
+  background-color: #faf8f2;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.tabButtons button {
+  flex: 1;
+  padding: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #6b6b6b;
+}
+
+.tabButtons button:hover {
+  background-color: #f1ece1;
+}
+
+.activeTab {
+  background-color: white !important;
+  color: #3c2e1f !important;
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form label {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  color: #4a4a4a;
+}
+
+.form input {
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e0d8c8;
+  border-radius: 5px;
+  font-size: 0.95rem;
+}
+
+.formOptions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.checkboxLabel {
+  font-size: 0.85rem;
+  color: #4a4a4a;
+}
+
+.forgotPassword {
+  font-size: 0.85rem;
+  color: #7a6149;
+  text-decoration: none;
+}
+
+.forgotPassword:hover {
+  text-decoration: underline;
+}
+
+.submitBtn {
+  background-color: #3c2e1f;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.submitBtn:hover {
+  background-color: #2e2318;
+}
