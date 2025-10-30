@@ -18,7 +18,9 @@ function SideBar() {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            isActive ? `${styles.sidebarButton} ${styles.active}` : styles.sidebarButton
+            isActive
+              ? `${styles.sidebarButton} ${styles.active}`
+              : styles.sidebarButton
           }
         >
           <span>{/* Placeholder for icon */}</span> Home
@@ -27,7 +29,9 @@ function SideBar() {
         <NavLink
           to="/explore"
           className={({ isActive }) =>
-            isActive ? `${styles.sidebarButton} ${styles.active}` : styles.sidebarButton
+            isActive
+              ? `${styles.sidebarButton} ${styles.active}`
+              : styles.sidebarButton
           }
         >
           <span>{/* Placeholder for icon */}</span> Explore
@@ -36,7 +40,9 @@ function SideBar() {
         <NavLink
           to="/profile"
           className={({ isActive }) =>
-            isActive ? `${styles.sidebarButton} ${styles.active}` : styles.sidebarButton
+            isActive
+              ? `${styles.sidebarButton} ${styles.active}`
+              : styles.sidebarButton
           }
         >
           <span>{/* Placeholder for icon */}</span> My Profile
@@ -46,7 +52,9 @@ function SideBar() {
         <NavLink
           to="/dinmor"
           className={({ isActive }) =>
-            isActive ? `${styles.sidebarButton} ${styles.active}` : styles.sidebarButton
+            isActive
+              ? `${styles.sidebarButton} ${styles.active}`
+              : styles.sidebarButton
           }
         >
           <span>{/* Placeholder for icon */}</span> Din Mor
