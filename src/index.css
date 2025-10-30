@@ -1,6 +1,61 @@
+:root {
+  /* Colors */
+  --primary-color: #2c1810;
+  --primary-hover: #3f2417;
+  --background-color: #ffffff;
+  --text-color: #2c1810;
+
+  --button-default-bg: #31231D;
+  --top-bar-bg: #44302B;
+  --side-bar-bg: #F9F8F2;
+  --white-bg: #FFFFFF;
+  --post-bg: #E9DFDB;
+  --post-border: #D4C4BD;
+  --menu-active-bg: #E9DFDB;
+  --menu-default-bg: #FFFFFF;
+  
+  /* Typography */
+  --font-family: 'Inter', sans-serif;
+  /* Typography / sizes */
+  --font-size-h1: 72px;
+  --font-size-h2: 60px;
+  --font-size-h3: 48px;
+  --font-size-h4: 36px;
+  --font-size-h5: 30px;
+  --font-size-h6: 24px;
+  --font-size-body-lg: 20px;
+  --font-size-body-md: 16px;
+  --font-size-body-sm: 14px;
+  --font-size-body-xsm: 12px;
+  /* Typography / Line height */
+  --font-line-h1: 88px;
+  --font-line-h2: 72px;
+  --font-line-h3: 64px;
+  --font-line-h4: 48px;
+  --font-line-h5: 40px;
+  --font-line-h6: 32px;
+  --font-line-body-lg: 28px;
+  --font-line-body-md: 24px;
+  --font-line-body-sm: 20px;
+  --font-line-body-xsm: 16px;
+  /* Typography / Width */
+  --font-width-light: 300;
+  --font-width-regular: 400;
+  --font-width-medium: 500;
+  --font-width-semibold: 600;
+  --font-width-bold: 700;
+  
+  /* Spacing */
+  /* --spacing-xs: 4px; */
+  
+  /* Border radius */
+  /* --border-radius: 4px; */
+  
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: var(--font-family), BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -11,3 +66,192 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Text Styles */
+
+/* Text Styles for h1 */
+.h1-light {
+  font-size: var(--font-size-h1);
+  line-height: var(--font-line-h1);
+  font-weight: var(--font-width-light);
+}
+
+.h1-regular {
+  font-size: var(--font-size-h1);
+  line-height: var(--font-line-h1);
+  font-weight: var(--font-width-regular);
+}
+
+.h1-medium {
+  font-size: var(--font-size-h1);
+  line-height: var(--font-line-h1);
+  font-weight: var(--font-width-medium);
+}
+
+.h1-semibold {
+  font-size: var(--font-size-h1);
+  line-height: var(--font-line-h1);
+  font-weight: var(--font-width-semibold);
+}
+
+.h1-bold {
+  font-size: var(--font-size-h1);
+  line-height: var(--font-line-h1);
+  font-weight: var(--font-width-bold);
+}
+
+/* Text Styles for h2 */
+.h2-light {
+  font-size: var(--font-size-h2);
+  line-height: var(--font-line-h2);
+  font-weight: var(--font-width-light);
+}
+
+.h2-regular {
+  font-size: var(--font-size-h2);
+  line-height: var(--font-line-h2);
+  font-weight: var(--font-width-regular);
+}
+
+.h2-medium {
+  font-size: var(--font-size-h2);
+  line-height: var(--font-line-h2);
+  font-weight: var(--font-width-medium);
+}
+
+.h2-semibold {
+  font-size: var(--font-size-h2);
+  line-height: var(--font-line-h2);
+  font-weight: var(--font-width-semibold);
+}
+
+.h2-bold {
+  font-size: var(--font-size-h2);
+  line-height: var(--font-line-h2);
+  font-weight: var(--font-width-bold);
+}
+
+/* Text Styles for h3 */
+.h3-light {
+  font-size: var(--font-size-h3);
+  line-height: var(--font-line-h3);
+  font-weight: var(--font-width-light);
+}
+
+.h3-regular {
+  font-size: var(--font-size-h3);
+  line-height: var(--font-line-h3);
+  font-weight: var(--font-width-regular);
+}
+
+.h3-medium {
+  font-size: var(--font-size-h3);
+  line-height: var(--font-line-h3);
+  font-weight: var(--font-width-medium);
+}
+
+.h3-semibold {
+  font-size: var(--font-size-h3);
+  line-height: var(--font-line-h3);
+  font-weight: var(--font-width-semibold);
+}
+
+.h3-bold {
+  font-size: var(--font-size-h3);
+  line-height: var(--font-line-h3);
+  font-weight: var(--font-width-bold);
+}
+
+/* Text Styles for h4 */
+.h4-light {
+  font-size: var(--font-size-h4);
+  line-height: var(--font-line-h4);
+  font-weight: var(--font-width-light);
+}
+
+.h4-regular {
+  font-size: var(--font-size-h4);
+  line-height: var(--font-line-h4);
+  font-weight: var(--font-width-regular);
+}
+
+.h4-medium {
+  font-size: var(--font-size-h4);
+  line-height: var(--font-line-h4);
+  font-weight: var(--font-width-medium);
+}
+
+.h4-semibold {
+  font-size: var(--font-size-h4);
+  line-height: var(--font-line-h4);
+  font-weight: var(--font-width-semibold);
+}
+
+.h4-bold {
+  font-size: var(--font-size-h4);
+  line-height: var(--font-line-h4);
+  font-weight: var(--font-width-bold);
+}
+
+/* Text Styles for h5 */
+.h5-light {
+  font-size: var(--font-size-h5);
+  line-height: var(--font-line-h5);
+  font-weight: var(--font-width-light);
+}
+
+.h5-regular {
+  font-size: var(--font-size-h5);
+  line-height: var(--font-line-h5);
+  font-weight: var(--font-width-regular);
+}
+
+.h5-medium {
+  font-size: var(--font-size-h5);
+  line-height: var(--font-line-h5);
+  font-weight: var(--font-width-medium);
+}
+
+.h5-semibold {
+  font-size: var(--font-size-h5);
+  line-height: var(--font-line-h5);
+  font-weight: var(--font-width-semibold);
+}
+
+.h5-bold {
+  font-size: var(--font-size-h5);
+  line-height: var(--font-line-h5);
+  font-weight: var(--font-width-bold);
+}
+
+/* Text Styles for h6 */
+.h6-light {
+  font-size: var(--font-size-h6);
+  line-height: var(--font-line-h6);
+  font-weight: var(--font-width-light);
+}
+
+.h6-regular {
+  font-size: var(--font-size-h6);
+  line-height: var(--font-line-h6);
+  font-weight: var(--font-width-regular);
+}
+
+.h6-medium {
+  font-size: var(--font-size-h6);
+  line-height: var(--font-line-h6);
+  font-weight: var(--font-width-medium);
+}
+
+.h6-semibold {
+  font-size: var(--font-size-h6);
+  line-height: var(--font-line-h6);
+  font-weight: var(--font-width-semibold);
+}
+
+.h6-bold {
+  font-size: var(--font-size-h6);
+  line-height: var(--font-line-h6);
+  font-weight: var(--font-width-bold);
+}
+
