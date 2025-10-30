@@ -37,8 +37,7 @@
 }
 
 .active {
-  background-color: #d6c7b3;
-  color: #3d2c23;
+  background-color: rgba(234, 222, 219, 0.863);
 }
 
 /* Bottom section */
