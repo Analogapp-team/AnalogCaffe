@@ -1,0 +1,36 @@
+.polaroid {
+  background: white;
+  /* padding: 7px 7px 24px 7px; */
+  padding-top: 7px; 
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  height: 100px;
+  align-items: center; 
+  justify-content: top;
+}
+
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.polaroid-image {
+  aspect-ratio: 1;
+  overflow: hidden;
+  margin-bottom: 2px;
+  width: 66px;
+  height: 69px;
+}
+
+.polaroid-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.polaroid-caption {
+  text-align: center;
+  font-family: 'Indie Flower', cursive;
+  font-size: 8px;
+  color: #333;
+}
