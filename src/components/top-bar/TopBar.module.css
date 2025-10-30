@@ -4,6 +4,7 @@
   justify-content: flex-start;
   height: 60px;
   padding: 0 30px;
+  background: #5b3a29; /* darken slightly */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -17,7 +18,6 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: #5b3a29; /* darken slightly */
   z-index: 0;
 }
 .topBar img {

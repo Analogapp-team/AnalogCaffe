@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./TopBar.module.css";
-import bannerImage from "../../assets/images/Analog banner image.png"; // ✅ banner background
-import logo from "../../assets/images/logo.png"; // ✅ logo image
+import bannerImage from "../../assets/images/analog-banner-image.png";
+import logo from "../../assets/images/logo.png";
 
 function TopBar() {
   const navigate = useNavigate();
