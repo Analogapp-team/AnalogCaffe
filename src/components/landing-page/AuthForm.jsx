@@ -58,7 +58,7 @@ export default function AuthForm() {
             <input type="checkbox" />
             Remember me
           </label>
-          <a href="#" className={styles.forgotPassword}>
+          <a href="/forgot-password" className={styles.forgotPassword}>
             Forgot your password?
           </a>
         </div>
