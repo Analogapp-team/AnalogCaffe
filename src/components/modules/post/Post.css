@@ -1,0 +1,98 @@
+.post {
+  background: var(--post-bg);
+  border-color: var(--post-border);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 24px;
+  max-width: 570px;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-weight: 600;
+  margin: 0;
+}
+
+.tilt-left {
+  transform: rotate(-7deg);
+}
+
+.tilt-right {
+  transform: rotate(4deg);
+}
+
+.timestamp {
+  color: #666;
+  font-size: 14px;
+}
+
+.post-content {
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.post-image-container {
+  margin-bottom: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.polaroids-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.toggle-polaroids-btn,
+.add-polaroid-btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.toggle-polaroids-btn {
+  background: none;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.add-polaroid-btn {
+  background: var(--primary-color);
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
