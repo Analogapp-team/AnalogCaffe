@@ -1,4 +1,5 @@
-import styles from "./feed.module.css";
+import React from 'react';
+import styles from './Feed.module.css';
 
 function Feed() {
   return (
