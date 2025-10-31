@@ -1,0 +1,107 @@
+.sidebar {
+  width: 350px;
+  background-color: #f7f5f1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  border-right: 1px solid #ebe8df;
+  box-sizing: border-box;
+}
+
+/* Nav section */
+.navSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+  margin-left: 100px;
+}
+
+.sidebarButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  text-decoration: none;
+  color: black;
+  background-color: white;
+  padding: 9px 15px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.sidebarButton:hover {
+  background-color: #e6e1da;
+}
+
+.active {
+  background-color: rgba(234, 222, 219, 0.863);
+}
+
+/* Bottom section */
+.bottomSection {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: auto;
+  margin-left: 100px;
+}
+
+/* User info card */
+.userCard {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.userAvatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #d6c7b3;
+  margin-right: 10px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-weight: 400;
+  font-size: 15px;
+  color: #3d2c23;
+  margin: 0;
+}
+
+.userDetails {
+  font-size: 12px;
+  color: black;
+  margin: 0;
+  font-weight: 200;
+}
+
+/* Logout button */
+.logoutButton {
+  background: white;
+  border: none;
+  color: #3d2c23;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 10px;
+  padding: 10px 15px;
+  transition: background-color 0.2s ease;
+  margin-bottom: 30px;
+}
+
+.logoutButton:hover {
+  background-color: #e6e1da;
+}

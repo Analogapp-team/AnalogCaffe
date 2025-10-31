@@ -1,0 +1,24 @@
+.profile-settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px; /* spacing between icon and text */
+  padding: 6px 12px;
+  border: 1px solid #392922;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #392922;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.profile-settings-btn:hover {
+  background-color: #f5ece2;
+}
+
+.settings-icon {
+  width: 18px;
+  height: 18px;
+}
