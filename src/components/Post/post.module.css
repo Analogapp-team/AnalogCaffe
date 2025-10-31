@@ -1,0 +1,82 @@
+.post {
+  width: 100%;
+  border-radius: 10px;
+  background-color: rgba(234, 222, 219, 0.863);
+  box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
+  -webkit-box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
+  -moz-box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
+  margin: 30px 0;
+}
+
+.postWrapper {
+  padding: 10px;
+}
+
+.postTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.postTopLeft {
+  display: flex;
+  align-items: center;
+}
+
+.postProfileImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.postUsername {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 10px;
+}
+
+.postProgramme {
+  font-size: 12px;
+  color: #666;
+  margin-right: 10px;
+}
+
+.postDate {
+  font-size: 12px;
+  color: #999;
+}
+
+.postCenter {
+  margin: 20px 0;
+}
+
+.postText {
+  font-size: 16px;
+  line-height: 1.4;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.postImg {
+  margin-top: 20px;
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+}
+
+.postBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.postBottomLeft {
+  display: flex;
+  align-items: center;
+}
+
+.postBottomRight {
+  display: flex;
+  align-items: center;
+}
