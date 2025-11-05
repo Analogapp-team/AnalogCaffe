@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import TopBar from "../components/top-bar/TopBar";
-import SideBar from "../components/side-bar/SideBar";
+import MenuBar from "../components/menu-bar/MenuBar";
 import RecommendedProfiles from "../components/recommended-profiles/RecommendedProfiles";
 
 function MainLayout() {
@@ -10,10 +10,10 @@ function MainLayout() {
       {/* TopBar at the top */}
       <TopBar />
 
-      {/* Body layout: sidebar + feed (main content) + recommended profiles */}
+      {/* Body layout: MenuBar + feed (main content) + recommended profiles */}
       <div style={{ display: "flex", flex: 1 }}>
-        {/*Left Sidebar*/}
-        <SideBar />
+        {/*MenuBar*/}
+        <MenuBar />
 
         {/* Main Feed Area - Scrollable */}
         <main

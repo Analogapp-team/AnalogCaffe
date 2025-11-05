@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import styles from "./SideBar.module.css";
+import styles from "./MenuBar.module.css";
 
-function SideBar() {
+function MenuBar() {
   const { logout } = useAuth();
 
   const user = {
@@ -13,14 +13,14 @@ function SideBar() {
   };
 
   return (
-    <div className={styles.sidebar}>
+    <div className={styles.menubar}>
       <div className={styles.navSection}>
         <NavLink
           to="/"
           className={({ isActive }) =>
             isActive
-              ? `${styles.sidebarButton} ${styles.active}`
-              : styles.sidebarButton
+              ? `${styles.menubarButton} ${styles.active}`
+              : styles.menubarButton
           }
         >
           <span>{/* Placeholder for icon */}</span> Home
@@ -30,8 +30,8 @@ function SideBar() {
           to="/explore"
           className={({ isActive }) =>
             isActive
-              ? `${styles.sidebarButton} ${styles.active}`
-              : styles.sidebarButton
+              ? `${styles.menubarButton} ${styles.active}`
+              : styles.menubarButton
           }
         >
           <span>{/* Placeholder for icon */}</span> Explore
@@ -41,8 +41,8 @@ function SideBar() {
           to="/profile"
           className={({ isActive }) =>
             isActive
-              ? `${styles.sidebarButton} ${styles.active}`
-              : styles.sidebarButton
+              ? `${styles.menubarButton} ${styles.active}`
+              : styles.menubarButton
           }
         >
           <span>{/* Placeholder for icon */}</span> My Profile
@@ -53,8 +53,8 @@ function SideBar() {
           to="/dinmor"
           className={({ isActive }) =>
             isActive
-              ? `${styles.sidebarButton} ${styles.active}`
-              : styles.sidebarButton
+              ? `${styles.menubarButton} ${styles.active}`
+              : styles.menubarButton
           }
         >
           <span>{/* Placeholder for icon */}</span> Din Mor
@@ -80,4 +80,4 @@ function SideBar() {
   );
 }
 
-export default SideBar;
+export default MenuBar;
