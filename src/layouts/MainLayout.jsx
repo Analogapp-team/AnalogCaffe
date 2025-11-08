@@ -13,13 +13,13 @@ function MainLayout() {
       <div className={styles.mainBody}>
         <MenuBar />
 
-        <main className={styles.pageArea}>
+        <div className={styles.pageArea}>
           <Outlet />
-        </main>
+        </div>
 
-        <aside className={styles.recommendedSidebar}>
+        <div className={styles.recommendedSidebar}>
           <RecommendedProfiles />
-        </aside>
+        </div>
       </div>
     </div>
   );

@@ -7,14 +7,14 @@
 /* Three-column layout inside */
 .mainBody {
   display: grid;
-  grid-template-columns: 350px 1fr 350px; /* menu | content | recommended */
-  height: calc(100vh - 70px); /* subtract TopBar height */
+  grid-template-columns: 350px 650px 350px; /* menu | content | recommended */
+  height: calc(100vh - 60px); /* subtract TopBar height (REMEMBER IF TopBar HEIGHT IS CHANGED) */
   background-color: #f7f5f1;
 }
 
 /* Middle page content area */
 .pageArea {
-  padding: 20px;
+  padding: 30px;
   overflow-y: auto;
   background-color: var(--white-bg);
 }

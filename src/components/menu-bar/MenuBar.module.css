@@ -21,7 +21,7 @@
 .menubarButton {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 17px;
   text-decoration: none;
   color: black;
@@ -29,7 +29,12 @@
   padding: 9px 15px;
   border-radius: 6px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
 }
 
 .menubarButton:hover {
