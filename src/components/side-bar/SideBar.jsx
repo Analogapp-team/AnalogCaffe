@@ -50,14 +50,14 @@ function SideBar() {
 
         {/* Placeholder tab for future features */}
         <NavLink
-          to="/dinmor"
+          to="/Events"
           className={({ isActive }) =>
             isActive
               ? `${styles.sidebarButton} ${styles.active}`
               : styles.sidebarButton
           }
         >
-          <span>{/* Placeholder for icon */}</span> Din Mor
+          <span>{/* Placeholder for icon */}</span> Events
         </NavLink>
       </div>
 
