@@ -3,9 +3,16 @@
   --primary-color: #2c1810;
   --primary-hover: #3f2417;
   --background-color: #ffffff;
-  --text-color: #2c1810;
+  
+  /* Colors / Text */
+  --text-color-default: #2c1810;
+  --text-color-menu: #392922;
+  --text-color-heading: #2A1F1A;
+  --text-color-body: #31231D;
+  --text-color-white: #ffffff;
 
   --button-default-bg: #31231D;
+  --button-hover-bg: #3f2417;
   --top-bar-bg: #44302B;
   --side-bar-bg: #F9F8F2;
   --white-bg: #FFFFFF;
