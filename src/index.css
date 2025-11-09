@@ -15,6 +15,7 @@
   --button-hover-bg: #3f2417;
   --top-bar-bg: #44302B;
   --side-bar-bg: #F9F8F2;
+  --side-bar-border: #C8D0DA;
   --white-bg: #FFFFFF;
   --post-bg: #E9DFDB;
   --post-border: #D4C4BD;
@@ -23,6 +24,7 @@
   
   /* Typography */
   --font-family: 'Inter', sans-serif;
+
   /* Typography / sizes */
   --font-size-h1: 72px;
   --font-size-h2: 60px;
@@ -34,6 +36,7 @@
   --font-size-body-md: 16px;
   --font-size-body-sm: 14px;
   --font-size-body-xsm: 12px;
+
   /* Typography / Line height */
   --font-line-h1: 88px;
   --font-line-h2: 72px;
@@ -45,6 +48,7 @@
   --font-line-body-md: 24px;
   --font-line-body-sm: 20px;
   --font-line-body-xsm: 16px;
+  
   /* Typography / Width */
   --font-width-light: 300;
   --font-width-regular: 400;

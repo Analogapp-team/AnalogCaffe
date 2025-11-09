@@ -1,11 +1,11 @@
 .sidebar {
   width: 350px;
-  background-color: #f7f5f1;
+  background-color: var(--side-bar-bg);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
-  border-right: 1px solid #ebe8df;
+  border-right: 1px solid var(--side-bar-border);
   box-sizing: border-box;
 }
 
@@ -25,7 +25,7 @@
   font-size: 17px;
   text-decoration: none;
   color: black;
-  background-color: white;
+  background-color: var(--background-color);
   padding: 9px 15px;
   border-radius: 6px;
   font-weight: 500;
@@ -53,7 +53,7 @@
 .userCard {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
+  background-color: var(--background-color);
   border-radius: 6px;
   padding: 10px;
 }
@@ -80,7 +80,7 @@
 
 .userDetails {
   font-size: 12px;
-  color: black;
+  color: var(--text-color-default);
   margin: 0;
   font-weight: 200;
 }
