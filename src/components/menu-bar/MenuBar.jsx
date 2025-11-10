@@ -46,12 +46,12 @@ function MenuBar() {
         </NavLink>
 
         {/* Placeholder tab for future features */}
-        <NavLink to="/dinmor" className={({ isActive }) =>
+        <NavLink to="/Events" className={({ isActive }) =>
             isActive
               ? `${styles.menubarButton} ${styles.active}`
               : styles.menubarButton
           }>
-          <img src={Events} alt="" className={styles.icon} /> Din Mor
+          <img src={Events} alt="" className={styles.icon} /> Events
         </NavLink>
       </div>
 
