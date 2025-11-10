@@ -47,5 +47,4 @@ In Index.css the variying text size, thickness and line height have been defined
 ### How to use
 Applying the text styles is as simple as checking Figma for the correct text style and then applying it as a class on the h1, p or alike.
 
-	`code`
 
