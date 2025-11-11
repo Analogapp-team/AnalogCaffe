@@ -10,7 +10,6 @@ import Login from "./pages/Login";
 import Home from "./pages/home/Home";
 import Explore from "./pages/Explore";
 import Profile from "./pages/Profile";
-import DinMor from "./pages/DinMor";
 import MainLayout from "./layouts/MainLayout";
 import ProfileSettings from "./pages/ProfileSettings";
 
@@ -30,10 +29,12 @@ function App() {
             <Route path="/explore" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/settings" element={<ProfileSettings />} />
-            <Route path="/dinmor" element={<DinMor />} />
           </Route>
         ) : (
-          <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />
+          <Route
+            path="*"
+            element={<Navigate to={isAuthenticated ? "/" : "/login"} />}
+          />
         )}
       </Routes>
     </Router>
