@@ -1,0 +1,41 @@
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.form-input-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #252b33;
+}
+
+.form-input-field {
+  height: 64px;
+  padding: 0 12px;
+  border: 1px solid #b89e91;
+  border-radius: 8px;
+  background-color: #ffffff;
+
+  font-size: 16px;
+  color: #252b33;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input-field::placeholder {
+  color: #687384;
+}
+
+.form-input-field:focus {
+  border-color: #48392a;
+  box-shadow: 0 0 0 2px rgba(72, 57, 42, 0.1);
+}
+
+.form-textarea {
+  height: auto;
+  padding: 12px;
+  resize: none;
+}

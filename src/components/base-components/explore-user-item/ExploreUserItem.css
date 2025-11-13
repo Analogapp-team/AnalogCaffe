@@ -1,0 +1,82 @@
+.userItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 8px;
+  border-radius: 8px;
+  transition: background-color 150ms ease;
+  max-width: 570px;
+}
+
+/* grey background on hover for the whole item */
+.userItem:hover {
+  background-color: #f2f2f2; /* light grey */
+}
+
+/* keep hover-like appearance when a child (e.g. FollowButton) has focus */
+.userItem:focus-within {
+  background-color: #f2f2f2;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer; /* clickable */
+  flex: 1 1 auto;   /* allow userInfo to grow and take available space */
+  min-width: 0;     /* allow text to truncate inside flex children */
+}
+
+/* keyboard focus visible */
+.userInfo:focus {
+  outline: 2px solid rgba(44, 24, 16, 0.12);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.profileAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.userName {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: #2c1810;
+}
+
+.userDescription {
+  margin: 0;
+  font-size: 14px;
+  color: #666666;
+}
+
+.followbutton {
+  padding: 8px 24px;
+  background-color: #2c1810;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex: 0 0 auto;
+  margin-left: 12px;
+}
+
+.followbutton:hover {
+  background-color: #3f2417;
+}
