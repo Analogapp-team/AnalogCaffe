@@ -1,7 +1,15 @@
 import React from "react";
 import "./FormInput.css";
 
-const FormInput = ({ label, type = "text", placeholder, value, onChange, textarea = false }) => {
+const FormInput = ({
+  label,
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+  textarea = false,
+  name,
+}) => {
   return (
     <div className="form-input">
       {label && <label className="form-input-label">{label}</label>}
@@ -11,6 +19,7 @@ const FormInput = ({ label, type = "text", placeholder, value, onChange, textare
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          name={name}
           rows="4"
         />
       ) : (
@@ -20,6 +29,7 @@ const FormInput = ({ label, type = "text", placeholder, value, onChange, textare
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          name={name}
         />
       )}
     </div>

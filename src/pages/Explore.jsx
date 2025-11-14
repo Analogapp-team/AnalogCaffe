@@ -7,7 +7,7 @@ function Explore() {
     <div>
       <div>
         <h2>Explore profiles!</h2>
-        <body>Explore profiles you’re interested in!</body>
+        <div>Explore profiles you’re interested in!</div>
       </div>
       <br />
       <br />
