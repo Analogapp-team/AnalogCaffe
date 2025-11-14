@@ -8,12 +8,10 @@
   max-width: 570px;
 }
 
-/* grey background on hover for the whole item */
 .userItem:hover {
-  background-color: #f2f2f2; /* light grey */
+  background-color: #f2f2f2; 
 }
 
-/* keep hover-like appearance when a child (e.g. FollowButton) has focus */
 .userItem:focus-within {
   background-color: #f2f2f2;
 }
@@ -22,12 +20,12 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  cursor: pointer; /* clickable */
-  flex: 1 1 auto;   /* allow userInfo to grow and take available space */
-  min-width: 0;     /* allow text to truncate inside flex children */
+  cursor: pointer; 
+  flex: 1 1 auto;   
+  min-width: 0;  
 }
 
-/* keyboard focus visible */
+/* focus state, maybe not necessary if we don't do tabulation */
 .userInfo:focus {
   outline: 2px solid rgba(44, 24, 16, 0.12);
   outline-offset: 4px;
@@ -55,7 +53,7 @@
   font-size: 16px;
   line-height: 24px;
   font-weight: 600;
-  color: #2c1810;
+  color: var(--text-color-heading);
 }
 
 .userDescription {
@@ -66,8 +64,8 @@
 
 .followbutton {
   padding: 8px 24px;
-  background-color: #2c1810;
-  color: white;
+  background-color: var(--button-default-bg);
+  color: var(--text-color-white);
   border: none;
   border-radius: 4px;
   font-weight: 500;
@@ -78,5 +76,5 @@
 }
 
 .followbutton:hover {
-  background-color: #3f2417;
+  background-color: var(--button-hover-bg);
 }
