@@ -1,4 +1,4 @@
-.menubar {
+.sidebar {
   width: 350px;
   background-color: #f7f5f1;
   display: flex;
@@ -18,10 +18,10 @@
   margin-left: 100px;
 }
 
-.menubarButton {
+.sidebarButton {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   font-size: 17px;
   text-decoration: none;
   color: black;
@@ -29,15 +29,10 @@
   padding: 9px 15px;
   border-radius: 6px;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
-.icon {
-  width: 20px;
-  height: 20px;
-}
-
-.menubarButton:hover {
+.sidebarButton:hover {
   background-color: #e6e1da;
 }
 

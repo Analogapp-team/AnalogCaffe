@@ -1,22 +1,20 @@
 .share {
   width: 100%;
+  height: 110px;
   border-radius: 10px;
   background-color: rgba(234, 222, 219, 0.863);
   box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
   -webkit-box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
   -moz-box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
-  margin-bottom: 20px;
 }
 
 .shareWrapper {
-  padding: 20px;
+  padding: 10px;
 }
 
 .shareTop {
   display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  margin-bottom: 15px;
+  align-items: center;
 }
 
 .shareProfileImg {
@@ -24,158 +22,57 @@
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
-  flex-shrink: 0;
-  border: 2px solid #fff;
+  margin-right: 10px; /* margin of Add photo + Post(from right side)*/
 }
 
 .shareInput {
-  border: none;
-  background: transparent;
-  width: 100%;
-  font-size: 16px;
-  resize: none;
-  min-height: 60px;
-  padding: 0;
-  font-family: inherit;
-  line-height: 1.5;
+  border: rgba(5, 5, 5, 0.75);
+  width: 90%;
 }
 
 .shareInput:focus {
   outline: none;
 }
 
-.shareInput:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.shareInput::placeholder {
-  color: #666;
-}
-
-.errorMessage {
-  color: #e74c3c;
-  font-size: 14px;
-  margin: 10px 0;
-  text-align: center;
-}
+/*.shareHr {
+  margin: 20px;
+}*/
 
 .shareBottom {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  justify-content: flex-end;
+  gap: 20px;
 }
 
 .shareOptions {
   display: flex;
-  flex: 1;
 }
 
 .shareOption {
   display: flex;
   align-items: center;
-}
-
-.fileInputLabel {
-  display: flex;
-  align-items: center;
+  margin-right: 15px;
   cursor: pointer;
-  padding: 8px 16px;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.7);
-  transition: background-color 0.2s;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.fileInputLabel:hover {
-  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .shareIcon {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
+  font-size: 18px;
+  margin-right: 3px;
 }
 
 .shareOptionText {
   font-size: 14px;
   font-weight: 500;
-  color: #333;
 }
 
 .shareButton {
   border: none;
-  padding: 10px 30px;
-  border-radius: 20px;
-  background-color: #ffffff;
-  font-weight: 600;
+  padding: 7px;
+  border-radius: 5px;
+  background-color: white;
+  font-weight: 500;
+  margin-right: 20px;
   cursor: pointer;
-  color: #333;
-  transition: all 0.2s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  white-space: nowrap;
-}
-
-.shareButton:hover:not(:disabled) {
-  background-color: #f8f9fa;
-  transform: translateY(-1px);
-}
-
-.shareButton:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.imagePreviews {
-  display: flex;
-  gap: 10px;
-  margin: 15px 0;
-  flex-wrap: wrap;
-}
-
-.imagePreviewItem {
-  position: relative;
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.previewImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.removeImageButton {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 1;
-}
-
-.removeImageButton:hover {
-  background: rgba(0, 0, 0, 0.9);
-}
-
-.removeImageButton:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  color: black;
 }

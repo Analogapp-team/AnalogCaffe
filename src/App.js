@@ -5,12 +5,11 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useAuth } from "./configuration/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import Login from "./pages/Login";
 import Home from "./pages/home/Home";
 import Explore from "./pages/Explore";
 import Profile from "./pages/Profile";
-import Events from "./pages/Events";
 import MainLayout from "./layouts/MainLayout";
 import ProfileSettings from "./pages/ProfileSettings";
 
@@ -30,7 +29,6 @@ function App() {
             <Route path="/explore" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/settings" element={<ProfileSettings />} />
-            <Route path="/Events" element={<Events />} />
           </Route>
         ) : (
           <Route
