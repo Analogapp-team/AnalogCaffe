@@ -84,7 +84,7 @@
 .tabButtons {
   display: flex;
   justify-content: space-between;
-  background-color: #faf8f2;
+  background-color: #faf6e8;
   border-radius: 6px;
   margin-bottom: 1.5rem;
   overflow: hidden;
@@ -128,19 +128,28 @@
   margin-bottom: 1rem;
   border: 1px solid #e0d8c8;
   border-radius: 5px;
-  font-size: 0.95rem;
+  font-size: .95rem;
 }
 
 .formOptions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-top: 6px;
+  margin-bottom: 20px;
 }
 
 .checkboxLabel {
-  font-size: 0.85rem;
-  color: #4a4a4a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.checkboxLabel input {
+  margin: 0; /* removes browser default spacing */
 }
 
 .forgotPassword {

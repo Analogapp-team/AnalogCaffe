@@ -1,5 +1,5 @@
 import React from "react";
-import "./Profile.css"; 
+import "./Profile.css";
 import ProfileHeader from "../components/profile-header/ProfileHeader";
 import Post from "../components/modules/post/Post";
 import profilePicture from "../assets/images/ProfilePicture.png";
@@ -12,7 +12,7 @@ const Profile = () => {
       <Post
         author={{
           name: "Sarah M. - Msc. Computer Science",
-          avatar: profilePicture
+          avatar: profilePicture,
         }}
         timestamp="2h ago"
         content="Something something also coffee! ☕"
@@ -27,7 +27,7 @@ const Profile = () => {
           { name: "Liam Alexander Smith", image: postImage },
           { name: "Liam Alexander Smith", image: postImage },
           { name: "Liam Alexander Smith", image: postImage },
-          { name: "Emma Grace Johnson", image: profilePicture }
+          { name: "Emma Grace Johnson", image: profilePicture },
         ]}
       />
     </div>
