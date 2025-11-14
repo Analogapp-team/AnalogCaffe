@@ -1,44 +1,28 @@
 import React from "react";
 import styles from "./RecommendedProfiles.module.css";
 
-// Temp mock data with images (replace later with real user data)
-const recommendedProfiles = [
-  {
-    name: "Liam Alexander Smith",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-  },
-  {
-    name: "Emma Grace Johnson",
-    image: "https://randomuser.me/api/portraits/women/45.jpg",
-  },
-  {
-    name: "Noah Benjamin Brown",
-    image: "https://randomuser.me/api/portraits/men/16.jpg",
-  },
-  {
-    name: "Olivia Marie Davis",
-    image: "https://randomuser.me/api/portraits/women/11.jpg",
-  },
-];
-
 function RecommendedProfiles() {
+  const recommendedProfiles = [
+    { name: "Liam Alexander Smith" },
+    { name: "Emma Grace Johnson" },
+    { name: "Noah Benjamin Brown" },
+    { name: "Olivia Marie Davis" },
+  ];
+
   return (
-    <div className={styles.card}>
-      <h3 className={styles.title}>Recommended Profiles</h3>
-
-      <div className={styles.list}>
-        {recommendedProfiles.map((profile, idx) => (
-          <div key={idx} className={styles.profileRow}>
-            <img src={profile.image} alt={profile.name} className={styles.avatar} />
-            <div className={styles.textGroup}>
-              <span className={styles.name}>{profile.name}</span>
-              <a href="#" className={styles.link}>See Profile →</a>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <button className={styles.moreButton}>See more profiles</button>
+    <div className={styles.recommendedContent}>
+      <h3 className={styles.sectionTitle}>Recommended Profiles</h3>
+      {recommendedProfiles.map((profile, index) => (
+        <div key={index} className={styles.profileItem}>
+          <strong className={styles.profileName}>{profile.name}</strong>
+          <a href="#" className={styles.seeProfileLink}>
+            See Profile →
+          </a>
+        </div>
+      ))}
+      <a href="#" className={styles.seeMoreLink}>
+        See more profiles
+      </a>
     </div>
   );
 }

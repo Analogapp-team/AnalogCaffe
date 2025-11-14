@@ -1,79 +1,56 @@
-.card {
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 20px;
-  border: 1px;
+.recommendedContent {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  width: 250px;
+  gap: 16px;
 }
 
-.title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #3d2c23;
+.sectionTitle {
   margin: 0;
-}
-
-/* Profile list container */
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* Each profile row */
-.profileRow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Avatar image */
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* Name + secondary link grouped */
-.textGroup {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.25;
-}
-
-.name {
-  font-weight: 600;
-  font-size: 14px;
   color: #3d2c23;
+  font-size: 17px;
+  font-weight: 500;
 }
 
-.link {
-  font-size: 13px;
+.profileItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profileItem:last-child {
+  border-bottom: none;
+}
+
+.profileName {
+  color: #3d2c23;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.seeProfileLink {
   color: #5b3a29;
   text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
 }
 
-.link:hover {
+.seeProfileLink:hover {
   text-decoration: underline;
 }
 
-/* See more button */
-.moreButton {
-  margin-top: 4px;
-  background: #e8d9cf;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
+.seeMoreLink {
+  display: block;
+  text-align: center;
+  color: #5b3a29;
+  text-decoration: none;
+  margin-top: 12px;
+  padding: 8px;
   font-size: 14px;
-  color: #4a3227;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  font-weight: 400;
 }
 
-.moreButton:hover {
-  background: #d8c7b9;
+.seeMoreLink:hover {
+  text-decoration: underline;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import "./ChangeButton.css";
-import editIcon from "../../assets/icons/edit.svg";
+import editIcon from "../../assets/icons/edit.svg"; 
 
 const ChangeButton = ({ onClick }) => {
   return (

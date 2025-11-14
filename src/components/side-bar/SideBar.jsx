@@ -1,15 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "../../configuration/AuthContext";
-import styles from "./MenuBar.module.css";
+import { useAuth } from "../../context/AuthContext";
+import styles from "./SideBar.module.css";
 
-import Home from "../../assets/icons/home.svg";
-import Explore from "../../assets/icons/explore.svg";
-import MyProfile from "../../assets/icons/myprofile.svg";
-import Events from "../../assets/icons/events.svg";
-import Logout from "../../assets/icons/logout.svg";
-
-function MenuBar() {
+function SideBar() {
   const { logout } = useAuth();
 
   const user = {
@@ -19,51 +13,51 @@ function MenuBar() {
   };
 
   return (
-    <div className={styles.menubar}>
+    <div className={styles.sidebar}>
       <div className={styles.navSection}>
         <NavLink
           to="/"
           className={({ isActive }) =>
             isActive
-              ? `${styles.menubarButton} ${styles.active}`
-              : styles.menubarButton
+              ? `${styles.sidebarButton} ${styles.active}`
+              : styles.sidebarButton
           }
         >
-          <img src={Home} alt="" className={styles.icon} /> Home
+          <span>{/* Placeholder for icon */}</span> Home
         </NavLink>
 
         <NavLink
           to="/explore"
           className={({ isActive }) =>
             isActive
-              ? `${styles.menubarButton} ${styles.active}`
-              : styles.menubarButton
+              ? `${styles.sidebarButton} ${styles.active}`
+              : styles.sidebarButton
           }
         >
-          <img src={Explore} alt="" className={styles.icon} /> Explore
+          <span>{/* Placeholder for icon */}</span> Explore
         </NavLink>
 
         <NavLink
           to="/profile"
           className={({ isActive }) =>
             isActive
-              ? `${styles.menubarButton} ${styles.active}`
-              : styles.menubarButton
+              ? `${styles.sidebarButton} ${styles.active}`
+              : styles.sidebarButton
           }
         >
-          <img src={MyProfile} alt="" className={styles.icon} /> My Profile
+          <span>{/* Placeholder for icon */}</span> My Profile
         </NavLink>
 
         {/* Placeholder tab for future features */}
         <NavLink
-          to="/Events"
+          to="/dinmor"
           className={({ isActive }) =>
             isActive
-              ? `${styles.menubarButton} ${styles.active}`
-              : styles.menubarButton
+              ? `${styles.sidebarButton} ${styles.active}`
+              : styles.sidebarButton
           }
         >
-          <img src={Events} alt="" className={styles.icon} /> Events
+          <span>{/* Placeholder for icon */}</span> Din Mor
         </NavLink>
       </div>
 
@@ -79,11 +73,11 @@ function MenuBar() {
         </div>
 
         <button onClick={logout} className={styles.logoutButton}>
-          <img src={Logout} alt="" className={styles.icon} /> Log out
+          <span>{/* Placeholder for icon */}</span>↩ Log out
         </button>
       </div>
     </div>
   );
 }
 
-export default MenuBar;
+export default SideBar;

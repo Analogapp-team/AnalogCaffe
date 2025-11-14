@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--background-color);
+  background-color: #ffffff;
   max-width: 630px;
   margin: 40px auto;
   padding: 30px;
