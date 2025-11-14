@@ -5,7 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useAuth } from "./context/AuthContext";
+import { useAuth } from "./configuration/AuthContext";
 import Login from "./pages/Login";
 import Home from "./pages/home/Home";
 import Explore from "./pages/Explore";
@@ -33,7 +33,10 @@ function App() {
             <Route path="/Events" element={<Events />} />
           </Route>
         ) : (
-          <Route path="*" element={<Navigate to={isAuthenticated ? "/" : "/login"} />} />
+          <Route
+            path="*"
+            element={<Navigate to={isAuthenticated ? "/" : "/login"} />}
+          />
         )}
       </Routes>
     </Router>

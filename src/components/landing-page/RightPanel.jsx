@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./LandingPage.module.css";
-import AuthForm from "./AuthForm";
+import AuthForm from "../../configuration/AuthForm";
 
 export default function RightPanel() {
   return (
