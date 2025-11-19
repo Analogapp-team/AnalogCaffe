@@ -42,19 +42,22 @@ function AuthProvider({ children }) {
 
   //Register function
   const register = async (userData) => {
-    try {
-      const user = new Parse.User();
-      user.set("username", userData.username);
-      user.set("email", userData.email);
-      user.set("password", userData.password);
+  try {
+    const user = new Parse.User();
 
-      const newUser = await user.signUp();
-      return { success: true, user: newUser };
-    } catch (error) {
-      console.error("Error: while signing up user:", error);
-      return { success: false, error: error.message };
-    }
-  };
+    user.set("username", `${userData.firstName} ${userData.lastName}`);
+    user.set("firstName", userData.firstName);
+    user.set("lastName", userData.lastName);
+    user.set("email", userData.email);
+    user.set("password", userData.password);
+
+    const newUser = await user.signUp();
+    return { success: true, user: newUser };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
 
   //Logout function
   const logout = async () => {
