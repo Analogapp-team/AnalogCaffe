@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./RecommendedProfiles.module.css";
+import { useNavigate } from "react-router-dom";
 
 // Temp mock data with images (replace later with real user data)
 const recommendedProfiles = [
@@ -22,23 +23,28 @@ const recommendedProfiles = [
 ];
 
 function RecommendedProfiles() {
+  const navigate = useNavigate();
   return (
-    <div className={styles.card}>
-      <h3 className={styles.title}>Recommended Profiles</h3>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h3 className={styles.title}>Recommended Profiles</h3>
 
-      <div className={styles.list}>
-        {recommendedProfiles.map((profile, idx) => (
-          <div key={idx} className={styles.profileRow}>
-            <img src={profile.image} alt={profile.name} className={styles.avatar} />
-            <div className={styles.textGroup}>
-              <span className={styles.name}>{profile.name}</span>
-              <a href="#" className={styles.link}>See Profile →</a>
+        <div className={styles.list}>
+          {recommendedProfiles.map((profile, idx) => (
+            <div key={idx} className={styles.profileRow}>
+              <img src={profile.image} alt={profile.name} className={styles.avatar} />
+              <div className={styles.textGroup}>
+                <span className={styles.name}>{profile.name}</span>
+                <a href="#" className={styles.link}>See Profile →</a>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <button className={styles.moreButton}>See more profiles</button>
+        <button 
+        onClick={() => navigate("/explore")} 
+        className={styles.moreButton}>See more profiles</button>
+      </div>
     </div>
   );
 }

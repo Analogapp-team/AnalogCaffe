@@ -12,12 +12,14 @@ function TopBar() {
       className={styles.topBar}
       style={{ backgroundImage: `url(${bannerImage})` }}
     >
-      <img
-        src={logo}
-        alt="Analog Logo"
-        className={styles.logo}
-        onClick={() => navigate("/")}
-      />
+      <div className={styles.logoContainer}>
+        <img
+          src={logo}
+          alt="Analog Logo"
+          className={styles.logo}
+          onClick={() => navigate("/")}
+        />
+      </div>
     </div>
   );
 }

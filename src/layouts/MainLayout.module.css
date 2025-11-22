@@ -2,18 +2,23 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  box-sizing: border-box;
+  background-color: #f7f5f1;
 }
 
 /* Three-column layout inside */
 .mainBody {
   display: grid;
-  grid-template-columns: 350px 650px 350px; /* menu | content | recommended */
+  max-width: 1170px;
+  grid-template-columns: 270px 630px 270px; /* menu | content | recommended */
   height: calc(100vh - 60px); /* subtract TopBar height (REMEMBER IF TopBar HEIGHT IS CHANGED) */
+  margin: 0 auto; /* centers all of our content*/
   background-color: #f7f5f1;
 }
 
 /* Middle page content area */
 .pageArea {
+  width: 630px;
   padding: 30px;
   overflow-y: auto;
   background-color: var(--white-bg);
@@ -23,6 +28,6 @@
 .recommendedSidebar {
   background-color: #f7f5f1;
   border-left: 1px solid #ebe8df;
-  padding: 20px;
+  /* padding: 20px; */
   overflow-y: auto;
 }
