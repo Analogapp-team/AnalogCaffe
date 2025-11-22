@@ -1,5 +1,6 @@
 import React from "react";
 import "./ProfileAvatar.css";
+import defaultAvatar from "../../assets/images/profileimage.png";
 
 const ProfileAvatar = ({ user, altText }) => {
   // Safe profile picture URL extraction
@@ -9,7 +10,7 @@ const ProfileAvatar = ({ user, altText }) => {
 
       console.log("📸 Profile picture data:", profilePicture);
 
-      // If profilePicture exists and has a url method
+      // If profilePicture exists and has a url method (Parse.File)
       if (profilePicture && typeof profilePicture.url === "function") {
         const url = profilePicture.url();
         console.log("✅ Generated URL:", url);
@@ -21,11 +22,11 @@ const ProfileAvatar = ({ user, altText }) => {
         return profilePicture;
       }
 
-      // Fallback to default avatar
-      return null;
+      // Fallback to default avatar from assets
+      return defaultAvatar;
     } catch (error) {
       console.error("❌ Error getting profile picture URL:", error);
-      return null;
+      return defaultAvatar;
     }
   };
 
@@ -37,12 +38,12 @@ const ProfileAvatar = ({ user, altText }) => {
   return (
     <div className="profile-avatar">
       <img
-        src={profilePictureUrl || "/default-avatar.png"}
+        src={profilePictureUrl || defaultAvatar}
         alt={displayName}
         className="avatar-image"
         onError={(e) => {
           console.log("🖼️ Image failed to load, using default");
-          e.target.src = "/default-avatar.png";
+          e.target.src = defaultAvatar;
         }}
         onLoad={() => console.log("🖼️ Image loaded successfully")}
       />

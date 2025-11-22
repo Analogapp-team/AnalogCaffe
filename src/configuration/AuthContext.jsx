@@ -3,12 +3,10 @@ import Parse from "./Back4App";
 
 const AuthContext = createContext();
 
-// Hook to easily access the context
 export function useAuth() {
   return useContext(AuthContext);
 }
 
-// Context provider
 function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,7 +17,7 @@ function AuthProvider({ children }) {
         const user = await Parse.User.currentAsync();
         setCurrentUser(user);
       } catch (error) {
-        console.error("Error: checking current user:", error);
+        console.error("Error checking current user:", error);
       } finally {
         setLoading(false);
       }
@@ -28,38 +26,33 @@ function AuthProvider({ children }) {
     checkCurrentUser();
   }, []);
 
-  //Login function
   const login = async (email, password) => {
     try {
       const user = await Parse.User.logIn(email, password);
       setCurrentUser(user);
       return { success: true, user };
     } catch (error) {
-      console.error("Error: while logging in user:", error);
       return { success: false, error: error.message };
     }
   };
 
-  //Register function
   const register = async (userData) => {
-  try {
-    const user = new Parse.User();
+    try {
+      const user = new Parse.User();
 
-    user.set("username", `${userData.firstName} ${userData.lastName}`);
-    user.set("firstName", userData.firstName);
-    user.set("lastName", userData.lastName);
-    user.set("email", userData.email);
-    user.set("password", userData.password);
+      user.set("username", `${userData.firstName} ${userData.lastName}`);
+      user.set("firstName", userData.firstName);
+      user.set("lastName", userData.lastName);
+      user.set("email", userData.email);
+      user.set("password", userData.password);
 
-    const newUser = await user.signUp();
-    return { success: true, user: newUser };
-  } catch (error) {
-    return { success: false, error: error.message };
-  }
-};
+      const newUser = await user.signUp();
+      return { success: true, user: newUser };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  };
 
-
-  //Logout function
   const logout = async () => {
     try {
       await Parse.User.logOut();
@@ -69,12 +62,24 @@ function AuthProvider({ children }) {
     }
   };
 
+  // 🔥 NEW: Refresh user globally (fixes avatar updates)
+  const refreshCurrentUser = async () => {
+    try {
+      const user = await Parse.User.currentAsync();
+      setCurrentUser(user);
+      return user;
+    } catch (error) {
+      console.error("Error refreshing current user:", error);
+    }
+  };
+
   const value = {
     currentUser,
     login,
     register,
     logout,
     isAuthenticated: !!currentUser,
+    refreshCurrentUser,
   };
 
   return (
