@@ -65,7 +65,10 @@ function AuthProvider({ children }) {
   // 🔥 NEW: Refresh user globally (fixes avatar updates)
   const refreshCurrentUser = async () => {
     try {
-      const user = await Parse.User.currentAsync();
+      let user = Parse.User.current();
+      if (!user) return null;
+
+      user = await user.fetch();  
       setCurrentUser(user);
       return user;
     } catch (error) {

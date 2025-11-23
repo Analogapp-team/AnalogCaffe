@@ -12,9 +12,10 @@ import Events from "../../assets/icons/events.svg";
 import Logout from "../../assets/icons/logout.svg";
 
 function MenuBar() {
-  const { logout } = useAuth();
+  const { logout, currentUser } = useAuth();   
   const [user, setUser] = useState(null);
 
+  // Loads user on mount
   useEffect(() => {
     const loadUser = async () => {
       try {
@@ -27,6 +28,12 @@ function MenuBar() {
 
     loadUser();
   }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      setUser(currentUser);
+    }
+  }, [currentUser]);
 
   const firstName = user?.get("firstName") || "";
   const lastName = user?.get("lastName") || "";
@@ -83,7 +90,15 @@ function MenuBar() {
 
       <div className={styles.bottomSection}>
         <div className={styles.userCard}>
-          <div className={styles.userAvatar}></div>
+          <div className={styles.userAvatar}>
+            {user && (
+              <ProfileAvatar // we're passing a size which is custom, needs some rework
+                user={user}
+                altText={fullName}
+                size={30}
+              />
+            )}
+          </div>
           <div className={styles.userInfo}>
             <p className={styles.userName}>{fullName || "User"}</p>
             <p className={styles.userDetails}>

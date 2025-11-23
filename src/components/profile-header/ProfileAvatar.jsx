@@ -2,52 +2,42 @@ import React from "react";
 import "./ProfileAvatar.css";
 import defaultAvatar from "../../assets/images/profileimage.png";
 
-const ProfileAvatar = ({ user, altText }) => {
-  // Safe profile picture URL extraction
+const ProfileAvatar = ({ user, altText, size = 80 }) => {
   const getProfilePictureUrl = () => {
     try {
       const profilePicture = user?.get("profilePicture");
 
-      console.log("📸 Profile picture data:", profilePicture);
-
-      // If profilePicture exists and has a url method (Parse.File)
       if (profilePicture && typeof profilePicture.url === "function") {
-        const url = profilePicture.url();
-        console.log("✅ Generated URL:", url);
-        return url;
+        return profilePicture.url();
       }
 
-      // If profilePicture is already a string URL
       if (typeof profilePicture === "string") {
         return profilePicture;
       }
 
-      // Fallback to default avatar from assets
       return defaultAvatar;
     } catch (error) {
-      console.error("❌ Error getting profile picture URL:", error);
       return defaultAvatar;
     }
   };
 
   const profilePictureUrl = getProfilePictureUrl();
-  const displayName = user?.get("firstName") || altText || "User";
-
-  console.log("🎯 Final avatar URL:", profilePictureUrl);
+  const displayName = altText || user?.get("firstName") || "User";
 
   return (
-    <div className="profile-avatar">
-      <img
-        src={profilePictureUrl || defaultAvatar}
-        alt={displayName}
-        className="avatar-image"
-        onError={(e) => {
-          console.log("🖼️ Image failed to load, using default");
-          e.target.src = defaultAvatar;
-        }}
-        onLoad={() => console.log("🖼️ Image loaded successfully")}
-      />
-    </div>
+    <img
+      src={profilePictureUrl}
+      alt={displayName}
+      className="avatar-image"
+      style={{
+        width: size,
+        height: size,
+        borderRadius: "100%",
+        objectFit: "cover",
+        flexShrink: 0,
+      }}
+      onError={(e) => (e.target.src = defaultAvatar)}
+    />
   );
 };
 

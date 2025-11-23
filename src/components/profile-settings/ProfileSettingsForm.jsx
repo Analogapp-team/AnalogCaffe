@@ -14,9 +14,12 @@ import {
   uploadProfilePicture,
   removeProfilePicture,
 } from "../../configuration/UserService";
+import { useAuth } from "../../configuration/AuthContext";
+
 
 const ProfileSettingsForm = () => {
   const navigate = useNavigate();
+  const { refreshCurrentUser } = useAuth();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -67,6 +70,8 @@ const ProfileSettingsForm = () => {
     setSaving(true);
     try {
       await updateUserProfile(formData);
+      await refreshCurrentUser();
+      window.location.reload();
       alert("Profile updated successfully!");
       navigate("/profile");
     } catch (error) {
@@ -91,6 +96,7 @@ const ProfileSettingsForm = () => {
     try {
       console.log("Starting profile picture upload...");
       await uploadProfilePicture(file);
+      await refreshCurrentUser();
       console.log("Profile picture uploaded successfully");
 
       // Reload user data to show new picture
@@ -114,6 +120,7 @@ const ProfileSettingsForm = () => {
     setUploading(true);
     try {
       await removeProfilePicture();
+      await refreshCurrentUser();
 
       // Reload user data
       const userData = await getCurrentUserProfile();
@@ -193,9 +200,9 @@ const ProfileSettingsForm = () => {
           value={formData.studyCourse}
           onChange={handleSelectChange}
           options={[
-            { value: "software", label: "MSc. Software Design" },
-            { value: "data", label: "MSc. Data Science" },
-            { value: "it-biz", label: "MSc. IT Business" },
+            { value: "MSc. Software Design", label: "MSc. Software Design" },
+            { value: "MSc. Data Science", label: "MSc. Data Science" },
+            { value: "MSc. IT Business", label: "MSc. IT Business" },
           ]}
         />
 
