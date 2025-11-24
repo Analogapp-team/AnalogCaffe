@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../configuration/AuthContext";
+import { getCurrentUserProfile } from "../../configuration/UserService";
+import ProfileAvatar from "../profile-header/ProfileAvatar";
 import styles from "./MenuBar.module.css";
 
 import Home from "../../assets/icons/home.svg";
@@ -10,13 +12,33 @@ import Events from "../../assets/icons/events.svg";
 import Logout from "../../assets/icons/logout.svg";
 
 function MenuBar() {
-  const { logout } = useAuth();
+  const { logout, currentUser } = useAuth();   
+  const [user, setUser] = useState(null);
 
-  const user = {
-    name: "John Doe",
-    studyLine: "KDDIT",
-    semester: "3rd Semester",
-  };
+  // Loads user on mount
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const freshUser = await getCurrentUserProfile();
+        setUser(freshUser);
+      } catch (err) {
+        console.error("Error loading user in MenuBar:", err);
+      }
+    };
+
+    loadUser();
+  }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      setUser(currentUser);
+    }
+  }, [currentUser]);
+
+  const firstName = user?.get("firstName") || "";
+  const lastName = user?.get("lastName") || "";
+  const studyCourse = user?.get("studyCourse") || "";
+  const fullName = `${firstName} ${lastName}`.trim();
 
   return (
     <div className={styles.menubar}>
@@ -54,9 +76,8 @@ function MenuBar() {
           <img src={MyProfile} alt="" className={styles.icon} /> My Profile
         </NavLink>
 
-        {/* Placeholder tab for future features */}
         <NavLink
-          to="/Events"
+          to="/events"
           className={({ isActive }) =>
             isActive
               ? `${styles.menubarButton} ${styles.active}`
@@ -69,11 +90,19 @@ function MenuBar() {
 
       <div className={styles.bottomSection}>
         <div className={styles.userCard}>
-          <div className={styles.userAvatar}></div>
+          <div className={styles.userAvatar}>
+            {user && (
+              <ProfileAvatar // we're passing a size which is custom, needs some rework
+                user={user}
+                altText={fullName}
+                size={30}
+              />
+            )}
+          </div>
           <div className={styles.userInfo}>
-            <p className={styles.userName}>{user.name}</p>
+            <p className={styles.userName}>{fullName || "User"}</p>
             <p className={styles.userDetails}>
-              {user.studyLine} {user.semester}
+              {studyCourse || "No Study Line Set"}
             </p>
           </div>
         </div>

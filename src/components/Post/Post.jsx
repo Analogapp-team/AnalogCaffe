@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { likePost, deletePost } from "../../configuration/PostService";
 import { useAuth } from "../../configuration/AuthContext";
 import styles from "./post.module.css";
+import ProfileAvatar from "../profile-header/ProfileAvatar";
 
 function Post({ post, onDelete }) {
   const { currentUser } = useAuth();
@@ -30,16 +31,12 @@ function Post({ post, onDelete }) {
   };
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this post?")) {
-      return;
-    }
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
 
     setIsDeleting(true);
     try {
       await deletePost(post.id);
-      if (onDelete) {
-        onDelete(post.id);
-      }
+      if (onDelete) onDelete(post.id);
     } catch (error) {
       console.error("Error deleting post:", error);
       alert("Error deleting post: " + error.message);
@@ -51,20 +48,17 @@ function Post({ post, onDelete }) {
   // Check if current user is the author of the post
   const isAuthor = currentUser && post?.get("author")?.id === currentUser.id;
 
-  // Safe data extraction with error handling
+  // Safe data extraction
   const getAuthorName = () => {
     if (!post) return "Unknown User";
-
     try {
       const author = post.get("author");
       if (!author) return "Unknown User";
 
       const firstName = author.get("firstName") || "";
       const lastName = author.get("lastName") || "";
+      if (firstName && lastName) return `${firstName} ${lastName.charAt(0)}.`;
 
-      if (firstName && lastName) {
-        return `${firstName} ${lastName.charAt(0)}.`;
-      }
       return author.get("username") || "User";
     } catch (error) {
       console.error("Error getting author name:", error);
@@ -74,41 +68,16 @@ function Post({ post, onDelete }) {
 
   const getAuthorProgram = () => {
     if (!post) return "Student";
-
     try {
       const author = post.get("author");
       return author?.get("studyCourse") || "MSc. Computer Science";
-    } catch (error) {
-      console.error("Error getting author program:", error);
+    } catch {
       return "Student";
-    }
-  };
-
-  const getProfilePicture = () => {
-    if (!post) return "/default-avatar.png";
-
-    try {
-      const author = post.get("author");
-      if (!author) return "/default-avatar.png";
-
-      const profilePicture = author.get("profilePicture");
-
-      if (profilePicture && typeof profilePicture.url === "function") {
-        return profilePicture.url();
-      }
-      if (typeof profilePicture === "string") {
-        return profilePicture;
-      }
-      return "/default-avatar.png";
-    } catch (error) {
-      console.error("Error getting profile picture:", error);
-      return "/default-avatar.png";
     }
   };
 
   const getRelativeTime = (createdAt) => {
     if (!createdAt) return "Recently";
-
     try {
       const now = new Date();
       const postDate = new Date(createdAt);
@@ -123,46 +92,36 @@ function Post({ post, onDelete }) {
         const diffInDays = Math.floor(diffInHours / 24);
         return `${diffInDays}d ago`;
       }
-    } catch (error) {
-      console.error("Error calculating relative time:", error);
+    } catch {
       return "Recently";
     }
   };
 
   const getPostImages = () => {
     if (!post) return [];
-
     try {
       const images = post.get("images");
-      console.log("Post images data:", images);
-
       if (images && Array.isArray(images)) {
         return images.map((image) => {
-          if (image && typeof image.url === "function") {
-            return image.url();
-          }
+          if (image && typeof image.url === "function") return image.url();
           return image;
         });
       }
       return [];
-    } catch (error) {
-      console.error("Error getting post images:", error);
+    } catch {
       return [];
     }
   };
 
   const getPostContent = () => {
-    if (!post) return "Loading...";
-
+    if (!post) return "";
     try {
       return post.get("content") || "";
-    } catch (error) {
-      console.error("Error getting post content:", error);
-      return "Error loading content";
+    } catch {
+      return "";
     }
   };
 
-  // Don't render if post is undefined
   if (!post) {
     return (
       <div className={styles.post}>
@@ -173,30 +132,22 @@ function Post({ post, onDelete }) {
     );
   }
 
-  const profilePictureUrl = getProfilePicture();
   const postContent = getPostContent();
   const postImages = getPostImages();
-
-  console.log("🎯 Rendering post with:", {
-    content: postContent,
-    images: postImages,
-    imageCount: postImages.length,
-  });
 
   return (
     <div className={styles.post}>
       <div className={styles.postWrapper}>
+        
         {/* Post Header */}
         <div className={styles.postTop}>
           <div className={styles.postTopLeft}>
-            <img
-              className={styles.postProfileImg}
-              src={profilePictureUrl}
-              alt=""
-              onError={(e) => {
-                e.target.src = "/default-avatar.png";
-              }}
+
+            <ProfileAvatar
+              user={post.get("author")}
+              size={40}
             />
+
             <div className={styles.authorInfo}>
               <span className={styles.postUsername}>{getAuthorName()}</span>
               <span className={styles.postProgramme}>{getAuthorProgram()}</span>
@@ -222,20 +173,14 @@ function Post({ post, onDelete }) {
                   src={imageUrl}
                   alt={`Post image ${index + 1}`}
                   className={styles.postImage}
-                  onError={(e) => {
-                    console.error(
-                      `❌ Failed to load image ${index + 1}:`,
-                      imageUrl
-                    );
-                    e.target.style.display = "none";
-                  }}
+                  onError={(e) => (e.target.style.display = "none")}
                 />
               ))}
             </div>
           )}
         </div>
 
-        {/* Post Actions - Like and Delete Buttons */}
+        {/* Post Actions */}
         <div className={styles.postActions}>
           <button
             className={`${styles.likeButton} ${isLiked ? styles.liked : ""}`}

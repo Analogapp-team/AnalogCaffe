@@ -4,24 +4,33 @@ import ProfileAvatar from "./ProfileAvatar";
 import ProfileInfo from "./ProfileInfo";
 import ProfileSettingsButton from "./ProfileSettingsButton";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../configuration/AuthContext";
 
 const ProfileHeader = () => {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
+
+  const firstName = currentUser?.get("firstName") || "";
+  const lastName = currentUser?.get("lastName") || "";
+  const studyCourse = currentUser?.get("studyCourse") || "";
+  const bio = currentUser?.get("bio") || "";
 
   const handleSettingsClick = () => {
     navigate("/profile/settings");
-    // add navigation logic here (React Router)
   };
 
   return (
     <div className="profile-header">
       <div className="profile-left">
-        <ProfileAvatar altText="Sarah M." />
+
+       
+        <ProfileAvatar user={currentUser} altText={`${firstName} ${lastName}`} />
+
         <div className="profile-details">
           <ProfileInfo
-            name="Sarah M."
-            study="MSc. Computer Science"
-            bio="I’m a coffee addict... obviously ☕"
+            name={`${firstName} ${lastName}`}
+            study={studyCourse}
+            bio={bio}
           />
         </div>
       </div>
