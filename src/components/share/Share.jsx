@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../configuration/AuthContext";
 import { createPost } from "../../configuration/PostService";
 import styles from "./share.module.css";
-import image from "../../assets/icons/image.svg";
-import ProfileAvatar from "../profile-header/ProfileAvatar";
+// import ProfileAvatar from "../profile-header/ProfileAvatar"; // moved to ShareTop
+import ShareTop from "./ShareTop";
+import ShareBottom from "./ShareBottom";
 
 function Share() {
   const { currentUser, refreshCurrentUser } = useAuth();
@@ -81,75 +82,26 @@ function Share() {
     <div className={styles.share}>
       <div className={styles.shareWrapper}>
         
-        {/* Top Section: Avatar + Input */}
-        <div className={styles.shareTop}>
-          <div className={styles.shareProfileImgWrapper}>
-            {displayUser && <ProfileAvatar user={displayUser} size={40} />}
-          </div>
+        <ShareTop
+          user={displayUser}
+          content={content}
+          setContent={setContent}
+          loading={loading}
+          imagePreviews={imagePreviews}
+          removeImage={removeImage}
+        />
 
-          <textarea
-            placeholder="What's in your mind?"
-            className={styles.shareInput}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            disabled={loading}
-            rows="3"
-          />
-        </div>
-
-        {/* Image previews */}
-        {imagePreviews.length > 0 && (
-          <div className={styles.imagePreviews}>
-            {imagePreviews.map((preview, index) => (
-              <div key={index} className={styles.imagePreviewItem}>
-                <img
-                  src={preview.preview}
-                  alt="Preview"
-                  className={styles.previewImage}
-                />
-                <button
-                  type="button"
-                  className={styles.removeImageButton}
-                  onClick={() => removeImage(index)}
-                  disabled={loading}
-                >
-                  ×
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Image previews (handled by ShareTop) */}
 
         {error && <div className={styles.errorMessage}>{error}</div>}
 
-        {/* Bottom Section */}
-        <div className={styles.shareBottom}>
-          <div className={styles.shareOptions}>
-            <label htmlFor="post-image-input" className={styles.fileInputLabel}>
-              <img className={styles.shareIcon} src={image} alt="Add photo" />
-              <span className={styles.shareOptionText}>
-                {images.length > 0 ? `${images.length} photo(s)` : "Add photo"}
-              </span>
-            </label>
-            <input
-              id="post-image-input"
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleImageSelect}
-              disabled={loading}
-              style={{ display: "none" }}
-            />
-          </div>
-
-          <button
-            className={styles.shareButton}
-            onClick={handlePost}
-            disabled={loading || (!content.trim() && images.length === 0)}
-          >
-            {loading ? "Posting..." : "Post"}
-          </button>
-        </div>
+        <ShareBottom
+          images={images}
+          loading={loading}
+          onImageSelect={handleImageSelect}
+          onPost={handlePost}
+          content={content}
+        />
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import Parse from "./Back4App";
+import { parseImagesToUrls } from "../utils/Parse";
 
 export const createPost = async ({ content, images = [] }) => {
   try {
@@ -199,5 +200,24 @@ export const deletePost = async (postId) => {
   } catch (error) {
     console.error("Error deleting post:", error);
     throw error;
+  }
+};
+
+export const extractPostContent = (post) => {
+  if (!post) return "";
+  try {
+    return post.get("content") || "";
+  } catch {
+    return "";
+  }
+};
+
+export const extractPostImages = (post) => {
+  if (!post) return [];
+  try {
+    const images = post.get("images");
+    return parseImagesToUrls(images);
+  } catch {
+    return [];
   }
 };

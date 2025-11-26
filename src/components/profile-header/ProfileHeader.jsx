@@ -5,13 +5,13 @@ import ProfileInfo from "./ProfileInfo";
 import ProfileSettingsButton from "./ProfileSettingsButton";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../configuration/AuthContext";
+import { getFullName } from "../../utils/User";
 
 const ProfileHeader = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
-  const firstName = currentUser?.get("firstName") || "";
-  const lastName = currentUser?.get("lastName") || "";
+  const fullName = getFullName(currentUser);
   const studyCourse = currentUser?.get("studyCourse") || "";
   const bio = currentUser?.get("bio") || "";
 
@@ -24,11 +24,11 @@ const ProfileHeader = () => {
       <div className="profile-left">
 
        
-        <ProfileAvatar user={currentUser} altText={`${firstName} ${lastName}`} />
+        <ProfileAvatar user={currentUser} altText={fullName} />
 
         <div className="profile-details">
           <ProfileInfo
-            name={`${firstName} ${lastName}`}
+            name={fullName}
             study={studyCourse}
             bio={bio}
           />

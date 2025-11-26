@@ -62,7 +62,7 @@ function AuthProvider({ children }) {
     }
   };
 
-  // 🔥 NEW: Refresh user globally (fixes avatar updates)
+  // Refresh user globally (fixes avatar updates)
   const refreshCurrentUser = async () => {
     try {
       let user = Parse.User.current();

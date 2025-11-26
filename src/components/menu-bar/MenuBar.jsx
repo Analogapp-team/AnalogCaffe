@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../configuration/AuthContext";
+import { getFullName } from "../../utils/User";
 import { getCurrentUserProfile } from "../../configuration/UserService";
 import ProfileAvatar from "../profile-header/ProfileAvatar";
 import styles from "./MenuBar.module.css";
@@ -35,10 +36,8 @@ function MenuBar() {
     }
   }, [currentUser]);
 
-  const firstName = user?.get("firstName") || "";
-  const lastName = user?.get("lastName") || "";
+  const fullName = getFullName(user);
   const studyCourse = user?.get("studyCourse") || "";
-  const fullName = `${firstName} ${lastName}`.trim();
 
   return (
     <div className={styles.menubar}>
