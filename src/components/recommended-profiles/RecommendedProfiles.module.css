@@ -1,12 +1,22 @@
+.container {
+  width: 270px;
+  padding-left: 20px;
+  padding-top: 30px;
+  box-sizing: border-box;
+}
+
 .card {
   background: #ffffff;
   border-radius: 10px;
-  padding: 20px;
+  padding: 15px;
   border: 1px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  width: 250px;
+  max-width: 250px;
+  width: 100%;
+  box-sizing: border-box;
+  /* margin-left: 20px; */
 }
 
 .title {
@@ -23,7 +33,7 @@
   gap: 14px;
 }
 
-/* Each profile row */
+/* Profile row */
 .profileRow {
   display: flex;
   align-items: center;
@@ -32,7 +42,7 @@
 
 /* Avatar image */
 .avatar {
-  width: 40px;
+  /* width: 40px; */
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
@@ -72,6 +82,11 @@
   color: #4a3227;
   cursor: pointer;
   transition: background 0.2s ease;
+
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .moreButton:hover {
