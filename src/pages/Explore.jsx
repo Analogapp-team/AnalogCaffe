@@ -19,7 +19,7 @@ function Explore() {
         if (!mounted) return;
         const mapped = results.map((u) => ({
           id: u.id,
-          username: u.get("username") || u.id,
+          userId: u.id,
           displayName: getFullName(u),
           desc: u.get("headline") || u.get("desc") || "",
           imgSrc: parseFileToUrl(u.get("avatarUrl") || u.get("profileImage")) || profilePicture,
@@ -52,7 +52,7 @@ function Explore() {
         <ExploreUserItem
           key={u.id}
           imgSrc={u.imgSrc}
-          username={u.username}
+          userId={u.userId}
           displayName={u.displayName}
           desc={u.desc}
         />

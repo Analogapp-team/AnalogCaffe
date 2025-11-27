@@ -127,10 +127,11 @@ function Post({ post, onDelete }) {
           {postImages.length > 0 && (
             <div className={styles.postImages}>
               {postImages.map((imageUrl, index) => (
-                <div
+                <img
                   key={index}
                   src={imageUrl}
-                  alt={`Post image ${index + 1}`}
+                  alt={postContent ? postContent.slice(0, 120) : ""}
+                  loading="lazy"
                   className={styles.postImage}
                   onError={(e) => (e.target.style.display = "none")}
                 />

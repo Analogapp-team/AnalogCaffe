@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./ExploreUserItem.css";
 import FollowButton from "../follow-button/FollowButton";
 
-function ExploreUserItem({ imgSrc, username, desc, displayName }) {
+function ExploreUserItem({ imgSrc, userId, desc, displayName }) {
   const [isFollowing, setIsFollowing] = useState(false);
   const navigate = useNavigate();
 
@@ -13,8 +13,8 @@ function ExploreUserItem({ imgSrc, username, desc, displayName }) {
   };
 
   const handleNavigate = () => {
-    if (username) {
-      navigate(`/profile/${encodeURIComponent(username)}`);
+    if (userId) {
+      navigate(`/profile/${encodeURIComponent(userId)}`);
     } else {
       navigate("/profile");
     }
@@ -26,7 +26,7 @@ function ExploreUserItem({ imgSrc, username, desc, displayName }) {
         className="userInfo"
         role="link"
         tabIndex={0}
-        aria-label={`Open profile of ${displayName || username || "user"}`}
+        aria-label={`Open profile of ${displayName || userId || "user"}`}
         onClick={handleNavigate}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
@@ -41,7 +41,7 @@ function ExploreUserItem({ imgSrc, username, desc, displayName }) {
           className="profileAvatar"
         />
         <div className="userDetails">
-          <h3 className="userName">{displayName || username}</h3>
+          <h3 className="userName">{displayName || userId}</h3>
           <p className="userDescription">{desc}</p>
         </div>
       </div>

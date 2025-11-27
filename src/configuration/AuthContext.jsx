@@ -39,8 +39,6 @@ function AuthProvider({ children }) {
   const register = async (userData) => {
     try {
       const user = new Parse.User();
-
-      user.set("username", `${userData.firstName} ${userData.lastName}`);
       user.set("firstName", userData.firstName);
       user.set("lastName", userData.lastName);
       user.set("email", userData.email);
