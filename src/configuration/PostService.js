@@ -1,6 +1,10 @@
 import Parse from "./Back4App";
 import { parseImagesToUrls } from "../utils/Parse";
 
+/* PostService handles creating, fetching, liking, and deleting posts. 
+  Call these functions when making a component to interact with posts. */
+
+// createPost creates a new post with optional images.
 export const createPost = async ({ content, images = [] }) => {
   try {
     const currentUser = Parse.User.current();
@@ -9,7 +13,7 @@ export const createPost = async ({ content, images = [] }) => {
     const Post = Parse.Object.extend("Post");
     const post = new Post();
 
-    // Always set content, even if it's empty string
+    // Always set content, even if it's an empty string
     post.set("content", content || "");
     post.set("author", currentUser);
 
@@ -17,7 +21,7 @@ export const createPost = async ({ content, images = [] }) => {
     console.log("Images to upload:", images);
     console.log("Number of images:", images.length);
 
-    // Handle image uploads if any
+    // Handle image uploads if any (as it is optional)
     if (images && images.length > 0) {
       console.log("Beginning image upload for", images.length, "images");
 
