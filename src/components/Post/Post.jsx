@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { likePost, deletePost } from "../../configuration/PostService";
+import { likePost, deletePost, extractPostContent, extractPostImages } from "../../configuration/PostService";
 import { useAuth } from "../../configuration/AuthContext";
 import styles from "./post.module.css";
 import ProfileAvatar from "../profile-header/ProfileAvatar";
+import { formatRelativeTime } from "../../utils/Time";
+import { getFullName } from "../../utils/User";
 
 function Post({ post, onDelete }) {
   const { currentUser } = useAuth();
@@ -54,12 +56,12 @@ function Post({ post, onDelete }) {
     try {
       const author = post.get("author");
       if (!author) return "Unknown User";
-
+      const fullname = getFullName(author);
+      // Try to abbreviate last name to initial if first and last are present
       const firstName = author.get("firstName") || "";
       const lastName = author.get("lastName") || "";
-      if (firstName && lastName) return `${firstName} ${lastName.charAt(0)}.`;
-
-      return author.get("username") || "User";
+      if (firstName && lastName) return `${firstName} ${lastName?.charAt(0)}.`;
+      return fullname;
     } catch (error) {
       console.error("Error getting author name:", error);
       return "Unknown User";
@@ -76,51 +78,8 @@ function Post({ post, onDelete }) {
     }
   };
 
-  const getRelativeTime = (createdAt) => {
-    if (!createdAt) return "Recently";
-    try {
-      const now = new Date();
-      const postDate = new Date(createdAt);
-      const diffInHours = Math.floor((now - postDate) / (1000 * 60 * 60));
-
-      if (diffInHours < 1) {
-        const diffInMinutes = Math.floor((now - postDate) / (1000 * 60));
-        return `${diffInMinutes}m ago`;
-      } else if (diffInHours < 24) {
-        return `${diffInHours}h ago`;
-      } else {
-        const diffInDays = Math.floor(diffInHours / 24);
-        return `${diffInDays}d ago`;
-      }
-    } catch {
-      return "Recently";
-    }
-  };
-
-  const getPostImages = () => {
-    if (!post) return [];
-    try {
-      const images = post.get("images");
-      if (images && Array.isArray(images)) {
-        return images.map((image) => {
-          if (image && typeof image.url === "function") return image.url();
-          return image;
-        });
-      }
-      return [];
-    } catch {
-      return [];
-    }
-  };
-
-  const getPostContent = () => {
-    if (!post) return "";
-    try {
-      return post.get("content") || "";
-    } catch {
-      return "";
-    }
-  };
+  const getPostImages = () => extractPostImages(post);
+  const getPostContent = () => extractPostContent(post);
 
   if (!post) {
     return (
@@ -152,7 +111,7 @@ function Post({ post, onDelete }) {
               <span className={styles.postUsername}>{getAuthorName()}</span>
               <span className={styles.postProgramme}>{getAuthorProgram()}</span>
               <span className={styles.postDate}>
-                {getRelativeTime(post.createdAt)}
+                {formatRelativeTime(post.createdAt)}
               </span>
             </div>
           </div>
@@ -171,7 +130,8 @@ function Post({ post, onDelete }) {
                 <img
                   key={index}
                   src={imageUrl}
-                  alt={`Post image ${index + 1}`}
+                  alt={postContent ? postContent.slice(0, 120) : ""}
+                  loading="lazy"
                   className={styles.postImage}
                   onError={(e) => (e.target.style.display = "none")}
                 />

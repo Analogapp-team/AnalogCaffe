@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Parse from "parse";
 import ExploreUserItem from "../components/base-components/explore-user-item/ExploreUserItem";
 import profilePicture from "../assets/images/ProfilePicture.png";
+import { parseFileToUrl } from "../utils/Parse";
+import { getFullName } from "../utils/User";
 
 function Explore() {
   const [users, setUsers] = useState([]);
@@ -17,9 +19,10 @@ function Explore() {
         if (!mounted) return;
         const mapped = results.map((u) => ({
           id: u.id,
-          username: u.get("name") || u.get("username") || "User",
+          userId: u.id,
+          displayName: getFullName(u),
           desc: u.get("headline") || u.get("desc") || "",
-          imgSrc: u.get("avatarUrl") || u.get("profileImage") || profilePicture,
+          imgSrc: parseFileToUrl(u.get("avatarUrl") || u.get("profileImage")) || profilePicture,
         }));
         setUsers(mapped);
       })
@@ -49,7 +52,8 @@ function Explore() {
         <ExploreUserItem
           key={u.id}
           imgSrc={u.imgSrc}
-          username={u.username}
+          userId={u.userId}
+          displayName={u.displayName}
           desc={u.desc}
         />
       ))}

@@ -1,28 +1,12 @@
 import React from "react";
 import "./ProfileAvatar.css";
 import defaultAvatar from "../../assets/images/profileimage.png";
+import { parseFileToUrl } from "../../utils/Parse";
+import { getFullName } from "../../utils/User";
 
 const ProfileAvatar = ({ user, altText, size = 80 }) => {
-  const getProfilePictureUrl = () => {
-    try {
-      const profilePicture = user?.get("profilePicture");
-
-      if (profilePicture && typeof profilePicture.url === "function") {
-        return profilePicture.url();
-      }
-
-      if (typeof profilePicture === "string") {
-        return profilePicture;
-      }
-
-      return defaultAvatar;
-    } catch (error) {
-      return defaultAvatar;
-    }
-  };
-
-  const profilePictureUrl = getProfilePictureUrl();
-  const displayName = altText || user?.get("firstName") || "User";
+  const profilePictureUrl = parseFileToUrl(user?.get("profilePicture")) || defaultAvatar;
+  const displayName = altText || getFullName(user);
 
   return (
     <img

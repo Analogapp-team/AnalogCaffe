@@ -29,6 +29,18 @@ export const getCurrentUserProfile = async () => {
   }
 };
 
+// Fetch a user by objectId (id) - returns a fresh Parse.User
+export const getUserById = async (userId) => {
+  try {
+    const q = new Parse.Query(Parse.User);
+    const user = await q.get(userId);
+    return await user.fetch();
+  } catch (error) {
+    console.error("Error fetching user by id:", error);
+    throw error;
+  }
+};
+
 // Update user fields and return the FRESH user
 export const updateUserProfile = async (updates) => {
   try {
