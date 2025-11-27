@@ -86,13 +86,29 @@
   font-size: 15px;
   border: none;
   border-radius: 8px;
-  padding: 6px 22px;
+  padding: 8px 22px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .event-card__attend:hover {
-  background-color: #3d2f22;
+  background-color: #6e5947;
+}
+
+.event-card__delete {
+  background-color: #c0392b;   /* red */
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 8px;
+  padding: 8px 22px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.event-card__delete:hover {
+  background-color: #e74c3c;
 }
 
 .event-card__attendees {
@@ -103,3 +119,11 @@
   align-items: center;
   gap: 6px;
 }
+
+.event-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+
