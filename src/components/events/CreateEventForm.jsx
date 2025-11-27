@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./CreateEventForm.css";
+import { createEvent } from "../../configuration/EventService";
 
-const CreateEventForm = ({ onCreate }) => {
+function CreateEventForm() {
   const [eventData, setEventData] = useState({
     title: "",
     description: "",
@@ -9,46 +10,72 @@ const CreateEventForm = ({ onCreate }) => {
     startTime: "",
     endTime: "",
     maxAttendees: "",
-    image: null,
+    imageFile: null,
   });
 
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  // Handling all inputs in one place (works for text + file inputs)
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setEventData({
-      ...eventData,
+    setEventData((prev) => ({
+      ...prev,
       [name]: files ? files[0] : value,
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  // Submit the form and send the data to the backend
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+    setSaving(true);
 
-    // limit attendees to 100 max
-    if (parseInt(eventData.maxAttendees) > 100) {
-      alert("Maximum attendees cannot exceed 100.");
-      return;
+    try {
+      await createEvent({
+        title: eventData.title,
+        description: eventData.description,
+        date: eventData.date,
+        startTime: eventData.startTime,
+        endTime: eventData.endTime,
+        maxAttendees: eventData.maxAttendees,
+        imageFile: eventData.imageFile,
+      });
+
+      setSuccess("Event created successfully!");
+
+      // Resetting the form after saving
+      setEventData({
+        title: "",
+        description: "",
+        date: "",
+        startTime: "",
+        endTime: "",
+        maxAttendees: "",
+        imageFile: null,
+      });
+
+      e.target.reset();
+    } catch (err) {
+      setError(err.message || "Failed to create event.");
+    } finally {
+      setSaving(false);
     }
-
-    console.log("New Event Created:", eventData);
-    if (onCreate) onCreate(eventData);
-
-    // reset
-    setEventData({
-      title: "",
-      description: "",
-      date: "",
-      startTime: "",
-      endTime: "",
-      maxAttendees: "",
-      image: null,
-    });
   };
 
   return (
     <div className="create-event">
       <h2 className="create-event__title">Create a New Event</h2>
 
+      {/* Feedback messages */}
+      {error && <div className="event-error">{error}</div>}
+      {success && <div className="event-success">{success}</div>}
+
       <form className="create-event__form" onSubmit={handleSubmit}>
+
+        {/* Row 1: Title + Image upload */}
         <div className="create-event__row">
           <div className="form-group">
             <label>Event Title</label>
@@ -58,6 +85,7 @@ const CreateEventForm = ({ onCreate }) => {
               placeholder="Morning Coffee Tasting"
               value={eventData.title}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -65,13 +93,14 @@ const CreateEventForm = ({ onCreate }) => {
             <label>Event Image</label>
             <input
               type="file"
-              name="image"
+              name="imageFile"
               accept="image/*"
               onChange={handleChange}
             />
           </div>
         </div>
 
+        {/* Description field */}
         <div className="form-group full-width">
           <label>Description</label>
           <textarea
@@ -82,6 +111,7 @@ const CreateEventForm = ({ onCreate }) => {
           ></textarea>
         </div>
 
+        {/* Row 2: Date + Max attendees */}
         <div className="create-event__row">
           <div className="form-group">
             <label>Date</label>
@@ -90,6 +120,7 @@ const CreateEventForm = ({ onCreate }) => {
               name="date"
               value={eventData.date}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -98,15 +129,15 @@ const CreateEventForm = ({ onCreate }) => {
             <input
               type="number"
               name="maxAttendees"
-              placeholder="max 100"
+              placeholder="0 = unlimited"
               value={eventData.maxAttendees}
               onChange={handleChange}
-              min="1"
-              max="100"
+              min="0"
             />
           </div>
         </div>
 
+        {/* Row 3: Times */}
         <div className="create-event__row">
           <div className="form-group">
             <label>Start Time</label>
@@ -129,12 +160,13 @@ const CreateEventForm = ({ onCreate }) => {
           </div>
         </div>
 
-        <button type="submit" className="create-event__submit">
-          Create Event
+        {/* Submit button */}
+        <button type="submit" className="create-event__submit" disabled={saving}>
+          {saving ? "Creating…" : "Create Event"}
         </button>
       </form>
     </div>
   );
-};
+}
 
 export default CreateEventForm;
