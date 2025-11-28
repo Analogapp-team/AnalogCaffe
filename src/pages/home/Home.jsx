@@ -1,7 +1,6 @@
 import React from "react";
 import Feed from "../../components/feed/Feed";
 import Share from "../../components/share/Share";
-import Post from "../../components/Post/Post";
 import styles from "./Home.module.css";
 
 function Home() {

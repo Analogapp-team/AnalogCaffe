@@ -1,6 +1,6 @@
 import Parse from "parse";
 
-{/* Back4App configuration - DONT TOUCH */}
+// Back4App configuration - DONT TOUCH - Look in .env for keys
 const PARSE_APPLICATION_ID = process.env.REACT_APP_BACK4APP_APPLICATION_ID;
 const PARSE_JAVASCRIPT_KEY = process.env.REACT_APP_BACK4APP_JAVASCRIPT_KEY;
 const PARSE_HOST_URL = process.env.REACT_APP_BACK4APP_SERVER_URL;

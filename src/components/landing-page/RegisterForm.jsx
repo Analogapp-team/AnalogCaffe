@@ -1,4 +1,3 @@
-// RegisterForm.jsx
 import React, { useState } from "react";
 import { useAuth } from "../../configuration/AuthContext";
 import styles from "./LandingPage.module.css";

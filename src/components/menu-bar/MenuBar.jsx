@@ -16,7 +16,7 @@ function MenuBar() {
   const { logout, currentUser } = useAuth();   
   const [user, setUser] = useState(null);
 
-  // Loads user on mount
+  // Loads user on mount and when currentUser changes
   useEffect(() => {
     const loadUser = async () => {
       try {
@@ -30,18 +30,23 @@ function MenuBar() {
     loadUser();
   }, []);
 
+  // Update user when currentUser changes
   useEffect(() => {
     if (currentUser) {
       setUser(currentUser);
     }
   }, [currentUser]);
 
+  // Extract user details for display
   const fullName = getFullName(user);
+  // Extract study course or provide default
   const studyCourse = user?.get("studyCourse") || "";
 
   return (
     <div className={styles.menubar}>
       <div className={styles.navSection}>
+
+        {/* Navigation Links */}
         <NavLink
           to="/"
           className={({ isActive }) =>

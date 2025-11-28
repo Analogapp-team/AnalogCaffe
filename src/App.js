@@ -25,15 +25,16 @@ function App() {
 
         {/* Protected Routes */}
         {isAuthenticated ? (
-          <Route element={<MainLayout />}>
+          <Route element={<MainLayout />}> {/*Protected routes wrapped in MainLayout */}
             <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/profile/:userId" element={<Profile />} /> {/* Victor use this router for the explore page (you were right) */}
+            <Route path="/profile/:userId" element={<Profile />} /> {/* Victor use this router for the explore profiles page (you were right) */}
             <Route path="/profile/settings" element={<ProfileSettings />} />
             <Route path="/Events" element={<Events />} />
           </Route>
         ) : (
+          // Redirect all other routes to login if not authenticated
           <Route
             path="*"
             element={<Navigate to={isAuthenticated ? "/" : "/login"} />}
