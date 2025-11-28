@@ -36,10 +36,12 @@ function Share() {
     const files = Array.from(event.target.files);
     if (files.length > 0) {
       setImages(files);
-      setImagePreviews(files.map((file) => ({
-        file,
-        preview: URL.createObjectURL(file),
-      })));
+      setImagePreviews(
+        files.map((file) => ({
+          file,
+          preview: URL.createObjectURL(file),
+        }))
+      );
     }
   };
 
@@ -81,7 +83,6 @@ function Share() {
   return (
     <div className={styles.share}>
       <div className={styles.shareWrapper}>
-        
         <ShareTop
           user={displayUser}
           content={content}

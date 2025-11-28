@@ -5,7 +5,8 @@ import { parseFileToUrl } from "../../utils/Parse";
 import { getFullName } from "../../utils/User";
 
 const ProfileAvatar = ({ user, altText, size = 80 }) => {
-  const profilePictureUrl = parseFileToUrl(user?.get("profilePicture")) || defaultAvatar;
+  const profilePictureUrl =
+    parseFileToUrl(user?.get("profilePicture")) || defaultAvatar;
   const displayName = altText || getFullName(user);
 
   return (
