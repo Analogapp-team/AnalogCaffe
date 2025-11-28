@@ -3,7 +3,14 @@ import ProfileAvatar from "../profile-header/ProfileAvatar";
 import styles from "./share.module.css";
 import ImagePreview from "./ImagePreview";
 
-function ShareTop({ user, content, setContent, loading, imagePreviews, removeImage }) {
+function ShareTop({
+  user,
+  content,
+  setContent,
+  loading,
+  imagePreviews,
+  removeImage,
+}) {
   return (
     <div className={styles.shareTop}>
       <div className={styles.shareProfileImgWrapper}>

@@ -18,7 +18,9 @@ function Feed() {
       console.log("Fetching posts from Back4App...");
       const postsData = await getPosts({ limit: 20 });
       console.log("Posts fetched:", postsData);
-      console.log("Number of posts:", postsData.length);
+
+      // console.log("Number of posts:", postsData.length);
+
       setPosts(postsData);
     } catch (error) {
       console.error("Error loading posts:", error);

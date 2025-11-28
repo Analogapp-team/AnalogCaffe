@@ -38,15 +38,19 @@ function AuthProvider({ children }) {
 
   const register = async (userData) => {
     try {
+      console.log("Registration data received:", userData);
       const user = new Parse.User();
-      user.set("firstName", userData.firstName);
-      user.set("lastName", userData.lastName);
+      user.set("username", userData.email);
       user.set("email", userData.email);
       user.set("password", userData.password);
+      user.set("firstName", userData.firstName);
+      user.set("lastName", userData.lastName);
 
-      const newUser = await user.signUp();
-      return { success: true, user: newUser };
+      await user.signUp();
+      setCurrentUser(user);
+      return { success: true, user };
     } catch (error) {
+      console.error("Registration error:", error);
       return { success: false, error: error.message };
     }
   };
@@ -66,7 +70,7 @@ function AuthProvider({ children }) {
       let user = Parse.User.current();
       if (!user) return null;
 
-      user = await user.fetch();  
+      user = await user.fetch();
       setCurrentUser(user);
       return user;
     } catch (error) {

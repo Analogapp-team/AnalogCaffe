@@ -7,7 +7,12 @@ function ShareBottom({ images, loading, onImageSelect, onPost, content }) {
     <div className={styles.shareBottom}>
       <div className={styles.shareOptions}>
         <label htmlFor="post-image-input" className={styles.fileInputLabel}>
-          <img className={styles.shareIcon} src={image} alt="" aria-hidden="true" />
+          <img
+            className={styles.shareIcon}
+            src={image}
+            alt=""
+            aria-hidden="true"
+          />
           <span className={styles.shareOptionText}>
             {images.length > 0 ? `${images.length} photo(s)` : "Add photo"}
           </span>

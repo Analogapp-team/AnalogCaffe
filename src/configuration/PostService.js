@@ -11,7 +11,12 @@ export const createPost = async ({ content, images = [] }) => {
 
     // Always set content, even if it's empty string
     post.set("content", content || "");
-    post.set("author", currentUser);
+    post.set("user", currentUser);
+
+    console.log("Setting user for post:", {
+      userId: currentUser.id,
+      username: currentUser.get("username"),
+    });
 
     console.log("Starting image upload process...");
     console.log("Images to upload:", images);
@@ -68,6 +73,7 @@ export const createPost = async ({ content, images = [] }) => {
     console.log("Post saved successfully:", {
       id: savedPost.id,
       content: savedPost.get("content"),
+      user: savedPost.get("user"),
       images: savedPost.get("images"),
       hasImages: !!savedPost.get("images"),
       imageCount: savedPost.get("images") ? savedPost.get("images").length : 0,
@@ -84,8 +90,8 @@ export const getPosts = async (options = {}) => {
   try {
     const query = new Parse.Query("Post");
 
-    //author information
-    query.include("author");
+    //user information
+    query.include("user");
 
     // Sort by newest first
     query.descending("createdAt");
@@ -98,14 +104,25 @@ export const getPosts = async (options = {}) => {
     const posts = await query.find();
 
     // Debug the fetched posts
-    console.log("📥 Fetched posts:", posts.length);
+    console.log("Fetched posts:", posts.length);
     posts.forEach((post, index) => {
-      console.log(`📖 Post ${index + 1}:`, {
+      const user = post.get("user");
+
+      console.log(`Post ${index + 1}:`, {
         id: post.id,
         content: post.get("content"),
+        user: user
+          ? {
+              id: user.id,
+              firstName: user.get("firstName"),
+              lastName: user.get("lastName"),
+              username: user.get("username"),
+            }
+          : null,
         hasImages: !!post.get("images"),
         images: post.get("images"),
         imageCount: post.get("images") ? post.get("images").length : 0,
+        createdAt: post.createdAt,
       });
     });
 
@@ -125,8 +142,8 @@ export const getUserPosts = async (userId) => {
     const user = await userQuery.get(userId);
 
     // Query posts by this author
-    query.equalTo("author", user);
-    query.include("author");
+    query.equalTo("user", user);
+    query.include("user");
     query.descending("createdAt");
 
     const posts = await query.find();
@@ -143,7 +160,7 @@ export const likePost = async (postId) => {
     if (!currentUser) throw new Error("No user logged in");
 
     const query = new Parse.Query("Post");
-    query.include("author");
+    query.include("user");
     const post = await query.get(postId);
 
     // Get current likes array or initialize empty array
@@ -185,11 +202,11 @@ export const deletePost = async (postId) => {
     if (!currentUser) throw new Error("No user logged in");
 
     const query = new Parse.Query("Post");
-    query.include("author");
+    query.include("user");
     const post = await query.get(postId);
 
     // Check if current user is the author
-    const author = post.get("author");
+    const author = post.get("user");
 
     if (author.id !== currentUser.id) {
       throw new Error("Not authorized to delete this post");

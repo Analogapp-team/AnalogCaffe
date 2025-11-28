@@ -28,6 +28,7 @@ export default function RegisterForm() {
     setLoading(true);
 
     const result = await register({
+      username: email,
       firstName,
       lastName,
       email,

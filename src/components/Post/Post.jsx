@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { likePost, deletePost, extractPostContent, extractPostImages } from "../../configuration/PostService";
+import {
+  likePost,
+  deletePost,
+  extractPostContent,
+  extractPostImages,
+} from "../../configuration/PostService";
 import { useAuth } from "../../configuration/AuthContext";
 import styles from "./post.module.css";
 import ProfileAvatar from "../profile-header/ProfileAvatar";
 import { formatRelativeTime } from "../../utils/Time";
-import { getFullName } from "../../utils/User";
 
 function Post({ post, onDelete }) {
   const { currentUser } = useAuth();
@@ -47,34 +51,64 @@ function Post({ post, onDelete }) {
     }
   };
 
-  // Check if current user is the author of the post
-  const isAuthor = currentUser && post?.get("author")?.id === currentUser.id;
+  // Get the author object from the USER column (not author)
+  const author = post?.get("user");
 
-  // Safe data extraction
+  // Check if current user is the author of the post
+  const isAuthor = currentUser && author?.id === currentUser.id;
+
+  // SIMPLIFIED AUTHOR DISPLAY LOGIC - NO FORMER USER LOGIC
   const getAuthorName = () => {
-    if (!post) return "Unknown User";
+    if (!author) return "Unknown User";
     try {
-      const author = post.get("author");
-      if (!author) return "Unknown User";
-      const fullname = getFullName(author);
-      // Try to abbreviate last name to initial if first and last are present
-      const firstName = author.get("firstName") || "";
-      const lastName = author.get("lastName") || "";
-      if (firstName && lastName) return `${firstName} ${lastName?.charAt(0)}.`;
-      return fullname;
+      // Get the actual name data with trimming
+      const firstName = author.get("firstName")?.trim(); // FIXED: Added parentheses ()
+      const lastName = author.get("lastName")?.trim(); // FIXED: Added parentheses ()
+
+      console.log("Name debug:", { firstName, lastName });
+
+      if (firstName && lastName) {
+        return `${firstName} ${lastName.charAt(0)}.`;
+      }
+
+      if (firstName) {
+        return firstName;
+      }
+
+      if (lastName) {
+        return lastName;
+      }
+
+      const username = author.get("username");
+      if (username) {
+        return username;
+      }
+
+      return "Unknown User";
     } catch (error) {
       console.error("Error getting author name:", error);
-      return "Unknown User";
+      return "Unknown User"; // Changed from "Former User"
     }
   };
 
   const getAuthorProgram = () => {
-    if (!post) return "Student";
+    if (!author) return "Student";
     try {
-      const author = post.get("author");
-      return author?.get("studyCourse") || "MSc. Computer Science";
+      // Simply return the study course
+      return author.get("studyCourse")?.trim() || "Student";
     } catch {
       return "Student";
+    }
+  };
+
+  // SIMPLIFIED PROFILE AVATAR HANDLER - NO FORMER USER LOGIC
+  const getAuthorForAvatar = () => {
+    if (!author) return null;
+    try {
+      // Always return the actual author
+      return author;
+    } catch {
+      return null;
     }
   };
 
@@ -93,19 +127,15 @@ function Post({ post, onDelete }) {
 
   const postContent = getPostContent();
   const postImages = getPostImages();
+  const authorForAvatar = getAuthorForAvatar();
 
   return (
     <div className={styles.post}>
       <div className={styles.postWrapper}>
-        
         {/* Post Header */}
         <div className={styles.postTop}>
           <div className={styles.postTopLeft}>
-
-            <ProfileAvatar
-              user={post.get("author")}
-              size={40}
-            />
+            <ProfileAvatar user={authorForAvatar} size={40} />
 
             <div className={styles.authorInfo}>
               <span className={styles.postUsername}>{getAuthorName()}</span>
