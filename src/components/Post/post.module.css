@@ -5,78 +5,173 @@
   box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
   -webkit-box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
   -moz-box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
-  margin: 30px 0;
+  margin: 20px 0;
 }
 
 .postWrapper {
-  padding: 10px;
+  padding: 20px;
 }
 
 .postTop {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
 }
 
 .postTopLeft {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
 }
 
 .postProfileImg {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
 }
 
 .postUsername {
-  font-size: 15px;
-  font-weight: 500;
-  margin: 0 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #252b33;
+  line-height: 1.2;
 }
 
 .postProgramme {
-  font-size: 12px;
-  color: #666;
-  margin-right: 10px;
+  font-size: 14px;
+  color: #687384;
+  line-height: 1.2;
 }
 
 .postDate {
-  font-size: 12px;
+  font-size: 14px;
   color: #999;
+  line-height: 1.2;
 }
 
 .postCenter {
-  margin: 20px 0;
+  margin: 0;
+  padding-left: 52px;
 }
 
 .postText {
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.5;
+  color: #252b33;
   display: block;
-  margin-bottom: 15px;
 }
 
-.postImg {
-  margin-top: 20px;
+.loadingState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+.postImages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.postImage {
   width: 100%;
-  max-height: 500px;
-  object-fit: contain;
+  max-width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
-.postBottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.postImages.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.postBottomLeft {
-  display: flex;
-  align-items: center;
+.postImages.grid .postImage {
+  height: 200px;
 }
 
-.postBottomRight {
+.postActions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.likeButton {
   display: flex;
   align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.likeButton:hover:not(:disabled) {
+  background: #f8f9fa;
+  transform: translateY(-1px);
+}
+
+.likeButton.liked {
+  border-color: #e74c3c;
+  background: #ffeaea;
+}
+
+.likeButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.likeIcon {
+  font-size: 16px;
+}
+
+.likeCount {
+  font-weight: 600;
+  color: #333;
+}
+
+.likeButton.liked .likeCount {
+  color: #e74c3c;
+}
+
+.deleteButton {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: #ffeaea;
+  border-color: #e74c3c;
+  transform: translateY(-1px);
+}
+
+.deleteButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

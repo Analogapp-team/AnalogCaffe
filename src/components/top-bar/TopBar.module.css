@@ -4,14 +4,25 @@
   justify-content: flex-start;
   height: 60px;
   padding: 0 30px;
-  background: #5b3a29; /* darken slightly */
+  background: #472d20; /* darken slightly */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   position: sticky;
-  top: 0;
   z-index: 100;
+  box-sizing: border-box;
+}
+
+.logoContainer {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 0;
 }
 
 .topBar::before {
@@ -24,16 +35,14 @@
   position: relative;
 }
 
-
 /* Logo styling */
 .logo {
   height: 30px;
   width: auto;
   cursor: pointer;
   transition: transform 0.2s ease, opacity 0.2s ease;
-  margin-left: 95px; /* keep alignment consistent with sidebar */
 }
 
 .logo:hover {
-  opacity: 0.8;
+  opacity: 0.85;
 }

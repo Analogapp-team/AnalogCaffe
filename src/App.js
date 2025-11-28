@@ -5,11 +5,12 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { useAuth } from "./context/AuthContext";
+import { useAuth } from "./configuration/AuthContext";
 import Login from "./pages/Login";
 import Home from "./pages/home/Home";
 import Explore from "./pages/Explore";
 import Profile from "./pages/Profile";
+import Events from "./pages/Events";
 import MainLayout from "./layouts/MainLayout";
 import ProfileSettings from "./pages/ProfileSettings";
 
@@ -28,7 +29,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/:userId" element={<Profile />} />{" "}
+            {/* Victor use this router for the explore page (you were right) */}
             <Route path="/profile/settings" element={<ProfileSettings />} />
+            <Route path="/Events" element={<Events />} />
           </Route>
         ) : (
           <Route

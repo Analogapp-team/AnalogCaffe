@@ -1,0 +1,33 @@
+.layoutContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+  background-color: #f7f5f1;
+}
+
+/* Three-column layout inside */
+.mainBody {
+  display: grid;
+  max-width: 1170px;
+  grid-template-columns: 270px 830px 270px; /* menu | content | recommended */
+  height: calc(100vh - 60px); /* subtract TopBar height (REMEMBER IF TopBar HEIGHT IS CHANGED) */
+  margin: 0 auto; /* centers all of our content*/
+  background-color: #f7f5f1;
+}
+
+/* Middle page content area */
+.pageArea {
+  width: 630px;
+  padding: 30px;
+  overflow-y: auto;
+  background-color: var(--white-bg);
+}
+
+/* Right recommended column */
+.recommendedSidebar {
+  background-color: #f7f5f1;
+  border-left: 1px solid #ebe8df;
+  /* padding: 20px; */
+  overflow-y: auto;
+}
