@@ -1,11 +1,11 @@
 .menubar {
-  width: 270px;
+  min-width: 200px;
+  max-width: 250px;
   background-color: #f7f5f1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* padding: 20px; */
-  padding-right: 20px;
+  padding: 8px 12px;
   border-right: 1px solid #ebe8df;
   box-sizing: border-box;
 }
@@ -14,8 +14,53 @@
 .navSection {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   margin-top: 30px;
+}
+
+@media (max-width: 900px) {
+  .menubar {
+    min-width: 200px;
+    max-width: 250px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ebe8df;
+  }
+
+  .navSection {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .menubarButton {
+    padding: 8px 10px;
+    font-size: 14px;
+    border-radius: 6px;
+  }
+
+  .bottomSection {
+    display: none;
+  }
+}
+
+/* Keep the menu and logout/profile visible on larger screens */
+@media (min-width: 900px) {
+  .menubar {
+    position: sticky;
+    top: 60px; /* account for TopBar height */
+    height: calc(100vh - 60px);
+    align-self: start;
+    overflow-y: auto; /* allows menu to scroll if needed */
+  }
+
+  .bottomSection {
+    position: sticky;
+    bottom: 12px; /* keep the logout button near the bottom within the menu */
+    margin-top: auto;
+  }
 }
 
 .menubarButton {
@@ -68,7 +113,7 @@
   height: 25px;
   border-radius: 50%;
   background-color: #d6c7b3;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .userInfo {
@@ -105,6 +150,7 @@
   padding: 10px 15px;
   transition: background-color 0.2s ease;
   margin-bottom: 30px;
+  gap: 10px;
 }
 
 .logoutButton:hover {

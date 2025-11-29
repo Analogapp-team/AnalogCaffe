@@ -139,7 +139,6 @@ function Post({ post, onDelete }) {
 
             <div className={styles.authorInfo}>
               <span className={styles.postUsername}>{getAuthorName()}</span>
-              <span className={styles.postProgramme}>{getAuthorProgram()}</span>
               <span className={styles.postDate}>
                 {formatRelativeTime(post.createdAt)}
               </span>
