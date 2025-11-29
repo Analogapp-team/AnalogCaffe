@@ -10,7 +10,7 @@
 .mainBody {
   display: grid;
   max-width: 1170px;
-  grid-template-columns: 270px 630px 270px; /* menu | content | recommended */
+  grid-template-columns: 270px 830px 270px; /* menu | content | recommended */
   height: calc(100vh - 60px); /* subtract TopBar height (REMEMBER IF TopBar HEIGHT IS CHANGED) */
   margin: 0 auto; /* centers all of our content*/
   background-color: #f7f5f1;

@@ -94,7 +94,6 @@ function Share() {
   return (
     <div className={styles.share}>
       <div className={styles.shareWrapper}>
-        
         <ShareTop
           user={displayUser}
           content={content}

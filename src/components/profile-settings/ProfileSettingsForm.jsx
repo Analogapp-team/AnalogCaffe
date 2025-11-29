@@ -16,7 +16,6 @@ import {
 } from "../../configuration/UserService";
 import { useAuth } from "../../configuration/AuthContext";
 
-
 const ProfileSettingsForm = () => {
   const navigate = useNavigate();
   const { refreshCurrentUser } = useAuth();
