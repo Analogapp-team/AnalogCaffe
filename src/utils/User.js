@@ -1,3 +1,4 @@
+// Utility functions to get users full name (used for displaying user names)
 export function getFullName(user) {
 	if (!user) return "User";
 	const firstName = typeof user.get === "function" ? user.get("firstName") : user.firstName;
@@ -14,6 +15,7 @@ export function getFullName(user) {
 	return "User";
 }
 
+// Utility function to get user display initials (used for profile avatar placeholders)
 export function getDisplayInitials(user) {
 	if (!user) return "U";
 	const firstName = typeof user.get === "function" ? user.get("firstName") : user.firstName;

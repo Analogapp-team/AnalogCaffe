@@ -14,6 +14,7 @@ function MainLayout() {
         <MenuBar />
 
         <div className={styles.pageArea}>
+          {/* Main content area where nested routes will be rendered */}
           <Outlet />
         </div>
 
