@@ -6,7 +6,7 @@ function ShareBottom({ images, loading, onImageSelect, onPost, content }) {
   return (
     <div className={styles.shareBottom}>
       <div className={styles.shareOptions}>
-        <label htmlFor="post-image-input" className={styles.fileInputLabel}>
+        <label htmlFor="post-image-input" className={styles.fileInputLabel} tabIndex={0} onKeyDown={(e)=>{ if(e.key==="Enter"||e.key===" ") { document.getElementById('post-image-input').click() } }}>
           <img
             className={styles.shareIcon}
             src={image}
