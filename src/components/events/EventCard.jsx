@@ -3,9 +3,11 @@ import "./EventCard.css";
 import calendarIcon from "../../assets/icons/calendar.svg";
 import clockIcon from "../../assets/icons/clock.svg";
 import { useAuth } from "../../configuration/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function EventCard({ event, onJoin, onLeave, onDelete }) {
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
   // Checking if the current user is the admin (hardcoded for now)
   const ADMIN_EMAIL = "klobucnikadrian123@gmail.com";
@@ -66,6 +68,11 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
     }
   };
 
+  // Navigate to event detail page
+  const handleViewEvent = () => {
+    navigate(`/events/${event.id}`);
+  };
+
   return (
     <div className="event-card">
 
@@ -108,8 +115,17 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
         </div>
       </div>
 
-      {/* Buttons for joining, leaving, or deleting */}
+      {/* Buttons for viewing, joining, leaving, or deleting */}
       <div className="event-card__actions">
+
+        {/* NEW VIEW BUTTON — placed before the existing ones */}
+        <button
+          className="event-card__view"
+          onClick={handleViewEvent}
+        >
+          View
+        </button>
+
         {currentUser && (
           <button
             className="event-card__attend"

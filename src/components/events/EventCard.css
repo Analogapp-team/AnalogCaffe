@@ -127,3 +127,16 @@
   align-items: flex-end;
 }
 
+.event-card__view {
+  background-color: white;
+  border: 1px solid #5a4636;
+  color: #5a4636;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.event-card__view:hover {
+  background-color: #f4f0ec;
+}
