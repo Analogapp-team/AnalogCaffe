@@ -27,7 +27,9 @@ function App() {
 
         {/* Protected Routes */}
         {isAuthenticated ? (
-          <Route element={<MainLayout />}> {/*Protected routes wrapped in MainLayout */}
+          <Route element={<MainLayout />}>
+            {" "}
+            {/*Protected routes wrapped in MainLayout */}
             <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />

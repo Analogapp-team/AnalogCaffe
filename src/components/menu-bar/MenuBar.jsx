@@ -13,8 +13,8 @@ import Events from "../../assets/icons/events.svg";
 import Logout from "../../assets/icons/logout.svg";
 
 function MenuBar() {
-  const { logout, currentUser } = useAuth();   
-  const [user, setUser] = useState(null);
+  const { logout, currentUser } = useAuth();
+  const [user, setUser] = useState(currentUser);
 
   // Loads user on mount and when currentUser changes
   useEffect(() => {
@@ -24,10 +24,13 @@ function MenuBar() {
         setUser(freshUser);
       } catch (err) {
         console.error("Error loading user in MenuBar:", err);
+        setUser(currentUser);
       }
     };
 
-    loadUser();
+    if (currentUser) {
+      loadUser();
+    }
   }, []);
 
   // Update user when currentUser changes
@@ -45,7 +48,6 @@ function MenuBar() {
   return (
     <div className={styles.menubar}>
       <div className={styles.navSection}>
-
         {/* Navigation Links */}
         <NavLink
           to="/"
