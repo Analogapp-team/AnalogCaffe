@@ -1,17 +1,36 @@
+// EventDetailPage is a PAGE / CONTAINER component
+// Responsibility:
+// - Fetch ONE event from backend
+// - Manage local state
+// - Handle join / leave logic
+// - Pass derived data into JSX
+
 import React, { useEffect, useState } from "react";
 import "../event-detail/EventDetailPage.css";
 import { useParams, Link } from "react-router-dom";
-import { getEventById, joinEvent, leaveEvent } from "../../configuration/EventService";
+import {
+  getEventById,
+  joinEvent,
+  leaveEvent,
+} from "../../configuration/EventService";
 import { useAuth } from "../../configuration/AuthContext";
-import Parse from "../../configuration/Back4App";
 
 function EventDetailPage() {
+  // Read eventId from URL
   const { eventId } = useParams();
+
+  // Logged-in user (global auth state)
   const { currentUser } = useAuth();
 
+  // Local component state
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  /**
+   * =========================================
+   * LOAD EVENT (side effect)
+   * =========================================
+   */
   useEffect(() => {
     const loadEvent = async () => {
       try {
@@ -27,26 +46,49 @@ function EventDetailPage() {
     loadEvent();
   }, [eventId]);
 
+  // Loading & error states
   if (loading) return <div>Loading event...</div>;
   if (!event) return <div>Event not found.</div>;
 
-  // Extract values
-  const title = event.get("title");
-  const description = event.get("description");
-  const date = event.get("date");
-  const startTime = event.get("startTime");
-  const endTime = event.get("endTime");
+  /**
+   * =========================================
+   * DERIVED EVENT DATA (no state)
+   * =========================================
+   */
+
+  const title = event.get("title") || "Untitled event";
+  const description = event.get("description") || "";
+  const date = event.get("date") || "Date TBA";
+  const startTime = event.get("startTime") || "";
+  const endTime = event.get("endTime") || "";
   const maxAttendees = event.get("maxAttendees") || 0;
+
   const participants = event.get("participants") || [];
+  const participantCount = participants.length;
 
   const imageFile = event.get("image");
   const imageUrl = imageFile ? imageFile.url() : "/default-event.png";
 
   const createdBy = event.get("createdBy");
-  const creatorName =
-    createdBy?.get("firstName") || createdBy?.get("username") || "Unknown User";
+ 
 
-  const isJoined = currentUser && participants.includes(currentUser.id);
+  /**
+   * =========================================
+   * DERIVED BOOLEANS
+   * =========================================
+   */
+
+  const isJoined =
+    currentUser && participants.includes(currentUser.id);
+
+  const isFull =
+    maxAttendees > 0 && participantCount >= maxAttendees;
+
+  /**
+   * =========================================
+   * EVENT HANDLERS
+   * =========================================
+   */
 
   const handleJoinLeave = async () => {
     try {
@@ -56,7 +98,7 @@ function EventDetailPage() {
         await joinEvent(eventId);
       }
 
-      // Refresh updated event
+      // Reload updated event from backend
       const updated = await getEventById(eventId);
       setEvent(updated);
     } catch (err) {
@@ -64,16 +106,26 @@ function EventDetailPage() {
     }
   };
 
+  /**
+   * =========================================
+   * RENDER
+   * =========================================
+   */
+
   return (
     <div className="event-detail-page">
-
-      {/* Back link */}
+      {/* Back navigation */}
       <Link to="/events" className="event-back-link">
         ← Back to all events
       </Link>
 
+      {/* Header */}
       <div className="event-detail-header">
-        <img src={imageUrl} alt={title} className="event-detail-image" />
+        <img
+          src={imageUrl}
+          alt={title}
+          className="event-detail-image"
+        />
 
         <div className="event-detail-header-info">
           <h1 className="event-detail-title">{title}</h1>
@@ -89,22 +141,37 @@ function EventDetailPage() {
               </span>
             </div>
           </div>
+
+        
         </div>
 
-        <button className="event-attend-btn" onClick={handleJoinLeave}>
-          {isJoined ? "Leave Event" : "Attend Event"}
-        </button>
+        {/* Attend / Leave button */}
+        {currentUser && (
+          <button
+            className="event-attend-btn"
+            onClick={handleJoinLeave}
+            disabled={isFull && !isJoined}
+          >
+            {isJoined
+              ? "Leave Event"
+              : isFull
+              ? "Full"
+              : "Attend Event"}
+          </button>
+        )}
       </div>
 
-      {/* ABOUT section */}
+      {/* About section */}
       <h2 className="event-section-title">About this event</h2>
       <p className="event-description">{description}</p>
 
-      {/* ATTENDEE COUNT */}
+      {/* Attendees */}
       <h2 className="event-attendees-title">
-        Attendees {participants.length}/{maxAttendees}
+        Attendees{" "}
+        {maxAttendees > 0
+          ? `${participantCount} / ${maxAttendees}`
+          : participantCount}
       </h2>
-
     </div>
   );
 }

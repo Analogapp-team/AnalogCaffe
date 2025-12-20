@@ -11,6 +11,10 @@
   font-family: inherit;
 }
 
+/* =========================
+   IMAGE
+========================= */
+
 .event-card__image {
   width: 72px;
   height: 72px;
@@ -19,6 +23,10 @@
   flex-shrink: 0;
   margin-right: 16px;
 }
+
+/* =========================
+   CONTENT
+========================= */
 
 .event-card__content {
   flex: 1;
@@ -37,6 +45,10 @@
   margin: 6px 0 12px 0;
   line-height: 1.4;
 }
+
+/* =========================
+   META INFO (date, time)
+========================= */
 
 .event-card__bottom {
   display: flex;
@@ -59,58 +71,6 @@
   object-fit: contain;
 }
 
-/* Right actions */
-.event-card__actions {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 8px;
-  margin-left: 16px;
-}
-
-.event-card__view {
-  font-size: 14px;
-  color: #4b382a;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-}
-
-.event-card__attend {
-  background-color: #4b382a;
-  color: white;
-  font-weight: 700;
-  font-size: 15px;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 22px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.event-card__attend:hover {
-  background-color: #6e5947;
-}
-
-.event-card__delete {
-  background-color: #c0392b;   /* red */
-  color: #ffffff;
-  border: none;
-  font-weight: 700;
-  font-size: 15px;
-  border-radius: 8px;
-  padding: 8px 22px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.event-card__delete:hover {
-  background-color: #e74c3c;
-}
-
 .event-card__attendees {
   font-size: 14px;
   color: #4b382a;
@@ -120,23 +80,78 @@
   gap: 6px;
 }
 
+/* =========================
+   ACTIONS LAYOUT
+========================= */
+
 .event-card__actions {
   display: flex;
   flex-direction: column;
-  gap: 8px;
   align-items: flex-end;
+  gap: 8px;
+  margin-left: 16px;
 }
 
-.event-card__view {
-  background-color: white;
-  border: 1px solid #5a4636;
-  color: #5a4636;
-  padding: 6px 12px;
-  border-radius: 6px;
+/* =========================
+   SHARED BUTTON SIZE
+   (IMPORTANT PART)
+========================= */
+
+.event-card__view,
+.event-card__attend,
+.event-card__delete {
+  width: 110px;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  margin-bottom: 8px;
+}
+
+/* =========================
+   VIEW BUTTON
+========================= */
+
+.event-card__view {
+  background-color: #ffffff;
+  border: 2px solid #5a4636;
+  color: #5a4636;
+  font-weight: 700;
 }
 
 .event-card__view:hover {
   background-color: #f4f0ec;
+}
+
+/* =========================
+   ATTEND BUTTON
+========================= */
+
+.event-card__attend {
+  background-color: #4b382a;
+  color: white;
+  font-weight: 700;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.event-card__attend:hover {
+  background-color: #6e5947;
+}
+
+/* =========================
+   DELETE BUTTON
+========================= */
+
+.event-card__delete {
+  background-color: #c0392b;
+  color: #ffffff;
+  border: none;
+  font-weight: 700;
+}
+
+.event-card__delete:hover {
+  background-color: #e74c3c;
 }

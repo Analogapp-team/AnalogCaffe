@@ -1,29 +1,76 @@
+// (page / controller)
+
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../configuration/AuthContext";
-import { getEvents, joinEvent, leaveEvent, deleteEvent } from "../configuration/EventService";
+import {
+  getEvents,
+  joinEvent,
+  leaveEvent,
+  deleteEvent,
+} from "../configuration/EventService";
 import EventList from "../components/events/EventList";
 import CreateEventForm from "../components/events/CreateEventForm";
 
+/**
+ * Events page
+ * High-level component responsible for:
+ * - loading data
+ * - holding page state
+ * - coordinating child components
+ */
 function Events() {
+  /**
+   * Local component state
+   */
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   const { currentUser } = useAuth();
 
-  // Checking if the logged-in user is the admin (same check as everywhere else)
-  const ADMIN_EMAIL = "klobucnikadrian123@gmail.com";
-  const ADMIN_ID = "PXrsjCliSR";
+  /**
+   * Derived values (no side effects)
+   */
 
-  const userEmail =
-    currentUser?.get("email") || currentUser?.get("username") || "";
+  // UI-level admin check (used only for rendering decisions)
+  const isAdmin = currentUser && (() => {
+    const ADMIN_EMAIL = "klobucnikadrian123@gmail.com";
+    const ADMIN_ID = "PXrsjCliSR";
 
-  const isAdmin = currentUser && (
-    currentUser.id === ADMIN_ID ||
-    userEmail.toLowerCase() === ADMIN_EMAIL.toLowerCase()
-  );
+    const email =
+      currentUser.get("email") || currentUser.get("username") || "";
 
-  // Deletes an event and updates the list on the page
+    return (
+      currentUser.id === ADMIN_ID ||
+      email.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+    );
+  })();
+
+  /**
+   * Side effects
+   */
+
+  // Load all events from the backend
+  useEffect(() => {
+    async function loadEvents() {
+      try {
+        const results = await getEvents();
+        setEvents(results);
+      } catch (err) {
+        setError("Failed to load events.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadEvents();
+  }, []);
+
+  /**
+   * Event handlers
+   */
+
+  // Delete an event and update local state
   const handleDelete = async (eventId) => {
     try {
       await deleteEvent(eventId);
@@ -33,28 +80,12 @@ function Events() {
     }
   };
 
-  // Load all events when the page loads
-  useEffect(() => {
-    const loadEvents = async () => {
-      try {
-        const results = await getEvents();
-        setEvents(results);
-      } catch (err) {
-        setError("Failed to load events.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadEvents();
-  }, []);
-
   // Join an event and update UI
   const handleJoin = async (eventId) => {
     try {
       const updated = await joinEvent(eventId);
-      setEvents(prev =>
-        prev.map(e => (e.id === updated.id ? updated : e))
+      setEvents((prev) =>
+        prev.map((e) => (e.id === updated.id ? updated : e))
       );
     } catch (err) {
       alert(err.message);
@@ -65,14 +96,17 @@ function Events() {
   const handleLeave = async (eventId) => {
     try {
       const updated = await leaveEvent(eventId);
-      setEvents(prev =>
-        prev.map(e => (e.id === updated.id ? updated : e))
+      setEvents((prev) =>
+        prev.map((e) => (e.id === updated.id ? updated : e))
       );
     } catch (err) {
       alert(err.message);
     }
   };
 
+  /**
+   * Render
+   */
   return (
     <div className="events-page">
       <h1>Events</h1>
