@@ -69,7 +69,6 @@ function EventDetailPage() {
   const imageFile = event.get("image");
   const imageUrl = imageFile ? imageFile.url() : "/default-event.png";
 
-  const createdBy = event.get("createdBy");
  
 
   /**
