@@ -16,13 +16,10 @@ function Post({ post, onDelete }) {
   const [likeCount, setLikeCount] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // Get the author object from the USER column
-  const user = post?.get?.("user") || null; // ✅ Consistent optional chaining
-
   // Check if current user liked this post and get like count
   useEffect(() => {
     if (post && currentUser) {
-      const likes = post.get?.("likes") || [];
+      const likes = post.get("likes") || [];
       setLikeCount(likes.length);
       setIsLiked(likes.some((like) => like === currentUser.id));
     }
@@ -31,7 +28,7 @@ function Post({ post, onDelete }) {
   const handleLike = async () => {
     try {
       const updatedPost = await likePost(post.id);
-      const likes = updatedPost.get?.("likes") || [];
+      const likes = updatedPost.get("likes") || [];
       setLikeCount(likes.length);
       setIsLiked(likes.some((like) => like === currentUser.id));
     } catch (error) {
@@ -54,17 +51,19 @@ function Post({ post, onDelete }) {
     }
   };
 
+  // Get the author object from the USER column (not author)
+  const author = post?.get("user");
+
   // Check if current user is the author of the post
-  const isAuthor = currentUser && user?.id === currentUser.id;
+  const isAuthor = currentUser && author?.id === currentUser.id;
 
-  // SIMPLIFIED AUTHOR DISPLAY LOGIC
+  // SIMPLIFIED AUTHOR DISPLAY LOGIC - NO FORMER USER LOGIC
   const getAuthorName = () => {
-    if (!user) return "Unknown User";
-
+    if (!author) return "Unknown User";
     try {
       // Get the actual name data with trimming
-      const firstName = user.get?.("firstName")?.trim();
-      const lastName = user.get?.("lastName")?.trim();
+      const firstName = author.get("firstName")?.trim(); // FIXED: Added parentheses ()
+      const lastName = author.get("lastName")?.trim(); // FIXED: Added parentheses ()
 
       console.log("Name debug:", { firstName, lastName });
 
@@ -80,7 +79,7 @@ function Post({ post, onDelete }) {
         return lastName;
       }
 
-      const username = user.get?.("username");
+      const username = author.get("username");
       if (username) {
         return username;
       }
@@ -88,25 +87,26 @@ function Post({ post, onDelete }) {
       return "Unknown User";
     } catch (error) {
       console.error("Error getting author name:", error);
-      return "Unknown User";
+      return "Unknown User"; // Changed from "Former User"
     }
   };
 
-  // ✅ FIXED: Add getStudyCourse function (optional, for future use)
-  const getStudyCourse = () => {
-    if (!user) return "Student";
+  const getAuthorProgram = () => {
+    if (!author) return "Student";
     try {
-      return user.get?.("studyCourse")?.trim() || "Student";
+      // Simply return the study course
+      return author.get("studyCourse")?.trim() || "Student";
     } catch {
       return "Student";
     }
   };
 
-  // SIMPLIFIED PROFILE AVATAR HANDLER
+  // SIMPLIFIED PROFILE AVATAR HANDLER - NO FORMER USER LOGIC
   const getAuthorForAvatar = () => {
-    if (!user) return null;
+    if (!author) return null;
     try {
-      return user;
+      // Always return the actual author
+      return author;
     } catch {
       return null;
     }
@@ -128,7 +128,6 @@ function Post({ post, onDelete }) {
   const postContent = getPostContent();
   const postImages = getPostImages();
   const authorForAvatar = getAuthorForAvatar();
-  const studyCourse = getStudyCourse(); // ✅ You can use this if needed
 
   return (
     <div className={styles.post}>
@@ -140,8 +139,6 @@ function Post({ post, onDelete }) {
 
             <div className={styles.authorInfo}>
               <span className={styles.postUsername}>{getAuthorName()}</span>
-              {/* ✅ Optional: Add study course if you want to display it */}
-              {/* <span className={styles.postStudyCourse}>{studyCourse}</span> */}
               <span className={styles.postDate}>
                 {formatRelativeTime(post.createdAt)}
               </span>
@@ -162,13 +159,10 @@ function Post({ post, onDelete }) {
                 <img
                   key={index}
                   src={imageUrl}
-                  alt={postContent ? postContent.slice(0, 120) : "Post image"}
+                  alt={postContent ? postContent.slice(0, 120) : ""}
                   loading="lazy"
                   className={styles.postImage}
-                  onError={(e) => {
-                    e.target.style.display = "none";
-                    console.error(`Failed to load image ${index}:`, imageUrl);
-                  }}
+                  onError={(e) => (e.target.style.display = "none")}
                 />
               ))}
             </div>
@@ -181,7 +175,6 @@ function Post({ post, onDelete }) {
             className={`${styles.likeButton} ${isLiked ? styles.liked : ""}`}
             onClick={handleLike}
             disabled={!currentUser}
-            aria-label={isLiked ? "Unlike post" : "Like post"}
           >
             <span className={styles.likeIcon}>{isLiked ? "❤️" : "🤍"}</span>
             <span className={styles.likeCount}>{likeCount}</span>
@@ -192,7 +185,6 @@ function Post({ post, onDelete }) {
               className={styles.deleteButton}
               onClick={handleDelete}
               disabled={isDeleting}
-              aria-label="Delete post"
             >
               {isDeleting ? "Deleting..." : "🗑️"}
             </button>
