@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../configuration/AuthContext";
-import { createPost } from "../../configuration/PostService";
 import styles from "./share.module.css";
-// import ProfileAvatar from "../profile-header/ProfileAvatar"; // moved to ShareTop
 import ShareTop from "./ShareTop";
 import ShareBottom from "./ShareBottom";
 
-function Share() {
+function Share({ onPostCreated }) {
   const { currentUser, refreshCurrentUser } = useAuth();
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]);
@@ -44,10 +42,12 @@ function Share() {
     if (files.length > 0) {
       setImages(files);
       // Generate preview URLs
-      setImagePreviews(files.map((file) => ({
-        file,
-        preview: URL.createObjectURL(file),
-      })));
+      setImagePreviews(
+        files.map((file) => ({
+          file,
+          preview: URL.createObjectURL(file),
+        }))
+      );
     }
   };
 
@@ -70,19 +70,21 @@ function Share() {
     setError("");
 
     try {
-      // Create the post with trimmed content and selected images
-      await createPost({ content: content.trim(), images });
+      const result = await onPostCreated({
+        content: content.trim(),
+        images,
+      });
 
-      setContent("");
-      setImages([]);
-      setImagePreviews([]);
+      if (result.success) {
+        setContent("");
+        setImages([]);
+        setImagePreviews([]);
 
-      // Clear file input value
-      const fileInput = document.getElementById("post-image-input");
-      if (fileInput) fileInput.value = "";
-
-      // Simple + effective
-      window.location.reload();
+        const fileInput = document.getElementById("post-image-input");
+        if (fileInput) fileInput.value = "";
+      } else {
+        setError(result.error || "failed to createpost");
+      }
     } catch (error) {
       console.error("Error creating post:", error);
       setError("Failed to create post. " + error.message);
@@ -90,7 +92,6 @@ function Share() {
       setLoading(false);
     }
   };
-
   return (
     <div className={styles.share}>
       <div className={styles.shareWrapper}>
@@ -102,8 +103,6 @@ function Share() {
           imagePreviews={imagePreviews}
           removeImage={removeImage}
         />
-
-        {/* Image previews (handled by ShareTop) */}
 
         {error && <div className={styles.errorMessage}>{error}</div>}
 
