@@ -9,18 +9,17 @@
   justify-content: center;
   
 
-  font-size: 14px;                 /* matches profile settings */
+  font-size: 14px;              
   font-weight: 600;
   font-family: inherit;
 
-  padding: 10px 18px;              /* same visual density */
-  border-radius: 6px;             /* same as profile container */
+  border-radius: 6px;             
   border: 1px solid transparent;
 
   cursor: pointer;
   white-space: nowrap;
 
-  min-width: 100px;        /* perfect for View / Edit / Save */
+  min-width: 100px;        
 
 
   transition: background-color 0.2s ease,
@@ -29,7 +28,7 @@
               opacity 0.2s ease;
 }
 
-/* Disabled state — same behavior everywhere */
+/* Disabled state 
 .ui-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
