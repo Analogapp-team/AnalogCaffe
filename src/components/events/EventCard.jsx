@@ -150,7 +150,7 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
       {/* Action buttons */}
       <div className="event-card__actions">
         <button
-          className="event-card__view"
+          className="ui-button ui-button--secondary"
           onClick={handleViewClick}
         >
           View
@@ -158,7 +158,7 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
 
         {currentUser && (
           <button
-            className="event-card__attend"
+            className="ui-button ui-button--primary"
             onClick={handleJoinClick}
             disabled={isFull && !isJoined}
           >
@@ -168,7 +168,7 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
 
         {isAdmin && (
           <button
-            className="event-card__delete"
+            className="ui-button ui-button--danger"
             onClick={handleDeleteClick}
           >
             Delete

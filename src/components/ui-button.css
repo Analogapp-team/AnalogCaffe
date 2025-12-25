@@ -1,0 +1,80 @@
+/* ===============================
+   Base UI Button (shared)
+   Matches Profile Settings style
+   =============================== */
+
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+
+  font-size: 14px;                 /* matches profile settings */
+  font-weight: 600;
+  font-family: inherit;
+
+  padding: 10px 18px;              /* same visual density */
+  border-radius: 6px;             /* same as profile container */
+  border: 1px solid transparent;
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  min-width: 100px;        /* perfect for View / Edit / Save */
+
+
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              color 0.2s ease,
+              opacity 0.2s ease;
+}
+
+/* Disabled state — same behavior everywhere */
+.ui-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* ===============================
+   Primary Button
+   (Attend, Save, Confirm)
+   =============================== */
+
+.ui-button--primary {
+  background-color: #4a3f35;   /* same brown tone you use */
+  color: #ffffff;
+}
+
+.ui-button--primary:hover:not(:disabled) {
+  background-color: #5a4e44;
+}
+
+/* ===============================
+   Secondary Button
+   (Edit, Cancel, View)
+   =============================== */
+
+.ui-button--secondary {
+  background-color: #ffffff;
+  color: #4a3f35;
+  border: 1px solid #b89e91;
+}
+
+.ui-button--secondary:hover:not(:disabled) {
+  background-color: #f4f0ec;
+}
+
+/* ===============================
+   Danger Button (optional)
+   (Delete)
+   =============================== */
+
+.ui-button--danger {
+  background-color: #c0392b;
+  color: #ffffff;
+}
+
+.ui-button--danger:hover:not(:disabled) {
+  background-color: #e74c3c;
+}

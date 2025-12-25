@@ -3,6 +3,7 @@
 // - Fetch ONE event from backend
 // - Manage local state
 // - Handle join / leave logic
+// - Allow admin to edit event (minimal)
 // - Pass derived data into JSX
 
 import React, { useEffect, useState } from "react";
@@ -12,30 +13,37 @@ import {
   getEventById,
   joinEvent,
   leaveEvent,
+  updateEvent,
 } from "../../configuration/EventService";
 import { useAuth } from "../../configuration/AuthContext";
 
 function EventDetailPage() {
-  // Read eventId from URL
   const { eventId } = useParams();
-
-  // Logged-in user (global auth state)
   const { currentUser } = useAuth();
 
-  // Local component state
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Admin edit mode
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState({
+    title: "",
+    description: "",
+  });
+
   /**
-   * =========================================
-   * LOAD EVENT (side effect)
-   * =========================================
+   * LOAD EVENT
    */
   useEffect(() => {
     const loadEvent = async () => {
       try {
         const result = await getEventById(eventId);
         setEvent(result);
+
+        setEditData({
+          title: result.get("title") || "",
+          description: result.get("description") || "",
+        });
       } catch (err) {
         console.error("Error loading event:", err);
       } finally {
@@ -46,16 +54,12 @@ function EventDetailPage() {
     loadEvent();
   }, [eventId]);
 
-  // Loading & error states
   if (loading) return <div>Loading event...</div>;
   if (!event) return <div>Event not found.</div>;
 
   /**
-   * =========================================
-   * DERIVED EVENT DATA (no state)
-   * =========================================
+   * DERIVED DATA
    */
-
   const title = event.get("title") || "Untitled event";
   const description = event.get("description") || "";
   const date = event.get("date") || "Date TBA";
@@ -69,14 +73,6 @@ function EventDetailPage() {
   const imageFile = event.get("image");
   const imageUrl = imageFile ? imageFile.url() : "/default-event.png";
 
- 
-
-  /**
-   * =========================================
-   * DERIVED BOOLEANS
-   * =========================================
-   */
-
   const isJoined =
     currentUser && participants.includes(currentUser.id);
 
@@ -84,11 +80,22 @@ function EventDetailPage() {
     maxAttendees > 0 && participantCount >= maxAttendees;
 
   /**
-   * =========================================
-   * EVENT HANDLERS
-   * =========================================
+   * ADMIN CHECK (UI ONLY)
    */
+  const ADMIN_ID = "PXrsjCliSR";
+  const ADMIN_EMAIL = "klobucnikadrian123@gmail.com";
 
+  const userEmail =
+    currentUser?.get("email") || currentUser?.get("username") || "";
+
+  const isAdmin =
+    currentUser &&
+    (currentUser.id === ADMIN_ID ||
+      userEmail.toLowerCase() === ADMIN_EMAIL.toLowerCase());
+
+  /**
+   * EVENT HANDLERS
+   */
   const handleJoinLeave = async () => {
     try {
       if (isJoined) {
@@ -97,7 +104,6 @@ function EventDetailPage() {
         await joinEvent(eventId);
       }
 
-      // Reload updated event from backend
       const updated = await getEventById(eventId);
       setEvent(updated);
     } catch (err) {
@@ -105,20 +111,26 @@ function EventDetailPage() {
     }
   };
 
-  /**
-   * =========================================
-   * RENDER
-   * =========================================
-   */
+  const handleSaveEdit = async () => {
+    try {
+      await updateEvent(eventId, editData);
+      const updated = await getEventById(eventId);
+      setEvent(updated);
+      setIsEditing(false);
+    } catch (err) {
+      console.error("Update error:", err);
+    }
+  };
 
+  /**
+   * RENDER
+   */
   return (
     <div className="event-detail-page">
-      {/* Back navigation */}
       <Link to="/events" className="event-back-link">
         ← Back to all events
       </Link>
 
-      {/* Header */}
       <div className="event-detail-header">
         <img
           src={imageUrl}
@@ -127,27 +139,28 @@ function EventDetailPage() {
         />
 
         <div className="event-detail-header-info">
-          <h1 className="event-detail-title">{title}</h1>
+          {isEditing ? (
+            <input
+              value={editData.title}
+              onChange={(e) =>
+                setEditData({ ...editData, title: e.target.value })
+              }
+            />
+          ) : (
+            <h1 className="event-detail-title">{title}</h1>
+          )}
 
           <div className="event-meta">
-            <div className="event-meta-item">
-              <span>{date}</span>
-            </div>
-
-            <div className="event-meta-item">
-              <span>
-                {startTime} – {endTime}
-              </span>
-            </div>
+            <span>{date}</span>
+            <span>
+              {startTime} – {endTime}
+            </span>
           </div>
-
-        
         </div>
 
-        {/* Attend / Leave button */}
-        {currentUser && (
+        {currentUser && !isEditing && (
           <button
-            className="event-attend-btn"
+            className="ui-button ui-button--primary"
             onClick={handleJoinLeave}
             disabled={isFull && !isJoined}
           >
@@ -160,17 +173,52 @@ function EventDetailPage() {
         )}
       </div>
 
-      {/* About section */}
       <h2 className="event-section-title">About this event</h2>
-      <p className="event-description">{description}</p>
 
-      {/* Attendees */}
+      {isEditing ? (
+        <textarea
+          value={editData.description}
+          onChange={(e) =>
+            setEditData({
+              ...editData,
+              description: e.target.value,
+            })
+          }
+        />
+      ) : (
+        <p className="event-description">{description}</p>
+      )}
+
       <h2 className="event-attendees-title">
-        Attendees{" "}
-        {maxAttendees > 0
-          ? `${participantCount} / ${maxAttendees}`
-          : participantCount}
+        Attendees {participantCount} / {maxAttendees}
       </h2>
+
+      {/* ADMIN CONTROLS */}
+      {isAdmin && !isEditing && (
+        <button
+          className="ui-button ui-button--secondary"
+          onClick={() => setIsEditing(true)}
+        >
+          Edit Event
+        </button>
+      )}
+
+      {isAdmin && isEditing && (
+        <div style={{ marginTop: "20px", display: "flex", gap: "12px" }}>
+          <button
+            className="ui-button ui-button--primary"
+            onClick={handleSaveEdit}
+          >
+            Save
+          </button>
+          <button
+            className="ui-button ui-button--secondary"
+            onClick={() => setIsEditing(false)}
+          >
+            Cancel
+          </button>
+        </div>
+      )}
     </div>
   );
 }

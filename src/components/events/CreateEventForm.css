@@ -97,17 +97,6 @@ input[type="file"]::-webkit-file-upload-button:hover {
   background-color: #3c2d1f;
 }
 
-.create-event__submit {
-  align-self: flex-end;
-  background-color: #4b382a;
-  color: #fff;
-  font-weight: 700;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 22px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
 
 .create-event__submit:hover {
   background-color: #3c2d1f;
