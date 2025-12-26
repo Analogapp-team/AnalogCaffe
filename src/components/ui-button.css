@@ -19,7 +19,8 @@
   cursor: pointer;
   white-space: nowrap;
 
-  min-width: 100px;        
+  min-width: 100px;
+  min-height: 38px;        
 
 
   transition: background-color 0.2s ease,

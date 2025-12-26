@@ -9,6 +9,8 @@ import calendarIcon from "../../assets/icons/calendar.svg";
 import clockIcon from "../../assets/icons/clock.svg";
 import { useAuth } from "../../configuration/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { isUserAdmin } from "../../utils/roles";
 
 function EventCard({ event, onJoin, onLeave, onDelete }) {
   // Global authentication state (who is logged in)
@@ -23,16 +25,26 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
    * (Delete button)
    */
 
-  const ADMIN_EMAIL = "klobucnikadrian123@gmail.com";
-  const ADMIN_ID = "PXrsjCliSR";
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const userEmail =
-    currentUser?.get("email") || currentUser?.get("username") || "";
+  useEffect(() => {
+    const checkAdminRole = async () => {
+      if (!currentUser) {
+        setIsAdmin(false);
+        return;
+      }
 
-  const isAdmin =
-    currentUser &&
-    (currentUser.id === ADMIN_ID ||
-      userEmail.toLowerCase() === ADMIN_EMAIL.toLowerCase());
+      try {
+        const admin = await isUserAdmin(currentUser);
+        setIsAdmin(admin);
+      } catch (err) {
+        console.error("Admin role check failed:", err);
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdminRole();
+  }, [currentUser]);
 
   /**
    * DERIVED EVENT DATA
@@ -100,7 +112,7 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
 
   /**
    * RENDER (JSX)
-   * JSX now describes UI only,  no logic noise.
+   * JSX now describes UI only, no logic noise.
    */
 
   return (

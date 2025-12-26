@@ -1,11 +1,8 @@
 import Parse from "./Back4App";
+import { isUserAdmin } from "../utils/roles";
 
 // Name of the class in the database
 const EVENT_CLASS = "Event";
-
-// Simple admin setup for now (not the best long-term)
-const ADMIN_ID = "PXrsjCliSR";
-const ADMIN_EMAIL = "klobucnikadrian123@gmail.com";
 
 /**
  * Helper functions
@@ -22,18 +19,6 @@ function getCurrentUser() {
     throw new Error("You must be logged in.");
   }
   return user;
-}
-
-/**
- * Check if the user is the admin.
- * We just compare ID or email.
- */
-function isAdmin(user) {
-  if (!user) return false;
-  if (user.id === ADMIN_ID) return true;
-
-  const email = user.get("email");
-  return email && email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
 }
 
 /**
@@ -74,17 +59,41 @@ async function fetchEvent(eventId) {
 
 /**
  * Create a new event.
- * Only the admin should be able to create events.
+ * Only admins should be able to create events.
  */
 export async function createEvent(data) {
   const currentUser = getCurrentUser();
+  const isAdmin = await isUserAdmin(currentUser);
 
-  if (!isAdmin(currentUser)) {
-    throw new Error("Only the admin can create events.");
+  if (!isAdmin) {
+    throw new Error("Only admins can create events.");
   }
 
   const Event = Parse.Object.extend(EVENT_CLASS);
   const event = new Event();
+
+  /**
+   * ACL SETUP
+   *
+   * - No public access
+   * - Authenticated users can READ
+   * - Admin role can READ + WRITE
+   */
+
+  const acl = new Parse.ACL();
+
+  // No public access
+  acl.setPublicReadAccess(false);
+  acl.setPublicWriteAccess(false);
+
+  // Authenticated users can read
+  acl.setReadAccess(Parse.User.current(), true);
+
+  // Admin role: full access
+  acl.setRoleReadAccess("Admin", true);
+  acl.setRoleWriteAccess("Admin", true);
+
+  event.setACL(acl);
 
   // Basic event fields
   event.set("title", data.title || "");
@@ -112,7 +121,6 @@ export async function createEvent(data) {
 
 /**
  * Get all events from the database.
- * Sorting by date so the earliest events show first.
  */
 export async function getEvents() {
   const Event = Parse.Object.extend(EVENT_CLASS);
@@ -124,7 +132,6 @@ export async function getEvents() {
 
   const results = await query.find();
 
-  // Normalize participant data for each event
   results.forEach((event) => {
     event.set("participants", normalizeParticipants(event));
   });
@@ -134,7 +141,6 @@ export async function getEvents() {
 
 /**
  * Fetch a single event using its ID.
- * This function is used by the UI.
  */
 export async function getEventById(eventId) {
   return await fetchEvent(eventId);
@@ -142,7 +148,6 @@ export async function getEventById(eventId) {
 
 /**
  * Add the current user to an event.
- * Also checks if the event is full before joining.
  */
 export async function joinEvent(eventId) {
   const currentUser = getCurrentUser();
@@ -151,10 +156,8 @@ export async function joinEvent(eventId) {
   const userId = currentUser.id;
   const participants = event.get("participants") || [];
 
-  // If user is already part of the event, nothing changes
   if (participants.includes(userId)) return event;
 
-  // Check if the event reached its capacity
   const max = event.get("maxAttendees") || 0;
   if (max > 0 && participants.length >= max) {
     throw new Error("This event is full.");
@@ -176,28 +179,29 @@ export async function leaveEvent(eventId) {
   const userId = currentUser.id;
   const participants = event.get("participants") || [];
 
-  const updatedParticipants = participants.filter((id) => id !== userId);
+  event.set(
+    "participants",
+    participants.filter((id) => id !== userId)
+  );
 
-  event.set("participants", updatedParticipants);
   await event.save();
-
   return event;
 }
 
 /**
  * Update any event info.
- * Only the admin can update an event.
+ * Only admins can update events.
  */
 export async function updateEvent(eventId, data) {
   const currentUser = getCurrentUser();
+  const isAdmin = await isUserAdmin(currentUser);
 
-  if (!isAdmin(currentUser)) {
-    throw new Error("Only admin can update events.");
+  if (!isAdmin) {
+    throw new Error("Only admins can update events.");
   }
 
   const event = await fetchEvent(eventId);
 
-  // Update only the fields that were provided
   if (data.title !== undefined) event.set("title", data.title);
   if (data.description !== undefined)
     event.set("description", data.description);
@@ -208,7 +212,6 @@ export async function updateEvent(eventId, data) {
     event.set("maxAttendees", Number(data.maxAttendees) || 0);
   }
 
-  // If admin uploads a new image, replace the old one
   if (data.imageFile) {
     const file = new Parse.File(data.imageFile.name, data.imageFile);
     await file.save();
@@ -221,13 +224,14 @@ export async function updateEvent(eventId, data) {
 
 /**
  * Delete an event completely.
- * Only admin can do this.
+ * Only admins can do this.
  */
 export async function deleteEvent(eventId) {
   const currentUser = getCurrentUser();
+  const isAdmin = await isUserAdmin(currentUser);
 
-  if (!isAdmin(currentUser)) {
-    throw new Error("Only admin can delete events.");
+  if (!isAdmin) {
+    throw new Error("Only admins can delete events.");
   }
 
   const event = await fetchEvent(eventId);

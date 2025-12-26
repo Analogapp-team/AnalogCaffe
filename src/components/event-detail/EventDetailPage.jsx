@@ -16,6 +16,7 @@ import {
   updateEvent,
 } from "../../configuration/EventService";
 import { useAuth } from "../../configuration/AuthContext";
+import { isUserAdmin } from "../../utils/roles";
 
 function EventDetailPage() {
   const { eventId } = useParams();
@@ -30,6 +31,9 @@ function EventDetailPage() {
     title: "",
     description: "",
   });
+
+  // Admin role (UI only)
+  const [isAdmin, setIsAdmin] = useState(false);
 
   /**
    * LOAD EVENT
@@ -53,6 +57,29 @@ function EventDetailPage() {
 
     loadEvent();
   }, [eventId]);
+
+  /**
+   * ADMIN CHECK (UI ONLY)
+   * Uses Parse Roles instead of hardcoded IDs
+   */
+  useEffect(() => {
+    const checkAdminRole = async () => {
+      if (!currentUser) {
+        setIsAdmin(false);
+        return;
+      }
+
+      try {
+        const admin = await isUserAdmin(currentUser);
+        setIsAdmin(admin);
+      } catch (err) {
+        console.error("Admin role check failed:", err);
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdminRole();
+  }, [currentUser]);
 
   if (loading) return <div>Loading event...</div>;
   if (!event) return <div>Event not found.</div>;
@@ -78,20 +105,6 @@ function EventDetailPage() {
 
   const isFull =
     maxAttendees > 0 && participantCount >= maxAttendees;
-
-  /**
-   * ADMIN CHECK (UI ONLY)
-   */
-  const ADMIN_ID = "PXrsjCliSR";
-  const ADMIN_EMAIL = "klobucnikadrian123@gmail.com";
-
-  const userEmail =
-    currentUser?.get("email") || currentUser?.get("username") || "";
-
-  const isAdmin =
-    currentUser &&
-    (currentUser.id === ADMIN_ID ||
-      userEmail.toLowerCase() === ADMIN_EMAIL.toLowerCase());
 
   /**
    * EVENT HANDLERS
