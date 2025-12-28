@@ -74,7 +74,6 @@ function CreateEventForm() {
       {success && <div className="event-success">{success}</div>}
 
       <form className="create-event__form" onSubmit={handleSubmit}>
-
         {/* Row 1: Title + Image upload */}
         <div className="create-event__row">
           <div className="form-group">
@@ -91,12 +90,18 @@ function CreateEventForm() {
 
           <div className="form-group">
             <label>Event Image</label>
-            <input
-              type="file"
-              name="imageFile"
-              accept="image/*"
-              onChange={handleChange}
-            />
+
+            {/* Global UI button for file upload */}
+            <label className="ui-button ui-button--secondary">
+              Choose file
+              <input
+                type="file"
+                name="imageFile"
+                accept="image/*"
+                onChange={handleChange}
+                style={{ display: "none" }}
+              />
+            </label>
           </div>
         </div>
 
@@ -161,7 +166,11 @@ function CreateEventForm() {
         </div>
 
         {/* Submit button */}
-        <button type="submit" className="create-event__submit" disabled={saving}>
+        <button
+          type="submit"
+          className="ui-button ui-button--primary"
+          disabled={saving}
+        >
           {saving ? "Creating…" : "Create Event"}
         </button>
       </form>

@@ -1,25 +1,56 @@
-import React from "react";
+// EventCard is a PRESENTATIONAL COMPONENT
+// Responsibility:
+// - Display ONE event
+// - Expose user actions via callbacks (onJoin, onLeave, onDelete)
+// - It does NOT manage state or talk to the backend
+
 import "./EventCard.css";
 import calendarIcon from "../../assets/icons/calendar.svg";
 import clockIcon from "../../assets/icons/clock.svg";
 import { useAuth } from "../../configuration/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { isUserAdmin } from "../../utils/roles";
 
 function EventCard({ event, onJoin, onLeave, onDelete }) {
+  // Global authentication state (who is logged in)
   const { currentUser } = useAuth();
 
-  // Checking if the current user is the admin (hardcoded for now)
-  const ADMIN_EMAIL = "klobucnikadrian123@gmail.com";
-  const ADMIN_ID = "PXrsjCliSR";
+  // React Router hook for navigation
+  const navigate = useNavigate();
 
-  const userEmail =
-    currentUser?.get("email") || currentUser?.get("username") || "";
+  /**
+   * ADMIN CHECK (derived logic, no side effects)
+   * Still present here because it controls UI visibility
+   * (Delete button)
+   */
 
-  const isAdmin =
-    currentUser &&
-    (currentUser.id === ADMIN_ID ||
-      userEmail.toLowerCase() === ADMIN_EMAIL.toLowerCase());
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  // Pulling fields directly from the event object
+  useEffect(() => {
+    const checkAdminRole = async () => {
+      if (!currentUser) {
+        setIsAdmin(false);
+        return;
+      }
+
+      try {
+        const admin = await isUserAdmin(currentUser);
+        setIsAdmin(admin);
+      } catch (err) {
+        console.error("Admin role check failed:", err);
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdminRole();
+  }, [currentUser]);
+
+  /**
+   * DERIVED EVENT DATA
+   * Extract everything ONCE so JSX stays readable.
+   */
+
   const title = event.get("title") || "Untitled event";
   const description = event.get("description") || "";
   const date = event.get("date") || "Date TBA";
@@ -27,29 +58,34 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
   const endTime = event.get("endTime") || "";
   const maxAttendees = event.get("maxAttendees") || 0;
 
-  // Participants is now an array of user IDs
+  // Participants are stored as user IDs
   const participants = event.get("participants") || [];
   const participantCount = participants.length;
 
-  // Event image handling
+  // Image handling (Parse files expose a url() method)
   const image = event.get("image");
   const imageUrl =
     image && typeof image.url === "function" ? image.url() : null;
 
-  // Make the time display readable
+  // User-friendly time string
   const timeDisplay =
     startTime && endTime
       ? `${startTime} - ${endTime}`
       : startTime || endTime || "Time TBA";
 
-  // Check if this user already joined the event
+  // Derived booleans used for rendering and behavior
   const isJoined =
     currentUser && participants.includes(currentUser.id);
 
-  // Simple check to see if the event is full
-  const isFull = maxAttendees > 0 && participantCount >= maxAttendees;
+  const isFull =
+    maxAttendees > 0 && participantCount >= maxAttendees;
 
-  // Join or leave the event depending on the current state
+  /**
+   * EVENT HANDLERS (callbacks)
+   * These functions DO NOT update state.
+   * They notify the parent component via props.
+   */
+
   const handleJoinClick = () => {
     if (isJoined) {
       onLeave && onLeave(event.id);
@@ -58,31 +94,43 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
     }
   };
 
-  // Delete event, only shown for admin
   const handleDeleteClick = () => {
     if (!onDelete) return;
-    if (window.confirm("Are you sure you want to delete this event?")) {
+
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this event?"
+    );
+
+    if (confirmed) {
       onDelete(event.id);
     }
   };
 
+  const handleViewClick = () => {
+    navigate(`/events/${event.id}`);
+  };
+
+  /**
+   * RENDER (JSX)
+   * JSX now describes UI only, no logic noise.
+   */
+
   return (
     <div className="event-card">
-
+      {/* Event image */}
       <img
         src={imageUrl || "/default-event.png"}
         alt={title}
         className="event-card__image"
       />
 
-      {/* Main event info section */}
+      {/* Main event content */}
       <div className="event-card__content">
         <h3 className="event-card__title">{title}</h3>
         <p className="event-card__desc">{description}</p>
 
         <div className="event-card__bottom">
-
-          {/* Event date */}
+          {/* Date */}
           <div className="event-card__info">
             <img
               src={calendarIcon}
@@ -92,15 +140,18 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
             <span>{date}</span>
           </div>
 
-          {/* Event time */}
+          {/* Time */}
           <div className="event-card__info">
-            <img src={clockIcon} alt="clock" className="event-card__icon" />
+            <img
+              src={clockIcon}
+              alt="clock"
+              className="event-card__icon"
+            />
             <span>{timeDisplay}</span>
           </div>
 
-          {/* Attendee counter */}
+          {/* Attendees */}
           <div className="event-card__attendees">
-            <span className="event-card__attendees-icon"></span>
             {maxAttendees > 0
               ? `${participantCount} / ${maxAttendees}`
               : `${participantCount} attending`}
@@ -108,11 +159,18 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
         </div>
       </div>
 
-      {/* Buttons for joining, leaving, or deleting */}
+      {/* Action buttons */}
       <div className="event-card__actions">
+        <button
+          className="ui-button ui-button--secondary"
+          onClick={handleViewClick}
+        >
+          View
+        </button>
+
         {currentUser && (
           <button
-            className="event-card__attend"
+            className="ui-button ui-button--primary"
             onClick={handleJoinClick}
             disabled={isFull && !isJoined}
           >
@@ -122,7 +180,7 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
 
         {isAdmin && (
           <button
-            className="event-card__delete"
+            className="ui-button ui-button--danger"
             onClick={handleDeleteClick}
           >
             Delete
