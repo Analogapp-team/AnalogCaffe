@@ -13,5 +13,7 @@ export function parseImagesToUrls(images) {
   // Handle null/undefined or non-array inputs
   if (!images || !Array.isArray(images)) return [];
   // Map each image to its URL and filter out any nulls
-  return images.map((img) => parseFileToUrl(img)).filter((url) => url);
+  return images
+    .map((img) => parseFileToUrl(img))
+    .filter((url) => url);
 }

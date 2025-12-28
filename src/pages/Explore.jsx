@@ -22,9 +22,7 @@ function Explore() {
           userId: u.id,
           displayName: getFullName(u),
           desc: u.get("headline") || u.get("desc") || "",
-          imgSrc:
-            parseFileToUrl(u.get("avatarUrl") || u.get("profileImage")) ||
-            profilePicture,
+          imgSrc: parseFileToUrl(u.get("avatarUrl") || u.get("profileImage")) || profilePicture,
         }));
         setUsers(mapped);
       })
@@ -59,6 +57,7 @@ function Explore() {
           desc={u.desc}
         />
       ))}
+   
     </div>
   );
 }

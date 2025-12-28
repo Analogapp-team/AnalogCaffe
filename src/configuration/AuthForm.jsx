@@ -16,75 +16,8 @@ export default function AuthForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // ✅ ADD THIS VALIDATION FUNCTION
-  const validateForm = () => {
-    if (isLogin) {
-      // Login validation
-      if (!email.trim()) {
-        setError("Email is required");
-        return false;
-      }
-      if (!password.trim()) {
-        setError("Password is required");
-        return false;
-      }
-
-      // Basic email format validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email.trim())) {
-        setError("Please enter a valid email address");
-        return false;
-      }
-    } else {
-      // Registration validation
-      if (!firstName.trim()) {
-        setError("First name is required");
-        return false;
-      }
-      if (!lastName.trim()) {
-        setError("Last name is required");
-        return false;
-      }
-      if (!email.trim()) {
-        setError("Email is required");
-        return false;
-      }
-
-      // Email format validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email.trim())) {
-        setError("Please enter a valid email address");
-        return false;
-      }
-
-      if (!password.trim()) {
-        setError("Password is required");
-        return false;
-      }
-      if (!confirmPassword.trim()) {
-        setError("Please confirm your password");
-        return false;
-      }
-      if (password !== confirmPassword) {
-        setError("Passwords do not match");
-        return false;
-      }
-      if (password.length < 6) {
-        setError("Password must be at least 6 characters");
-        return false;
-      }
-    }
-    return true;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // ✅ ADD VALIDATION CHECK HERE
-    if (!validateForm()) {
-      return;
-    }
-
     setLoading(true);
     setError("");
 
@@ -95,12 +28,25 @@ export default function AuthForm() {
         if (result.success) {
           navigate("/");
         } else {
-          setError(
-            result.error || "Login failed. Please check your credentials."
-          );
+          setError(result.error || "Login failed");
         }
       } else {
-        // REGISTER FLOW - You can remove the duplicate checks here since validateForm handles them
+        // REGISTER FLOW
+        if (
+          !firstName ||
+          !lastName ||
+          !email ||
+          !password ||
+          !confirmPassword
+        ) {
+          setError("All fields are required");
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          setError("Passwords do not match");
+          return;
+        }
 
         const result = await register({
           username: email,
@@ -118,16 +64,12 @@ export default function AuthForm() {
           setPassword("");
           setConfirmPassword("");
           setIsLogin(true);
-          // Optional: Show success message
-          setTimeout(() => {
-            setError(""); // Clear any success message
-          }, 3000);
         } else {
           setError(result.error || "Registration failed");
         }
       }
     } catch (error) {
-      setError("An unexpected error occurred. Please try again.");
+      setError("An unexpected error occurred");
     } finally {
       setLoading(false);
     }
@@ -174,7 +116,6 @@ export default function AuthForm() {
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={loading}
-              placeholder="Enter your email"
             />
 
             <label>Password</label>
@@ -184,7 +125,6 @@ export default function AuthForm() {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={loading}
-              placeholder="Enter your password"
             />
 
             <div className={styles.formOptions}>
@@ -215,7 +155,6 @@ export default function AuthForm() {
               onChange={(e) => setFirstName(e.target.value)}
               required
               disabled={loading}
-              placeholder="Enter your first name"
             />
 
             <label>Last Name</label>
@@ -225,7 +164,6 @@ export default function AuthForm() {
               onChange={(e) => setLastName(e.target.value)}
               required
               disabled={loading}
-              placeholder="Enter your last name"
             />
 
             <label>Email Address</label>
@@ -235,7 +173,6 @@ export default function AuthForm() {
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={loading}
-              placeholder="Enter your email"
             />
 
             <label>Password</label>
@@ -245,7 +182,6 @@ export default function AuthForm() {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={loading}
-              placeholder="At least 6 characters"
             />
 
             <label>Confirm Password</label>
@@ -255,7 +191,6 @@ export default function AuthForm() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               disabled={loading}
-              placeholder="Confirm your password"
             />
 
             <button

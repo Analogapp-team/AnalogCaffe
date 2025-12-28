@@ -9,7 +9,7 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-// AuthProvider component that wraps the app and provides authentication context.
+// AuthProvider component that wraps the app and provides authentication context. 
 // Speaks with Back4App through Parse to manage user authentication.
 function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);

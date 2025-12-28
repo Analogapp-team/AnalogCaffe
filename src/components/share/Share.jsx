@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../configuration/AuthContext";
+import { createPost } from "../../configuration/PostService";
 import styles from "./share.module.css";
+// import ProfileAvatar from "../profile-header/ProfileAvatar"; // moved to ShareTop
 import ShareTop from "./ShareTop";
 import ShareBottom from "./ShareBottom";
 
-function Share({ onPostCreated }) {
+function Share() {
   const { currentUser, refreshCurrentUser } = useAuth();
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]);
@@ -42,12 +44,10 @@ function Share({ onPostCreated }) {
     if (files.length > 0) {
       setImages(files);
       // Generate preview URLs
-      setImagePreviews(
-        files.map((file) => ({
-          file,
-          preview: URL.createObjectURL(file),
-        }))
-      );
+      setImagePreviews(files.map((file) => ({
+        file,
+        preview: URL.createObjectURL(file),
+      })));
     }
   };
 
@@ -70,21 +70,19 @@ function Share({ onPostCreated }) {
     setError("");
 
     try {
-      const result = await onPostCreated({
-        content: content.trim(),
-        images,
-      });
+      // Create the post with trimmed content and selected images
+      await createPost({ content: content.trim(), images });
 
-      if (result.success) {
-        setContent("");
-        setImages([]);
-        setImagePreviews([]);
+      setContent("");
+      setImages([]);
+      setImagePreviews([]);
 
-        const fileInput = document.getElementById("post-image-input");
-        if (fileInput) fileInput.value = "";
-      } else {
-        setError(result.error || "failed to createpost");
-      }
+      // Clear file input value
+      const fileInput = document.getElementById("post-image-input");
+      if (fileInput) fileInput.value = "";
+
+      // Simple + effective
+      window.location.reload();
     } catch (error) {
       console.error("Error creating post:", error);
       setError("Failed to create post. " + error.message);
@@ -92,6 +90,7 @@ function Share({ onPostCreated }) {
       setLoading(false);
     }
   };
+
   return (
     <div className={styles.share}>
       <div className={styles.shareWrapper}>
@@ -103,6 +102,8 @@ function Share({ onPostCreated }) {
           imagePreviews={imagePreviews}
           removeImage={removeImage}
         />
+
+        {/* Image previews (handled by ShareTop) */}
 
         {error && <div className={styles.errorMessage}>{error}</div>}
 

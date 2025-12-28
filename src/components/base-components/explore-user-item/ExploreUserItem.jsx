@@ -35,7 +35,11 @@ function ExploreUserItem({ imgSrc, userId, desc, displayName }) {
           }
         }}
       >
-        <img src={imgSrc} alt="Profile" className="profileAvatar" />
+        <img
+          src={imgSrc}
+          alt="Profile"
+          className="profileAvatar"
+        />
         <div className="userDetails">
           <h3 className="userName">{displayName || userId}</h3>
           <p className="userDescription">{desc}</p>

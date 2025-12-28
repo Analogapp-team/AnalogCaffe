@@ -23,10 +23,16 @@ const ProfileHeader = ({ user }) => {
   return (
     <div className="profile-header">
       <div className="profile-left">
+
+       
         <ProfileAvatar user={useUser} altText={fullName} />
 
         <div className="profile-details">
-          <ProfileInfo name={fullName} study={studyCourse} bio={bio} />
+          <ProfileInfo
+            name={fullName}
+            study={studyCourse}
+            bio={bio}
+          />
         </div>
       </div>
 
