@@ -7,6 +7,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
+  padding: 12px 12px;
   
 
   font-size: 14px;              
@@ -29,7 +31,7 @@
               opacity 0.2s ease;
 }
 
-/* Disabled state 
+/* Disabled state */
 .ui-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -42,7 +44,7 @@
    =============================== */
 
 .ui-button--primary {
-  background-color: #4a3f35;   /* same brown tone you use */
+  background-color: #4a3f35;  
   color: #ffffff;
 }
 
@@ -77,4 +79,14 @@
 
 .ui-button--danger:hover:not(:disabled) {
   background-color: #e74c3c;
+}
+
+.ui-button--with-icon {
+  gap: 6px; /* space between icon and text */
+}
+
+.ui-button--with-icon img {
+  width: 18px;
+  height: 18px;
+  display: block;
 }
