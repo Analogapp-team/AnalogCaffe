@@ -1,6 +1,6 @@
 /* ===============================
    Base UI Button (shared)
-   Matches Profile Settings style
+   Uses global design tokens
    =============================== */
 
 .ui-button {
@@ -8,27 +8,25 @@
   align-items: center;
   justify-content: center;
 
-  padding: 12px 12px;
-  
+  padding: 0 16px;
+  min-height: 36px;
+  min-width: 100px;
 
-  font-size: 14px;              
-  font-weight: 600;
-  font-family: inherit;
+  font-family: var(--font-family);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-width-semibold);
 
-  border-radius: 6px;             
+  border-radius: 6px;
   border: 1px solid transparent;
 
   cursor: pointer;
   white-space: nowrap;
 
-  min-width: 100px;
-  min-height: 38px;        
-
-
-  transition: background-color 0.2s ease,
-              border-color 0.2s ease,
-              color 0.2s ease,
-              opacity 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
 }
 
 /* Disabled state */
@@ -37,19 +35,18 @@
   cursor: not-allowed;
 }
 
-
 /* ===============================
    Primary Button
-   (Attend, Save, Confirm)
+   (Save, Attend, Confirm)
    =============================== */
 
 .ui-button--primary {
-  background-color: #4a3f35;  
-  color: #ffffff;
+  background-color: var(--button-default-bg);
+  color: var(--text-color-white);
 }
 
 .ui-button--primary:hover:not(:disabled) {
-  background-color: #5a4e44;
+  background-color: var(--button-hover-bg);
 }
 
 /* ===============================
@@ -58,35 +55,40 @@
    =============================== */
 
 .ui-button--secondary {
-  background-color: #ffffff;
-  color: #4a3f35;
-  border: 1px solid #b89e91;
+  background-color: var(--white-bg);
+  color: var(--text-color-default);
+  border-color: var(--post-border);
 }
 
 .ui-button--secondary:hover:not(:disabled) {
-  background-color: #f4f0ec;
+  background-color: var(--menu-active-bg);
 }
 
 /* ===============================
-   Danger Button (optional)
-   (Delete)
+   Danger Button
+   (Delete / Remove)
    =============================== */
 
 .ui-button--danger {
-  background-color: #c0392b;
-  color: #ffffff;
+  background-color: #fff2f2;
+  color: #a82222;
+  border-color: #fde6e6;
 }
 
 .ui-button--danger:hover:not(:disabled) {
-  background-color: #e74c3c;
+  background-color: #ffeaea;
 }
 
+/* ===============================
+   Icon Support
+   =============================== */
+
 .ui-button--with-icon {
-  gap: 6px; /* space between icon and text */
+  gap: 6px;
 }
 
 .ui-button--with-icon img {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   display: block;
 }

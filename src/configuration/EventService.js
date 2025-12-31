@@ -86,12 +86,8 @@ export async function createEvent(data) {
   acl.setPublicReadAccess(false);
   acl.setPublicWriteAccess(false);
 
- // Everyone can READ (visibility controlled by your protected routes)
-acl.setPublicReadAccess(true);
-
-// No public writes
-acl.setPublicWriteAccess(false);
-
+ // Everyone can READ (visibility controlled by protected routes)
+  acl.setReadAccess(currentUser, false);
 
   // Admin role: full access
   acl.setRoleReadAccess("Admin", true);

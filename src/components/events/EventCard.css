@@ -2,13 +2,16 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  background-color: #fff;
-  border: 1px solid #f2f0e9;
+
+  background-color: var(--white-bg);
+  border: 1px solid var(--post-border);
   border-radius: 12px;
+
   padding: 20px;
   margin-bottom: 16px;
+
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  font-family: inherit;
+  font-family: var(--font-family);
 }
 
 /* =========================
@@ -33,17 +36,17 @@
 }
 
 .event-card__title {
-  color: #4b382a;
-  font-size: 18px;
-  font-weight: 700;
+  color: var(--text-color-heading);
+  font-size: var(--font-size-body-lg);
+  font-weight: var(--font-width-bold);
   margin: 0;
 }
 
 .event-card__desc {
-  color: #7b6f66;
-  font-size: 15px;
-  margin: 6px 0 12px 0;
-  line-height: 1.4;
+  color: var(--text-color-body);
+  font-size: var(--font-size-body-md);
+  line-height: var(--font-line-body-md);
+  margin: 6px 0 12px;
 }
 
 /* =========================
@@ -60,9 +63,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #4b382a;
-  font-weight: 600;
-  font-size: 14px;
+
+  color: var(--text-color-heading);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-width-semibold);
 }
 
 .event-card__icon {
@@ -72,12 +76,13 @@
 }
 
 .event-card__attendees {
-  font-size: 14px;
-  color: #4b382a;
-  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 6px;
+
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-width-medium);
+  color: var(--text-color-heading);
 }
 
 /* =========================

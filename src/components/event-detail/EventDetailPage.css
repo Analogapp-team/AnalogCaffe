@@ -3,20 +3,28 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 30px;
-  font-family: Inter, sans-serif;
-  background: #ffffff;
+
+  font-family: var(--font-family);
+  background-color: var(--white-bg);
 }
 
-/* Back link */
+/* =========================
+   BACK LINK
+========================= */
+
 .event-back-link {
   display: inline-block;
   margin-bottom: 20px;
-  color: #4a3f35;
-  font-size: 15px;
+
+  font-size: var(--font-size-body-sm);
+  color: var(--text-color-menu);
   text-decoration: none;
 }
 
-/* HEADER LAYOUT */
+/* =========================
+   HEADER LAYOUT
+========================= */
+
 .event-detail-header {
   display: flex;
   align-items: center;
@@ -29,6 +37,7 @@
   height: 110px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .event-detail-header-info {
@@ -36,51 +45,77 @@
 }
 
 .event-detail-title {
-  font-size: 26px;
-  color: #3d332b;
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-width-bold);
+  color: var(--text-color-heading);
   margin-bottom: 8px;
 }
 
-/* META (date + time) */
+/* =========================
+   META (date + time)
+========================= */
+
 .event-meta {
   display: flex;
-  gap: 20px;
   align-items: center;
-  font-size: 15px;
-  color: #5a4e44;
+  gap: 20px;
+
+  font-size: var(--font-size-body-sm);
+  color: var(--text-color-body);
 }
 
+/* =========================
+   ATTEND BUTTON
+========================= */
+
 .event-attend-btn {
-  background: #4a3f35;
-  color: white;
+  background-color: var(--button-default-bg);
+  color: var(--text-color-white);
+
   border: none;
   border-radius: 10px;
   padding: 12px 24px;
-  cursor: pointer;
-  font-size: 16px;
-    font-weight: 700;
 
+  font-size: var(--font-size-body-md);
+  font-weight: var(--font-width-bold);
+  font-family: inherit;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
-/* ABOUT */
+.event-attend-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* =========================
+   ABOUT SECTION
+========================= */
+
 .event-section-title {
   margin-top: 35px;
-  font-size: 22px;
-  font-weight: 600;
-  color: #3d332b;
+
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-width-semibold);
+  color: var(--text-color-heading);
 }
 
 .event-description {
   margin-top: 10px;
-  font-size: 16px;
-  color: #5a4e44;
-  line-height: 1.6;
+
+  font-size: var(--font-size-body-md);
+  line-height: var(--font-line-body-md);
+  color: var(--text-color-body);
 }
 
-/* ATTENDEES */
+/* =========================
+   ATTENDEES
+========================= */
+
 .event-attendees-title {
   margin-top: 35px;
-  font-size: 20px;
-  font-weight: 600;
-  color: #3d332b;
+
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-width-semibold);
+  color: var(--text-color-heading);
 }

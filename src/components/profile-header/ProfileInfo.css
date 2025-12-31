@@ -1,25 +1,27 @@
 .profile-info {
-  display: left;
+  display: flex;
   flex-direction: column;
+  gap: 0;
   text-align: left;
-  gap: 0px;
 }
 
+/* Name */
 .profile-name {
-  font-size: 30px;
-  font-weight: 700;
-  text-align: left;
-  color: #38404A;
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-width-bold);
+  color: var(--text-color-heading);
 }
 
+/* Study / subtitle */
 .profile-study {
-  font-size: 18px;
-  text-align: left;
-  color: #38404A;
+  font-size: var(--font-size-body-lg);
+  font-weight: var(--font-width-regular);
+  color: var(--text-color-heading);
 }
 
+/* Bio / description */
 .profile-bio {
-  font-size: 16px;
-  text-align: left;
-  color: #777;
+  font-size: var(--font-size-body-md);
+  font-weight: var(--font-width-regular);
+  color: var(--text-color-body);
 }

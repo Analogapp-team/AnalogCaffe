@@ -1,34 +1,39 @@
 /* ---- Base container ---- */
 .profile-settings-container {
-  background-color: #ffffff;
-  border: 1px solid #e2dcd5;
+  background-color: var(--white-bg);
+  border: 1px solid var(--post-border);
   border-radius: 10px;
   padding: 3px 30px 40px;
+
   display: flex;
   flex-direction: column;
   gap: 24px;
-  color: #252b33;
+
+  color: var(--text-color-body);
 }
 
 /* ---- Section heading ---- */
 .profile-settings-container h2 {
-  font-size: 32px;
-  font-weight: 600;
-  color: #38404a;
+  font-size: var(--font-size-h5);
+  line-height: var(--font-line-h5);
+  font-weight: var(--font-width-semibold);
+  color: var(--text-color-heading);
   margin-bottom: -16px;
 }
 
 .profile-settings-container p.section-description {
-  font-size: 14px;
-  color: #687384;
-  margin-bottom: 0px;
+  font-size: var(--font-size-body-sm);
+  line-height: var(--font-line-body-sm);
+  color: var(--text-color-body);
+  margin-bottom: 0;
 }
 
+/* ---- Divider ---- */
 .profile-divider {
   height: 1px;
-  background-color: #b89e91;
+  background-color: var(--post-border);
   opacity: 0.5;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 /* ---- Avatar + Buttons ---- */
@@ -38,36 +43,37 @@
   gap: 16px;
 }
 
-/* Ensure avatar container has proper dimensions */
+/* Avatar container */
 .profile-avatar {
   width: 96px;
   height: 96px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
+  background-color: var(--post-bg);
 }
 
 .avatar-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%; /* Consistent rounding */
+  border-radius: 50%;
 }
 
 /* Loading state for avatar */
 .profile-avatar.loading {
-  background: #f5f5f5;
+  background-color: var(--post-bg);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .avatar-loading {
-  font-size: 12px;
-  color: #666;
+  font-size: var(--font-size-body-xsm);
+  color: var(--text-color-body);
 }
 
-/* Button group - consolidated */
+/* ---- Button group ---- */
 .button-group {
   display: flex;
   gap: 12px;
@@ -93,7 +99,7 @@
   flex: 1;
 }
 
-/* ---- Save button ---- */
+/* ---- Save section ---- */
 .save-section {
   display: flex;
   justify-content: flex-end;
@@ -102,31 +108,32 @@
   margin-top: 16px;
 }
 
-/* ---- Loading states ---- */
+/* ---- Loading state ---- */
 .loading-state {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 40px;
-  font-size: 16px;
-  color: #666;
+
+  font-size: var(--font-size-body-md);
+  color: var(--text-color-body);
 }
 
-/* Upload text */
+/* ---- Upload text ---- */
 .upload-text {
-  font-size: 14px;
-  color: #666;
+  font-size: var(--font-size-body-sm);
+  color: var(--text-color-body);
   font-style: italic;
-  margin-left: 0; /* Remove left margin since we use gap */
+  margin-left: 0;
 }
 
-/* Disabled state for buttons */
+/* ---- Disabled buttons (global safety net) ---- */
 button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-/* Responsive design */
+/* ---- Responsive ---- */
 @media (max-width: 768px) {
   .profile-settings-container {
     padding-left: 20px;
