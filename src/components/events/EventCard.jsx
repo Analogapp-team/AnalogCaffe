@@ -1,169 +1,61 @@
-// EventCard is a PRESENTATIONAL COMPONENT
-// Responsibility:
-// - Display ONE event
-// - Expose user actions via callbacks (onJoin, onLeave, onDelete)
-// - It does NOT manage state or talk to the backend
-
 import "./EventCard.css";
 import calendarIcon from "../../assets/icons/calendar.svg";
 import clockIcon from "../../assets/icons/clock.svg";
 import { useAuth } from "../../configuration/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { isUserAdmin } from "../../utils/roles";
 
-function EventCard({ event, onJoin, onLeave, onDelete }) {
-  // Global authentication state (who is logged in)
+function EventCard({ event, isAdmin, onJoin, onLeave, onDelete }) {
   const { currentUser } = useAuth();
-
-  // React Router hook for navigation
   const navigate = useNavigate();
 
-  /**
-   * ADMIN CHECK (derived logic, no side effects)
-   * Still present here because it controls UI visibility
-   * (Delete button)
-   */
-
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    const checkAdminRole = async () => {
-      if (!currentUser) {
-        setIsAdmin(false);
-        return;
-      }
-
-      try {
-        const admin = await isUserAdmin(currentUser);
-        setIsAdmin(admin);
-      } catch (err) {
-        console.error("Admin role check failed:", err);
-        setIsAdmin(false);
-      }
-    };
-
-    checkAdminRole();
-  }, [currentUser]);
-
-  /**
-   * DERIVED EVENT DATA
-   * Extract everything ONCE so JSX stays readable.
-   */
-
-  const title = event.get("title") || "Untitled event";
-  const description = event.get("description") || "";
-  const date = event.get("date") || "Date TBA";
-  const startTime = event.get("startTime") || "";
-  const endTime = event.get("endTime") || "";
+  const title = event.get("title");
+  const description = event.get("description");
+  const date = event.get("date");
+  const startTime = event.get("startTime");
+  const endTime = event.get("endTime");
   const maxAttendees = event.get("maxAttendees") || 0;
 
-  // Participants are stored as user IDs
   const participants = event.get("participants") || [];
   const participantCount = participants.length;
 
-  // Image handling (Parse files expose a url() method)
   const image = event.get("image");
-  const imageUrl =
-    image && typeof image.url === "function" ? image.url() : null;
+  const imageUrl = image?.url?.() ?? "/default-event.png";
 
-  // User-friendly time string
-  const timeDisplay =
-    startTime && endTime
-      ? `${startTime} - ${endTime}`
-      : startTime || endTime || "Time TBA";
-
-  // Derived booleans used for rendering and behavior
   const isJoined =
     currentUser && participants.includes(currentUser.id);
 
   const isFull =
     maxAttendees > 0 && participantCount >= maxAttendees;
 
-  /**
-   * EVENT HANDLERS (callbacks)
-   * These functions DO NOT update state.
-   * They notify the parent component via props.
-   */
-
   const handleJoinClick = () => {
-    if (isJoined) {
-      onLeave && onLeave(event.id);
-    } else {
-      onJoin && onJoin(event.id);
-    }
+    isJoined ? onLeave(event.id) : onJoin(event.id);
   };
-
-  const handleDeleteClick = () => {
-    if (!onDelete) return;
-
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this event?"
-    );
-
-    if (confirmed) {
-      onDelete(event.id);
-    }
-  };
-
-  const handleViewClick = () => {
-    navigate(`/events/${event.id}`);
-  };
-
-  /**
-   * RENDER (JSX)
-   * JSX now describes UI only, no logic noise.
-   */
 
   return (
     <div className="event-card">
-      {/* Event image */}
-      <img
-        src={imageUrl || "/default-event.png"}
-        alt={title}
-        className="event-card__image"
-      />
+      <img src={imageUrl} alt={title} className="event-card__image" />
 
-      {/* Main event content */}
       <div className="event-card__content">
-        <h3 className="event-card__title">{title}</h3>
-        <p className="event-card__desc">{description}</p>
+        <h3>{title}</h3>
+        <p>{description}</p>
 
         <div className="event-card__bottom">
-          {/* Date */}
-          <div className="event-card__info">
-            <img
-              src={calendarIcon}
-              alt="calendar"
-              className="event-card__icon"
-            />
-            <span>{date}</span>
+          <div>
+            <img src={calendarIcon} alt="" /> {date}
           </div>
-
-          {/* Time */}
-          <div className="event-card__info">
-            <img
-              src={clockIcon}
-              alt="clock"
-              className="event-card__icon"
-            />
-            <span>{timeDisplay}</span>
+          <div>
+            <img src={clockIcon} alt="" /> {startTime} – {endTime}
           </div>
-
-          {/* Attendees */}
-          <div className="event-card__attendees">
-            {maxAttendees > 0
-              ? `${participantCount} / ${maxAttendees}`
-              : `${participantCount} attending`}
+          <div>
+            {participantCount} / {maxAttendees || "∞"}
           </div>
         </div>
       </div>
 
-      {/* Action buttons */}
       <div className="event-card__actions">
         <button
           className="ui-button ui-button--secondary"
-          onClick={handleViewClick}
+          onClick={() => navigate(`/events/${event.id}`)}
         >
           View
         </button>
@@ -181,7 +73,7 @@ function EventCard({ event, onJoin, onLeave, onDelete }) {
         {isAdmin && (
           <button
             className="ui-button ui-button--danger"
-            onClick={handleDeleteClick}
+            onClick={() => onDelete(event.id)}
           >
             Delete
           </button>

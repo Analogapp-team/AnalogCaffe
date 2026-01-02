@@ -83,7 +83,7 @@ export async function createEvent(data) {
   const acl = new Parse.ACL();
 
   // No public access
-  acl.setPublicReadAccess(false);
+  acl.setPublicReadAccess(true);
   acl.setPublicWriteAccess(false);
 
  // Everyone can READ (visibility controlled by protected routes)
