@@ -48,11 +48,17 @@ const Profile = () => {
     fetchUserPosts();
   }, [profileUser]);
 
+  const handlePostDelete = (deletedPostId) => {
+    setUserPosts((prevPosts) =>
+      prevPosts.filter((post) => post.id !== deletedPostId)
+    );
+  };
+
   return (
     <div className="profile-page">
       <ProfileHeader user={profileUser} />
       {userPosts.map((post) => (
-        <Post key={post.id} post={post} />
+        <Post key={post.id} post={post} onDelete={handlePostDelete} />
       ))}
     </div>
   );
