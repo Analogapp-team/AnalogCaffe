@@ -1,13 +1,5 @@
-// EventDetailPage is a PAGE / CONTAINER component
-// Responsibility:
-// - Fetch ONE event from backend
-// - Manage local state
-// - Handle join / leave logic
-// - Allow admin to edit event (minimal)
-// - Pass derived data into JSX
-
 import React, { useEffect, useState } from "react";
-import "../event-detail/EventDetailPage.css";
+import "./EventDetailPage.css";
 import { useParams, Link } from "react-router-dom";
 import {
   getEventById,
@@ -18,6 +10,10 @@ import {
 import { useAuth } from "../../configuration/AuthContext";
 import { isUserAdmin } from "../../utils/roles";
 
+import EventDetailHeader from "./EventDetailHeader";
+import EventDetailDescription from "./EventDetailDescription";
+import EventAdminControls from "./EventAdminControls";
+
 function EventDetailPage() {
   const { eventId } = useParams();
   const { currentUser } = useAuth();
@@ -25,19 +21,15 @@ function EventDetailPage() {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Admin edit mode
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
     title: "",
     description: "",
   });
 
-  // Admin role (UI only)
   const [isAdmin, setIsAdmin] = useState(false);
 
-  /**
-   * LOAD EVENT
-   */
+  // LOAD EVENT
   useEffect(() => {
     const loadEvent = async () => {
       try {
@@ -58,10 +50,7 @@ function EventDetailPage() {
     loadEvent();
   }, [eventId]);
 
-  /**
-   * ADMIN CHECK (UI ONLY)
-   * Uses Parse Roles instead of hardcoded IDs
-   */
+  // ADMIN CHECK (UI ONLY)
   useEffect(() => {
     const checkAdminRole = async () => {
       if (!currentUser) {
@@ -84,9 +73,7 @@ function EventDetailPage() {
   if (loading) return <div>Loading event...</div>;
   if (!event) return <div>Event not found.</div>;
 
-  /**
-   * DERIVED DATA
-   */
+  // DERIVED DATA
   const title = event.get("title") || "Untitled event";
   const description = event.get("description") || "";
   const date = event.get("date") || "Date TBA";
@@ -100,15 +87,13 @@ function EventDetailPage() {
   const imageFile = event.get("image");
   const imageUrl = imageFile ? imageFile.url() : "/default-event.png";
 
-  const isJoined =
-    currentUser && participants.includes(currentUser.id);
+  const isJoined = currentUser && participants.includes(currentUser.id);
+  const isFull = maxAttendees > 0 && participantCount >= maxAttendees;
 
-  const isFull =
-    maxAttendees > 0 && participantCount >= maxAttendees;
+  const joinLeaveLabel = isJoined ? "Leave Event" : isFull ? "Full" : "Attend Event";
+  const joinLeaveDisabled = isFull && !isJoined;
 
-  /**
-   * EVENT HANDLERS
-   */
+  // HANDLERS
   const handleJoinLeave = async () => {
     try {
       if (isJoined) {
@@ -127,111 +112,69 @@ function EventDetailPage() {
   const handleSaveEdit = async () => {
     try {
       await updateEvent(eventId, editData);
+
       const updated = await getEventById(eventId);
       setEvent(updated);
+
       setIsEditing(false);
     } catch (err) {
       console.error("Update error:", err);
     }
   };
 
-  /**
-   * RENDER
-   */
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+
+    // Reset edit fields back to current event values (so cancel truly cancels)
+    setEditData({
+      title: event.get("title") || "",
+      description: event.get("description") || "",
+    });
+  };
+
   return (
     <div className="event-detail-page">
       <Link to="/events" className="event-back-link">
         ← Back to all events
       </Link>
 
-      <div className="event-detail-header">
-        <img
-          src={imageUrl}
-          alt={title}
-          className="event-detail-image"
-        />
+      <EventDetailHeader
+        imageUrl={imageUrl}
+        title={title}
+        date={date}
+        startTime={startTime}
+        endTime={endTime}
+        isEditing={isEditing}
+        editTitle={editData.title}
+        onEditTitleChange={(e) =>
+          setEditData((prev) => ({ ...prev, title: e.target.value }))
+        }
+        showAttendButton={currentUser && !isEditing}
+        onJoinLeave={handleJoinLeave}
+        joinLeaveLabel={joinLeaveLabel}
+        joinLeaveDisabled={joinLeaveDisabled}
+      />
 
-        <div className="event-detail-header-info">
-          {isEditing ? (
-            <input
-              value={editData.title}
-              onChange={(e) =>
-                setEditData({ ...editData, title: e.target.value })
-              }
-            />
-          ) : (
-            <h1 className="event-detail-title">{title}</h1>
-          )}
-
-          <div className="event-meta">
-            <span>{date}</span>
-            <span>
-              {startTime} – {endTime}
-            </span>
-          </div>
-        </div>
-
-        {currentUser && !isEditing && (
-          <button
-            className="ui-button ui-button--primary"
-            onClick={handleJoinLeave}
-            disabled={isFull && !isJoined}
-          >
-            {isJoined
-              ? "Leave Event"
-              : isFull
-              ? "Full"
-              : "Attend Event"}
-          </button>
-        )}
-      </div>
-
-      <h2 className="event-section-title">About this event</h2>
-
-      {isEditing ? (
-        <textarea
-          value={editData.description}
-          onChange={(e) =>
-            setEditData({
-              ...editData,
-              description: e.target.value,
-            })
-          }
-        />
-      ) : (
-        <p className="event-description">{description}</p>
-      )}
+      <EventDetailDescription
+        isEditing={isEditing}
+        description={description}
+        editDescription={editData.description}
+        onEditDescriptionChange={(e) =>
+          setEditData((prev) => ({ ...prev, description: e.target.value }))
+        }
+      />
 
       <h2 className="event-attendees-title">
         Attendees {participantCount} / {maxAttendees}
       </h2>
 
-      {/* ADMIN CONTROLS */}
-      {isAdmin && !isEditing && (
-        <button
-          className="ui-button ui-button--secondary"
-          onClick={() => setIsEditing(true)}
-        >
-          Edit Event
-        </button>
-      )}
-
-      {isAdmin && isEditing && (
-        <div style={{ marginTop: "20px", display: "flex", gap: "12px" }}>
-          <button
-            className="ui-button ui-button--primary"
-            onClick={handleSaveEdit}
-          >
-            Save
-          </button>
-          <button
-            className="ui-button ui-button--secondary"
-            onClick={() => setIsEditing(false)}
-          >
-            Cancel
-          </button>
-        </div>
-      )}
+      <EventAdminControls
+        isAdmin={isAdmin}
+        isEditing={isEditing}
+        onStartEdit={() => setIsEditing(true)}
+        onSave={handleSaveEdit}
+        onCancel={handleCancelEdit}
+      />
     </div>
   );
 }

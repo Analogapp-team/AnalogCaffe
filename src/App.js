@@ -15,7 +15,6 @@ import MainLayout from "./layouts/MainLayout";
 import ProfileSettings from "./pages/ProfileSettings";
 import EventDetailPage from "./components/event-detail/EventDetailPage";
 
-
 function App() {
   const { isAuthenticated } = useAuth();
 
