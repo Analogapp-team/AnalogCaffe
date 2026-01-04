@@ -13,6 +13,8 @@ import Profile from "./pages/Profile";
 import Events from "./pages/Events";
 import MainLayout from "./layouts/MainLayout";
 import ProfileSettings from "./pages/ProfileSettings";
+import EventDetailPage from "./components/event-detail/EventDetailPage";
+
 
 function App() {
   const { isAuthenticated } = useAuth();
@@ -26,6 +28,8 @@ function App() {
         {/* Protected Routes */}
         {isAuthenticated ? (
           <Route element={<MainLayout />}>
+            {" "}
+            {/*Protected routes wrapped in MainLayout */}
             <Route path="/" element={<Home />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />
@@ -33,8 +37,10 @@ function App() {
             {/* Victor use this router for the explore page (you were right) */}
             <Route path="/profile/settings" element={<ProfileSettings />} />
             <Route path="/Events" element={<Events />} />
+            <Route path="/events/:eventId" element={<EventDetailPage />} />
           </Route>
         ) : (
+          // Redirect all other routes to login if not authenticated
           <Route
             path="*"
             element={<Navigate to={isAuthenticated ? "/" : "/login"} />}

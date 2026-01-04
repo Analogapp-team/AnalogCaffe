@@ -2,10 +2,7 @@
   width: 100%;
   border-radius: 10px;
   background-color: rgba(234, 222, 219, 0.863);
-  box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
-  -webkit-box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
-  -moz-box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
-  margin: 20px 0;
+  border: rgba(0, 0, 0, 0.1) 0.5px solid;
 }
 
 .postWrapper {
@@ -14,13 +11,13 @@
 
 .postTop {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 15px;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
 .postTopLeft {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
   width: 100%;
 }
@@ -61,7 +58,7 @@
 
 .postCenter {
   margin: 0;
-  padding-left: 52px;
+  padding-top: 8px;
 }
 
 .postText {
@@ -109,9 +106,9 @@
   justify-content: flex-end;
   align-items: center;
   gap: 15px;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 0.5px solid white;
 }
 
 .likeButton {

@@ -1,11 +1,11 @@
 .share {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 12px;
   background-color: rgba(234, 222, 219, 0.863);
-  box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
-  -webkit-box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
-  -moz-box-shadow: 0px -1px 6px 0px rgba(5, 5, 5, 0.75);
   margin-bottom: 20px;
+  border: 1px solid rgba(0,0,0,0.06);
+  position: relative;
+  overflow: visible;
 }
 
 .shareWrapper {
@@ -30,12 +30,12 @@
 
 .shareInput {
   border: none;
-  background: transparent;
+  background: white;
   width: 100%;
   font-size: 16px;
   resize: none;
   min-height: 60px;
-  padding: 0;
+  padding: 5px 10px;
   font-family: inherit;
   line-height: 1.5;
 }
@@ -50,7 +50,7 @@
 }
 
 .shareInput::placeholder {
-  color: #666;
+  color: #66666609;
 }
 
 .errorMessage {
@@ -71,7 +71,9 @@
 
 .shareOptions {
   display: flex;
-  flex: 1;
+  gap: 10px;
+  align-items: center;
+  flex: 0 0 auto;
 }
 
 .shareOption {
@@ -80,24 +82,34 @@
 }
 
 .fileInputLabel {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   cursor: pointer;
   padding: 8px 16px;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  background-color: var(--primary-color);
   transition: background-color 0.2s;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  height: 40px;
+  z-index: 3;
 }
 
 .fileInputLabel:hover {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #3f2417;
+}
+
+.fileInputLabel:focus {
+  outline: 3px solid rgba(60, 40, 30, 0.15);
+  outline-offset: 2px;
 }
 
 .shareIcon {
   width: 20px;
   height: 20px;
   margin-right: 8px;
+}
+
+.fileInputLabel .shareIcon {
+  filter: brightness(0) invert(1);
 }
 
 .shareOptionText {
@@ -108,21 +120,26 @@
 
 .shareButton {
   border: none;
-  padding: 10px 30px;
-  border-radius: 20px;
+  padding: 8px 16px;
+  border-radius: 10px;
   background-color: #ffffff;
   font-weight: 600;
   cursor: pointer;
-  color: #333;
+  color: var(--primary-color);
   transition: all 0.2s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
   white-space: nowrap;
+  height: 40px;
+  margin-left: auto;
 }
 
 .shareButton:hover:not(:disabled) {
   background-color: #f8f9fa;
   transform: translateY(-1px);
+}
+
+.fileInputLabel .shareOptionText {
+  color: #fff;
+  font-weight: 600;
 }
 
 .shareButton:disabled {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+/*import React, { useState } from 'react';
 import './Post.css';
 import Polaroid from '../../base-components/polaroid/Polaroid';
 
@@ -53,4 +53,4 @@ const Post = ({ author, timestamp, content, image, polaroids = [] }) => {
   );
 };
 
-export default Post;
+export default Post;*/

@@ -2,11 +2,23 @@ import React from "react";
 import styles from "./share.module.css";
 import image from "../../assets/icons/image.svg";
 
-function ShareBottom({ images, loading, onImageSelect, onPost, content }) {
+function ShareBottom({ images, loading, onImageSelect, onPost, content, fileInputRef }) {
   return (
     <div className={styles.shareBottom}>
       <div className={styles.shareOptions}>
-        <label htmlFor="post-image-input" className={styles.fileInputLabel}>
+        <label
+          htmlFor="post-image-input"
+          className={styles.fileInputLabel}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              // Prevent default scroll behavior for spacebar
+              e.preventDefault(); 
+              // 2. Use the ref to click the input safely
+              fileInputRef.current?.click();
+            }
+          }}
+        >
           <img
             className={styles.shareIcon}
             src={image}
@@ -18,6 +30,7 @@ function ShareBottom({ images, loading, onImageSelect, onPost, content }) {
           </span>
         </label>
         <input
+          ref={fileInputRef}
           id="post-image-input"
           type="file"
           accept="image/*"

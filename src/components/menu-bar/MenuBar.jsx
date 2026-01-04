@@ -13,10 +13,10 @@ import Events from "../../assets/icons/events.svg";
 import Logout from "../../assets/icons/logout.svg";
 
 function MenuBar() {
-  const { logout, currentUser } = useAuth();   
-  const [user, setUser] = useState(null);
+  const { logout, currentUser } = useAuth();
+  const [user, setUser] = useState(currentUser);
 
-  // Loads user on mount
+  // Loads user on mount and when currentUser changes
   useEffect(() => {
     const loadUser = async () => {
       try {
@@ -24,24 +24,31 @@ function MenuBar() {
         setUser(freshUser);
       } catch (err) {
         console.error("Error loading user in MenuBar:", err);
+        setUser(currentUser);
       }
     };
 
-    loadUser();
+    if (currentUser) {
+      loadUser();
+    }
   }, []);
 
+  // Update user when currentUser changes
   useEffect(() => {
     if (currentUser) {
       setUser(currentUser);
     }
   }, [currentUser]);
 
+  // Extract user details for display
   const fullName = getFullName(user);
+  // Extract study course or provide default
   const studyCourse = user?.get("studyCourse") || "";
 
   return (
     <div className={styles.menubar}>
       <div className={styles.navSection}>
+        {/* Navigation Links */}
         <NavLink
           to="/"
           className={({ isActive }) =>
