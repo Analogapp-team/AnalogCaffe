@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./share.module.css";
 import image from "../../assets/icons/image.svg";
 
-function ShareBottom({ images, loading, onImageSelect, onPost, content }) {
+function ShareBottom({ images, loading, onImageSelect, onPost, content, fileInputRef }) {
   return (
     <div className={styles.shareBottom}>
       <div className={styles.shareOptions}>
@@ -12,7 +12,10 @@ function ShareBottom({ images, loading, onImageSelect, onPost, content }) {
           tabIndex={0}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
-              document.getElementById("post-image-input").click();
+              // Prevent default scroll behavior for spacebar
+              e.preventDefault(); 
+              // 2. Use the ref to click the input safely
+              fileInputRef.current?.click();
             }
           }}
         >
@@ -27,6 +30,7 @@ function ShareBottom({ images, loading, onImageSelect, onPost, content }) {
           </span>
         </label>
         <input
+          ref={fileInputRef}
           id="post-image-input"
           type="file"
           accept="image/*"

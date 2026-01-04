@@ -34,7 +34,6 @@ export const getUserById = async (userId) => {
   try {
     const q = new Parse.Query(Parse.User);
     const user = await q.get(userId);
-    return await user.fetch();
   } catch (error) {
     console.error("Error fetching user by id:", error);
     throw error;
