@@ -10,6 +10,8 @@
   font-size: var(--font-size-h5);
   font-weight: var(--font-width-bold);
   color: var(--text-color-heading);
+  margin: 0px;
+  margin-top: 20px;
 }
 
 /* Study / subtitle */
@@ -17,6 +19,8 @@
   font-size: var(--font-size-body-lg);
   font-weight: var(--font-width-regular);
   color: var(--text-color-heading);
+  margin: 0px;
+  margin-top: 10px;
 }
 
 /* Bio / description */
@@ -24,4 +28,7 @@
   font-size: var(--font-size-body-md);
   font-weight: var(--font-width-regular);
   color: var(--text-color-body);
+  margin: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }

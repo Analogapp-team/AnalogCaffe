@@ -18,12 +18,12 @@ function ShareTop({
       </div>
 
       <textarea
-        placeholder="What's in your mind?"
+        placeholder="What's on your mind?"
         className={styles.shareInput}
         value={content}
         onChange={(e) => setContent(e.target.value)}
         disabled={loading}
-        rows="3"
+        rows="1"
       />
 
       {/* Image previews */}
