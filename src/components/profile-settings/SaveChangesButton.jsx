@@ -1,9 +1,11 @@
 import React from "react";
-import "./SaveChangesButton.css";
 
 const SaveChangesButton = ({ onClick }) => {
   return (
-    <button className="save-btn" onClick={onClick}>
+    <button
+      className="ui-button ui-button--primary"
+      onClick={onClick}
+    >
       Save Changes
     </button>
   );

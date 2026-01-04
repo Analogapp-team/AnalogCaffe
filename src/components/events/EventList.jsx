@@ -2,7 +2,7 @@ import React from "react";
 import EventCard from "./EventCard";
 import "./EventList.css";
 
-function EventList({ events, onJoin, onLeave, onDelete }) {
+function EventList({ events, isAdmin, onJoin, onLeave, onDelete }) {
   if (!events || events.length === 0) {
     return <div>No events yet.</div>;
   }
@@ -13,6 +13,7 @@ function EventList({ events, onJoin, onLeave, onDelete }) {
         <EventCard
           key={event.id}
           event={event}
+          isAdmin={isAdmin} 
           onJoin={onJoin}
           onLeave={onLeave}
           onDelete={onDelete}

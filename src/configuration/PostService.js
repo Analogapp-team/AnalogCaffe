@@ -49,7 +49,7 @@ export const createPost = async ({ content, images = [] }) => {
               parseFile
             );
 
-            // Save the file to Back4App 
+            // Save the file to Back4App
             await parseFile.save();
             console.log(
               `Image ${index + 1} uploaded successfully:`,
@@ -80,17 +80,21 @@ export const createPost = async ({ content, images = [] }) => {
     console.log("Saving post to database...");
     const savedPost = await post.save();
 
+    const query = new Parse.Query("Post");
+    query.include("user");
+    const completePost = await query.get(savedPost.id);
+
     console.log("Post saved successfully:", {
-      id: savedPost.id,
-      content: savedPost.get("content"),
-      user: savedPost.get("user"),
+      id: completePost.id,
+      content: completePost.get("content"),
+      user: completePost.get("user"),
       images: savedPost.get("images"),
-      hasImages: !!savedPost.get("images"),
-      imageCount: savedPost.get("images") ? savedPost.get("images").length : 0,
+      userFirstName: completePost.get("user")?.get("firstName"),
+      userLastName: completePost.get("user")?.get("lastName"),
     });
 
     // Return the saved post object
-    return savedPost;
+    return completePost;
   } catch (error) {
     console.error("Error creating post:", error);
     throw error;
@@ -106,6 +110,24 @@ export const getPosts = async (options = {}) => {
     //user information
     query.include("user");
 
+    // ✅ CRITICAL FIX 2: Select specific user fields to ensure they're fetched
+    // Without this, user data might be incomplete
+    query.select([
+      "content",
+      "images",
+      "likes",
+      "createdAt",
+      "updatedAt",
+      "user", // This ensures user pointer is included
+      "user.firstName",
+      "user.lastName",
+      "user.username",
+      "user.email",
+      "user.profilePicture",
+      "user.studyCourse",
+      "user.bio",
+    ]);
+
     // Sort by newest first
     query.descending("createdAt");
 
@@ -114,30 +136,60 @@ export const getPosts = async (options = {}) => {
       query.limit(options.limit);
     }
 
-    // Execute the query to fetch posts
+    // Execute the query
     const posts = await query.find();
 
-    // Debug the fetched posts
-    console.log("Fetched posts:", posts.length);
+    // ✅ EXTENSIVE DEBUGGING
+    console.log("=== POST FETCH DEBUG ===");
+    console.log(`Total posts fetched: ${posts.length}`);
+
+    if (posts.length === 0) {
+      console.warn("⚠️ No posts found!");
+      return posts;
+    }
+
+    // Check each post's user data
     posts.forEach((post, index) => {
       const user = post.get("user");
+      const postJson = post.toJSON();
 
-      console.log(`Post ${index + 1}:`, {
-        id: post.id,
-        content: post.get("content"),
-        user: user
-          ? {
-              id: user.id,
-              firstName: user.get("firstName"),
-              lastName: user.get("lastName"),
-              username: user.get("username"),
-            }
-          : null,
-        hasImages: !!post.get("images"),
-        images: post.get("images"),
-        imageCount: post.get("images") ? post.get("images").length : 0,
-        createdAt: post.createdAt,
-      });
+      console.log(`\n--- Post ${index + 1} ---`);
+      console.log("Post ID:", post.id);
+      console.log("Content:", post.get("content")?.substring(0, 50) + "...");
+      console.log("Created:", post.createdAt);
+      console.log("Has 'user' field:", !!user);
+
+      if (user) {
+        console.log("✅ User object found!");
+        console.log("User ID:", user.id);
+        console.log("User className:", user.className);
+        console.log("User firstName:", user.get("firstName"));
+        console.log("User lastName:", user.get("lastName"));
+        console.log("User username:", user.get("username"));
+        console.log("Has profilePicture:", !!user.get("profilePicture"));
+
+        // Check if user object has all necessary data
+        const userJson = user.toJSON();
+        console.log("User JSON keys:", Object.keys(userJson));
+
+        // If firstName/lastName are missing, try to fetch fresh
+        if (!user.get("firstName") && !user.get("lastName")) {
+          console.warn("⚠️ User object missing name data!");
+          console.log("Raw user data from post:", postJson.user);
+        }
+      } else {
+        console.error("❌ NO USER OBJECT FOUND!");
+        console.log("Post JSON structure:", Object.keys(postJson));
+        console.log("Post raw user field:", postJson.user);
+
+        // Check for alternative user fields
+        const possibleUserFields = Object.keys(postJson).filter(
+          (key) =>
+            key.toLowerCase().includes("user") ||
+            key.toLowerCase().includes("author")
+        );
+        console.log("Possible user fields:", possibleUserFields);
+      }
     });
 
     // Return the fetched posts
@@ -158,13 +210,36 @@ export const getUserPosts = async (userId) => {
     const userQuery = new Parse.Query(Parse.User);
     const user = await userQuery.get(userId);
 
-    // Query posts by this author
     query.equalTo("user", user);
+
+    // Include user data
     query.include("user");
+    query.select([
+      "content",
+      "images",
+      "likes",
+      "createdAt",
+      "user.firstName",
+      "user.lastName",
+      "user.username",
+      "user.profilePicture",
+    ]);
+
     query.descending("createdAt");
 
-    // Use query to fetch posts
     const posts = await query.find();
+
+    console.log(`✅ Fetched ${posts.length} posts for user ${userId}`);
+
+    if (posts.length > 0) {
+      const firstUser = posts[0].get("user");
+      console.log("Sample user data:", {
+        id: firstUser?.id,
+        name: `${firstUser?.get("firstName")} ${firstUser?.get("lastName")}`,
+        profilePic: !!firstUser?.get("profilePicture"),
+      });
+    }
+
     return posts;
   } catch (error) {
     console.error("Error fetching user posts:", error);
@@ -234,8 +309,8 @@ export const deletePost = async (postId) => {
     const post = await query.get(postId);
 
     // Check if current user is the author
-    const author = post.get("author");
-    if (author.id !== currentUser.id) {
+    const postUser = post.get("user");
+    if (!postUser || postUser.id !== currentUser.id) {
       throw new Error("Not authorized to delete this post");
     }
 
