@@ -62,8 +62,8 @@
   color: #666666;
 }
 
-.followbutton {
-  padding: 8px 24px;
+.seeProfileButton {
+  padding: 6px 8px;
   background-color: var(--button-default-bg);
   color: var(--text-color-white);
   border: none;

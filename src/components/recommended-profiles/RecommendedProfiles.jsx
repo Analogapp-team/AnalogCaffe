@@ -6,26 +6,6 @@ import { parseFileToUrl } from "../../utils/Parse";
 import { getFullName } from "../../utils/User";
 import defaultAvatar from "../../assets/images/profileimage.png";
 
-// Temp mock data with images (replace later with real user data)
-const recommendedProfiles = [
-  {
-    name: "Liam Alexander Smith",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-  },
-  {
-    name: "Emma Grace Johnson",
-    image: "https://randomuser.me/api/portraits/women/45.jpg",
-  },
-  {
-    name: "Noah Benjamin Brown",
-    image: "https://randomuser.me/api/portraits/men/16.jpg",
-  },
-  {
-    name: "Olivia Marie Davis",
-    image: "https://randomuser.me/api/portraits/women/11.jpg",
-  },
-];
-
 function RecommendedProfiles() {
   const navigate = useNavigate();
   const [profiles, setProfiles] = useState([]);

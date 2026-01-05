@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ExploreUserItem.css";
-import FollowButton from "../follow-button/FollowButton";
 
 function ExploreUserItem({ imgSrc, userId, desc, displayName }) {
-  const [isFollowing, setIsFollowing] = useState(false);
   const navigate = useNavigate();
-
-  const handleFollowChange = (newState) => {
-    setIsFollowing(newState);
-    // Add any additional logic here (e.g., API calls)
-  };
 
   const handleNavigate = () => {
     if (userId) {
@@ -41,10 +34,15 @@ function ExploreUserItem({ imgSrc, userId, desc, displayName }) {
           <p className="userDescription">{desc}</p>
         </div>
       </div>
-      <FollowButton
-        following={isFollowing}
-        onFollowChange={handleFollowChange}
-      />
+
+      <button 
+      className="seeProfileButton"
+      type="button"
+      role="switch"
+      title="See profile"
+      >
+        See Profile
+    </button>
     </div>
   );
 }
