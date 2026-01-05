@@ -1,7 +1,7 @@
-/* ===============================
+/* 
    Base UI Button (shared)
    Fixed size, uses existing tokens
-   =============================== */
+   */
 
 .ui-button {
   display: inline-flex;
@@ -37,10 +37,10 @@
   cursor: not-allowed;
 }
 
-/* ===============================
+/* 
    Primary Button
    (Save, Attend, Confirm)
-   =============================== */
+   */
 
 .ui-button--primary {
   background-color: var(--button-default-bg);
@@ -51,10 +51,10 @@
   background-color: var(--button-hover-bg);
 }
 
-/* ===============================
+/* 
    Secondary Button
    (Edit, Cancel, View)
-   =============================== */
+   */
 
 .ui-button--secondary {
   background-color: var(--white-bg);
@@ -66,10 +66,10 @@
   background-color: var(--menu-active-bg);
 }
 
-/* ===============================
+/* 
    Danger Button
    (Delete / Remove)
-   =============================== */
+   */
 
 .ui-button--danger {
   background-color: #fff2f2;
@@ -81,9 +81,9 @@
   background-color: #ffeaea;
 }
 
-/* ===============================
+/*
    Icon Support (unchanged)
-   =============================== */
+    */
 
 .ui-button--with-icon {
   gap: 6px;
