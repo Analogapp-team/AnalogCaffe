@@ -100,7 +100,7 @@ const ProfileSettingsForm = () => {
 
       // Reload user data to show new picture
       const userData = await getCurrentUserProfile();
-      console.log("👤 Updated user data:", userData);
+      console.log(" Updated user data:", userData);
       setUser(userData);
 
       alert("Profile picture updated successfully!");
