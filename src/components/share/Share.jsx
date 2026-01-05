@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react"; // 1. Import useRef
 import { useAuth } from "../../configuration/AuthContext";
 import styles from "./share.module.css";
 import ShareTop from "./ShareTop";
@@ -6,6 +6,10 @@ import ShareBottom from "./ShareBottom";
 
 function Share({ onPostCreated }) {
   const { currentUser, refreshCurrentUser } = useAuth();
+  
+  // 2. Create the ref to control the file input
+  const fileInputRef = useRef(null);
+
   const [content, setContent] = useState("");
   const [images, setImages] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -16,6 +20,11 @@ function Share({ onPostCreated }) {
   // Always load latest user (fixes avatar instantly updating)
   useEffect(() => {
     const loadFreshUser = async () => {
+      if (!currentUser) {
+        setFreshUser(null);
+        return; // Stop here, don't run the rest of the function
+      }
+
       try {
         // Fetch updated user profile
         const updatedUser = await refreshCurrentUser();
@@ -80,8 +89,9 @@ function Share({ onPostCreated }) {
         setImages([]);
         setImagePreviews([]);
 
-        const fileInput = document.getElementById("post-image-input");
-        if (fileInput) fileInput.value = "";
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
       } else {
         setError(result.error || "failed to createpost");
       }
@@ -92,6 +102,7 @@ function Share({ onPostCreated }) {
       setLoading(false);
     }
   };
+
   return (
     <div className={styles.share}>
       <div className={styles.shareWrapper}>
@@ -107,6 +118,7 @@ function Share({ onPostCreated }) {
         {error && <div className={styles.errorMessage}>{error}</div>}
 
         <ShareBottom
+          fileInputRef={fileInputRef}
           images={images}
           loading={loading}
           onImageSelect={handleImageSelect}
