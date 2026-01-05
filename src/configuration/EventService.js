@@ -1,17 +1,17 @@
 import Parse from "./Back4App";
 import { isUserAdmin } from "../utils/roles";
 
-// Name of the class in the database
+/**
+ * Parse class name
+ */
 const EVENT_CLASS = "Event";
 
-/**
- * Helper functions
- * (low-level logic)
- */
+/* =========================================================
+   Helper functions (low-level, internal)
+========================================================= */
 
 /**
- * Get the currently logged-in user.
- * Throws an error if no user is logged in.
+ * Get the currently logged-in user
  */
 function getCurrentUser() {
   const user = Parse.User.current();
@@ -22,8 +22,7 @@ function getCurrentUser() {
 }
 
 /**
- * Parse can return participants either as user objects or as plain IDs.
- * This function makes sure we always work with an array of user IDs.
+ * Normalize participants to an array of user IDs
  */
 function normalizeParticipants(event) {
   const raw = event.get("participants");
@@ -32,13 +31,12 @@ function normalizeParticipants(event) {
   // Already IDs
   if (typeof raw[0] === "string") return raw;
 
-  // Convert Parse.User objects to IDs
-  return raw.map((p) => p.id);
+  // Convert Parse.User objects → IDs
+  return raw.map((user) => user.id);
 }
 
 /**
- * Fetch a single event object from the database.
- * Internal helper used by multiple public functions.
+ * Fetch a single event and normalize it
  */
 async function fetchEvent(eventId) {
   const Event = Parse.Object.extend(EVENT_CLASS);
@@ -52,20 +50,18 @@ async function fetchEvent(eventId) {
   return event;
 }
 
-/**
- * Public API functions
- * (used by UI components)
- */
+/* =========================================================
+   Public API functions (used by UI)
+========================================================= */
 
 /**
- * Create a new event.
- * Only admins should be able to create events.
+ * Create a new event (ADMIN ONLY)
  */
 export async function createEvent(data) {
   const currentUser = getCurrentUser();
-  const isAdmin = await isUserAdmin(currentUser);
+  const admin = await isUserAdmin(currentUser);
 
-  if (!isAdmin) {
+  if (!admin) {
     throw new Error("Only admins can create events.");
   }
 
@@ -73,42 +69,25 @@ export async function createEvent(data) {
   const event = new Event();
 
   /**
-   * ACL SETUP
-   *
-   * - No public access
-   * - Authenticated users can READ
-   * - Admin role can READ + WRITE
+   * ACL setup
    */
-
   const acl = new Parse.ACL();
-
-  // No public access
   acl.setPublicReadAccess(true);
   acl.setPublicWriteAccess(false);
-
- // Everyone can READ (visibility controlled by protected routes)
-  acl.setReadAccess(currentUser, false);
-
-  // Admin role: full access
   acl.setRoleReadAccess("Admin", true);
   acl.setRoleWriteAccess("Admin", true);
 
   event.setACL(acl);
 
-  // Basic event fields
   event.set("title", data.title || "");
   event.set("description", data.description || "");
   event.set("date", data.date || "");
   event.set("startTime", data.startTime || "");
   event.set("endTime", data.endTime || "");
   event.set("maxAttendees", Number(data.maxAttendees) || 0);
-
-  // Start with an empty participants list
   event.set("participants", []);
-
   event.set("createdBy", currentUser);
 
-  // If user uploads an image, save it and attach to the event
   if (data.imageFile) {
     const file = new Parse.File(data.imageFile.name, data.imageFile);
     await file.save();
@@ -120,7 +99,7 @@ export async function createEvent(data) {
 }
 
 /**
- * Get all events from the database.
+ * Get all events
  */
 export async function getEvents() {
   const Event = Parse.Object.extend(EVENT_CLASS);
@@ -140,14 +119,14 @@ export async function getEvents() {
 }
 
 /**
- * Fetch a single event using its ID.
+ * Get a single event by ID
  */
 export async function getEventById(eventId) {
   return await fetchEvent(eventId);
 }
 
 /**
- * Add the current user to an event.
+ * Join an event
  */
 export async function joinEvent(eventId) {
   const currentUser = getCurrentUser();
@@ -170,7 +149,7 @@ export async function joinEvent(eventId) {
 }
 
 /**
- * Remove the user from the event.
+ * Leave an event
  */
 export async function leaveEvent(eventId) {
   const currentUser = getCurrentUser();
@@ -189,22 +168,20 @@ export async function leaveEvent(eventId) {
 }
 
 /**
- * Update any event info.
- * Only admins can update events.
+ * Update event details (ADMIN ONLY)
  */
 export async function updateEvent(eventId, data) {
   const currentUser = getCurrentUser();
-  const isAdmin = await isUserAdmin(currentUser);
+  const admin = await isUserAdmin(currentUser);
 
-  if (!isAdmin) {
+  if (!admin) {
     throw new Error("Only admins can update events.");
   }
 
   const event = await fetchEvent(eventId);
 
   if (data.title !== undefined) event.set("title", data.title);
-  if (data.description !== undefined)
-    event.set("description", data.description);
+  if (data.description !== undefined) event.set("description", data.description);
   if (data.date !== undefined) event.set("date", data.date);
   if (data.startTime !== undefined) event.set("startTime", data.startTime);
   if (data.endTime !== undefined) event.set("endTime", data.endTime);
@@ -212,25 +189,44 @@ export async function updateEvent(eventId, data) {
     event.set("maxAttendees", Number(data.maxAttendees) || 0);
   }
 
-  if (data.imageFile) {
-    const file = new Parse.File(data.imageFile.name, data.imageFile);
-    await file.save();
-    event.set("image", file);
-  }
-
   await event.save();
   return event;
 }
 
 /**
- * Delete an event completely.
- * Only admins can do this.
+ * Upload / replace event image (ADMIN ONLY)
+ */
+export async function uploadEventImage(eventId, file) {
+  const currentUser = getCurrentUser();
+  const admin = await isUserAdmin(currentUser);
+
+  if (!admin) {
+    throw new Error("Only admins can upload event images.");
+  }
+
+  if (!file) {
+    throw new Error("No image provided.");
+  }
+
+  const event = await fetchEvent(eventId);
+
+  const parseFile = new Parse.File(file.name, file);
+  await parseFile.save();
+
+  event.set("image", parseFile);
+  await event.save();
+
+  return event;
+}
+
+/**
+ * Delete event (ADMIN ONLY)
  */
 export async function deleteEvent(eventId) {
   const currentUser = getCurrentUser();
-  const isAdmin = await isUserAdmin(currentUser);
+  const admin = await isUserAdmin(currentUser);
 
-  if (!isAdmin) {
+  if (!admin) {
     throw new Error("Only admins can delete events.");
   }
 

@@ -1,20 +1,22 @@
 /* ===============================
    Base UI Button (shared)
-   Uses global design tokens
+   Fixed size, uses existing tokens
    =============================== */
 
 .ui-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
 
-  padding: 0 16px;
-  min-height: 36px;
+  /* Fixed, consistent size */
+  height: 36px;
   min-width: 100px;
+  padding: 0 16px;
 
   font-family: var(--font-family);
   font-size: var(--font-size-body-sm);
-  font-weight: var(--font-width-semibold);
+  font-weight: var(--font-width-regular); /* REGULAR */
 
   border-radius: 6px;
   border: 1px solid transparent;
@@ -80,7 +82,7 @@
 }
 
 /* ===============================
-   Icon Support
+   Icon Support (unchanged)
    =============================== */
 
 .ui-button--with-icon {
