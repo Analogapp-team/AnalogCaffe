@@ -12,7 +12,7 @@ function Explore() {
   useEffect(() => {
     let mounted = true;
     const q = new Parse.Query(Parse.User);
-    q.limit(100);
+    q.limit(7);
 
     q.find()
       .then((results) => {
@@ -23,7 +23,7 @@ function Explore() {
           displayName: getFullName(u),
           desc: u.get("headline") || u.get("desc") || "",
           imgSrc:
-            parseFileToUrl(u.get("avatarUrl") || u.get("profileImage")) ||
+            parseFileToUrl(u.get("profilePicture")) ||
             profilePicture,
         }));
         setUsers(mapped);
