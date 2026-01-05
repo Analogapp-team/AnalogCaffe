@@ -3,10 +3,12 @@
   border-radius: 10px;
   background-color: rgba(234, 222, 219, 0.863);
   border: rgba(0, 0, 0, 0.1) 0.5px solid;
+  margin-bottom: 30px;
 }
 
 .postWrapper {
   padding: 20px;
+  padding-bottom: 12px;
 }
 
 .postTop {
@@ -103,35 +105,33 @@
 
 .postActions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   gap: 15px;
   margin-top: 20px;
   padding-top: 10px;
   border-top: 0.5px solid white;
+  width: 100%;
 }
 
 .likeButton {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 8px 16px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  background: white;
+  min-width: 110px;
+  border: none;
+  border-radius: 8px;
+  background: #4d3333;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 14px;
+  font-size: 15px;
+  box-sizing: border-box;
 }
 
 .likeButton:hover:not(:disabled) {
-  background: #f8f9fa;
-  transform: translateY(-1px);
-}
-
-.likeButton.liked {
-  border-color: #e74c3c;
-  background: #ffeaea;
+  background: #4d3333bb;
 }
 
 .likeButton:disabled {
@@ -144,28 +144,29 @@
 }
 
 .likeCount {
-  font-weight: 600;
-  color: #333;
-}
-
-.likeButton.liked .likeCount {
-  color: #e74c3c;
-}
-
-.deleteButton {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  background: white;
-  cursor: pointer;
-  transition: all 0.2s;
+  font-weight: 400;
+  font-family: inherit;
+  color: #ececec;
   font-size: 14px;
 }
 
+.deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  min-width: 110px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
 .deleteButton:hover:not(:disabled) {
-  background: #ffeaea;
-  border-color: #e74c3c;
-  transform: translateY(-1px);
+  background: #eeeeee;
 }
 
 .deleteButton:disabled {

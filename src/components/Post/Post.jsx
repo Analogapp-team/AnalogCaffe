@@ -17,7 +17,7 @@ function Post({ post, onDelete }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   // Get the author object from the USER column
-  const user = post?.get?.("user") || null; // ✅ Consistent optional chaining
+  const user = post?.get?.("user") || null;
 
   // Check if current user liked this post and get like count
   useEffect(() => {
@@ -92,7 +92,7 @@ function Post({ post, onDelete }) {
     }
   };
 
-  // ✅ FIXED: Add getStudyCourse function (optional, for future use)
+  // getStudyCourse function (optional, for future use)
   const getStudyCourse = () => {
     if (!user) return "Student";
     try {
@@ -128,7 +128,7 @@ function Post({ post, onDelete }) {
   const postContent = getPostContent();
   const postImages = getPostImages();
   const authorForAvatar = getAuthorForAvatar();
-  const studyCourse = getStudyCourse(); // ✅ You can use this if needed
+  const studyCourse = getStudyCourse(); 
 
   return (
     <div className={styles.post}>
@@ -140,8 +140,6 @@ function Post({ post, onDelete }) {
 
             <div className={styles.authorInfo}>
               <span className={styles.postUsername}>{getAuthorName()}</span>
-              {/* ✅ Optional: Add study course if you want to display it */}
-              {/* <span className={styles.postStudyCourse}>{studyCourse}</span> */}
               <span className={styles.postDate}>
                 {formatRelativeTime(post.createdAt)}
               </span>
@@ -194,7 +192,7 @@ function Post({ post, onDelete }) {
               disabled={isDeleting}
               aria-label="Delete post"
             >
-              {isDeleting ? "Deleting..." : "🗑️"}
+              {isDeleting ? "Deleting..." : "Delete Post"}
             </button>
           )}
         </div>

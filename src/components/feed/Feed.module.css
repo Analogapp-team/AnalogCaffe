@@ -3,8 +3,7 @@
 }
 
 .feedWrapper {
-  padding: 20px;
+  padding: 2px;
   display: flex;
   flex-direction: column;
-  gap: 50px;
 }
