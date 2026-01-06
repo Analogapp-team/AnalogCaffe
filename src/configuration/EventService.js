@@ -22,30 +22,18 @@ function getCurrentUser() {
 }
 
 /**
- * Normalize participants to an array of user IDs
- */
-function normalizeParticipants(event) {
-  const raw = event.get("participants");
-  if (!raw || raw.length === 0) return [];
-
-  // Already IDs
-  if (typeof raw[0] === "string") return raw;
-
-  // Convert Parse.User objects → IDs
-  return raw.map((user) => user.id);
-}
-
-/**
- * Fetch a single event and normalize it
+ * Fetch a single event
  */
 async function fetchEvent(eventId) {
   const Event = Parse.Object.extend(EVENT_CLASS);
   const query = new Parse.Query(Event);
 
-  query.include("createdBy");
+  query.equalTo("objectId", eventId);
+  const event = await query.first();
 
-  const event = await query.get(eventId);
-  event.set("participants", normalizeParticipants(event));
+  if (!event) {
+    throw new Error("Event not found.");
+  }
 
   return event;
 }
@@ -68,12 +56,9 @@ export async function createEvent(data) {
   const Event = Parse.Object.extend(EVENT_CLASS);
   const event = new Event();
 
-  /**
-   * ACL setup
-   */
   const acl = new Parse.ACL();
   acl.setPublicReadAccess(true);
-  acl.setPublicWriteAccess(false);
+  acl.setPublicWriteAccess(true);
   acl.setRoleReadAccess("Admin", true);
   acl.setRoleWriteAccess("Admin", true);
 
@@ -85,7 +70,7 @@ export async function createEvent(data) {
   event.set("startTime", data.startTime || "");
   event.set("endTime", data.endTime || "");
   event.set("maxAttendees", Number(data.maxAttendees) || 0);
-  event.set("participants", []);
+  event.set("participants", []); // ✅ userId strings
   event.set("createdBy", currentUser);
 
   if (data.imageFile) {
@@ -109,13 +94,7 @@ export async function getEvents() {
   query.include("createdBy");
   query.limit(100);
 
-  const results = await query.find();
-
-  results.forEach((event) => {
-    event.set("participants", normalizeParticipants(event));
-  });
-
-  return results;
+  return await query.find();
 }
 
 /**
@@ -135,7 +114,9 @@ export async function joinEvent(eventId) {
   const userId = currentUser.id;
   const participants = event.get("participants") || [];
 
-  if (participants.includes(userId)) return event;
+  if (participants.includes(userId)) {
+    return event;
+  }
 
   const max = event.get("maxAttendees") || 0;
   if (max > 0 && participants.length >= max) {
