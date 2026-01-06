@@ -31,7 +31,6 @@ function Events() {
 
   /**
    * ADMIN ROLE (UI ONLY)
-   * Same logic as EventDetailPage
    */
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -80,33 +79,28 @@ function Events() {
    * EVENT HANDLERS (SIDE EFFECTS)
    */
 
-const handleDelete = async (eventId) => {
-  const confirmed = window.confirm(
-    "Are you sure you want to delete this event?"
-  );
-
-  if (!confirmed) return;
-
-  try {
-    await deleteEvent(eventId);
-
-    setEvents((prev) =>
-      prev.filter((e) => e.id !== eventId)
+  const handleDelete = async (eventId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this event?"
     );
-  } catch (err) {
-    console.error("Delete failed:", err);
-    alert(err.message || "Failed to delete event.");
-  }
-};
+
+    if (!confirmed) return;
+
+    try {
+      await deleteEvent(eventId);
+      setEvents((prev) => prev.filter((e) => e.id !== eventId));
+    } catch (err) {
+      console.error("Delete failed:", err);
+      alert(err.message || "Failed to delete event.");
+    }
+  };
 
   const handleJoin = async (eventId) => {
     try {
       const updated = await joinEvent(eventId);
 
       setEvents((prev) =>
-        prev.map((e) =>
-          e.id === updated.id ? updated : e
-        )
+        prev.map((e) => (e.id === updated.id ? updated : e))
       );
     } catch (err) {
       console.error("Join failed:", err);
@@ -119,14 +113,19 @@ const handleDelete = async (eventId) => {
       const updated = await leaveEvent(eventId);
 
       setEvents((prev) =>
-        prev.map((e) =>
-          e.id === updated.id ? updated : e
-        )
+        prev.map((e) => (e.id === updated.id ? updated : e))
       );
     } catch (err) {
       console.error("Leave failed:", err);
       alert(err.message || "Could not leave event.");
     }
+  };
+
+  /**
+   *  HANDLE EVENT CREATION (INSTANT UI UPDATE)
+   */
+  const handleEventCreated = (newEvent) => {
+    setEvents((prev) => [newEvent, ...prev]);
   };
 
   /**
@@ -137,7 +136,9 @@ const handleDelete = async (eventId) => {
       <h1>Events</h1>
 
       {/* Admin-only UI */}
-      {isAdmin && <CreateEventForm />}
+      {isAdmin && (
+        <CreateEventForm onEventCreated={handleEventCreated} />
+      )}
 
       {loading && <div>Loading events…</div>}
       {error && <div>{error}</div>}
