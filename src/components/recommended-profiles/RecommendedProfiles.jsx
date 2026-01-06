@@ -1,41 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./RecommendedProfiles.module.css";
-import { useNavigate } from "react-router-dom";
-
-// Temp mock data with images (replace later with real user data)
-const recommendedProfiles = [
-  {
-    name: "Liam Alexander Smith",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-  },
-  {
-    name: "Emma Grace Johnson",
-    image: "https://randomuser.me/api/portraits/women/45.jpg",
-  },
-  {
-    name: "Noah Benjamin Brown",
-    image: "https://randomuser.me/api/portraits/men/16.jpg",
-  },
-  {
-    name: "Olivia Marie Davis",
-    image: "https://randomuser.me/api/portraits/women/11.jpg",
-  },
-];
+import { useNavigate, Link } from "react-router-dom";
+import Parse from "../../configuration/Back4App";
+import { parseFileToUrl } from "../../utils/Parse";
+import { getFullName } from "../../utils/User";
+import defaultAvatar from "../../assets/images/profileimage.png";
 
 function RecommendedProfiles() {
   const navigate = useNavigate();
+  const [profiles, setProfiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      const q = new Parse.Query(Parse.User);
+      q.limit(4);
+      q.descending("createdAt");
+      try {
+        const results = await q.find();
+        const mapped = results.map((u) => ({
+          userId: u.id,
+          name: getFullName(u),
+          image: parseFileToUrl(u.get("profilePicture")) || defaultAvatar,
+        }));
+        setProfiles(mapped);
+      } catch (err) {
+        console.error("Failed to load recommended profiles", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProfiles();
+  }, []);
+
+  if (loading) return <div>Loading recommended profiles...</div>;
+
   return (
     <div className={styles.container}>
       <div className={styles.card}>
         <h3 className={styles.title}>Recommended Profiles</h3>
 
         <div className={styles.list}>
-          {recommendedProfiles.map((profile, idx) => (
+          {profiles.map((profile, idx) => (
             <div key={idx} className={styles.profileRow}>
               <img src={profile.image} alt={profile.name} className={styles.avatar} />
               <div className={styles.textGroup}>
                 <span className={styles.name}>{profile.name}</span>
-                <a href="#" className={styles.link}>See Profile →</a>
+                <Link to={`/profile/${profile.userId}`} className={styles.link}>See Profile →</Link>
               </div>
             </div>
           ))}
