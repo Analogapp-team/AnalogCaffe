@@ -42,7 +42,7 @@ function ExploreUserItem({ imgSrc, userId, desc, displayName }) {
       onClick={handleNavigate}
       >
         See Profile
-    </button>
+      </button>
     </div>
   );
 }
