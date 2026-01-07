@@ -14,9 +14,9 @@
   font-family: var(--font-family);
 }
 
-/* =========================
+/* 
    IMAGE
-========================= */
+*/
 
 .event-card__image {
   width: 72px;
@@ -27,9 +27,9 @@
   margin-right: 16px;
 }
 
-/* =========================
+/* 
    CONTENT
-========================= */
+ */
 
 .event-card__content {
   flex: 1;
@@ -49,9 +49,9 @@
   margin: 6px 0 12px;
 }
 
-/* =========================
+/*
    META INFO (date, time)
-========================= */
+ */
 
 .event-card__bottom {
   display: flex;
@@ -85,9 +85,7 @@
   color: var(--text-color-heading);
 }
 
-/* =========================
-   ACTIONS LAYOUT
-========================= */
+/* ACTIONS LAYOUT */
 
 .event-card__actions {
   display: flex;

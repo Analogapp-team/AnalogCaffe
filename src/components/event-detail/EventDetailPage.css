@@ -8,9 +8,9 @@
   background-color: var(--white-bg);
 }
 
-/* =========================
+/* 
    BACK LINK
-========================= */
+*/
 
 .event-back-link {
   display: inline-block;
@@ -21,9 +21,9 @@
   text-decoration: none;
 }
 
-/* =========================
+/* 
    HEADER LAYOUT
-========================= */
+ */
 
 .event-detail-header {
   display: flex;
@@ -51,9 +51,9 @@
   margin-bottom: 8px;
 }
 
-/* =========================
+/* 
    META (date + time)
-========================= */
+*/
 
 .event-meta {
   display: flex;
@@ -64,9 +64,9 @@
   color: var(--text-color-body);
 }
 
-/* =========================
+/* 
    ATTEND BUTTON
-========================= */
+ */
 
 .event-attend-btn {
   background-color: var(--button-default-bg);
@@ -88,9 +88,9 @@
   background-color: var(--button-hover-bg);
 }
 
-/* =========================
+/* 
    ABOUT SECTION
-========================= */
+*/
 
 .event-section-title {
   margin-top: 35px;
@@ -108,9 +108,9 @@
   color: var(--text-color-body);
 }
 
-/* =========================
+/* 
    ATTENDEES
-========================= */
+ */
 
 .event-attendees-title {
   margin-top: 35px;
@@ -118,4 +118,27 @@
   font-size: var(--font-size-h6);
   font-weight: var(--font-width-semibold);
   color: var(--text-color-heading);
+}
+
+.event-detail-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.event-detail-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-width-semibold);
+  color: var(--text-color-heading);
+}
+
+.event-detail-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
