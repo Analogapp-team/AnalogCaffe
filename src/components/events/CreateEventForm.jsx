@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./CreateEventForm.css";
 import { createEvent } from "../../configuration/EventService";
 
-function CreateEventForm() {
+function CreateEventForm({ onEventCreated }) {
   const [eventData, setEventData] = useState({
     title: "",
     description: "",
@@ -59,7 +59,7 @@ function CreateEventForm() {
     setSaving(true);
 
     try {
-      await createEvent({
+      const createdEvent = await createEvent({
         title: eventData.title,
         description: eventData.description,
         date: eventData.date,
@@ -68,6 +68,9 @@ function CreateEventForm() {
         maxAttendees: eventData.maxAttendees,
         imageFile: eventData.imageFile,
       });
+
+      // Notify parent so UI updates instantly
+      onEventCreated?.(createdEvent);
 
       setSuccess("Event created successfully!");
 
@@ -117,7 +120,6 @@ function CreateEventForm() {
           <div className="form-group">
             <label>Event Image</label>
 
-            {/* ✅ NEW STRUCTURAL WRAPPER */}
             <div className="event-image-row">
               <label className="ui-button ui-button--primary">
                 Choose file

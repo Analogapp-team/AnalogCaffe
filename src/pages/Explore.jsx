@@ -12,7 +12,9 @@ function Explore() {
   useEffect(() => {
     let mounted = true;
     const q = new Parse.Query(Parse.User);
+    
     q.limit(7);
+    q.descending("createdAt");
 
     q.find()
       .then((results) => {

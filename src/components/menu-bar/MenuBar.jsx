@@ -73,6 +73,7 @@ function MenuBar() {
 
         <NavLink
           to="/profile"
+          end
           className={({ isActive }) =>
             isActive
               ? `${styles.menubarButton} ${styles.active}`

@@ -81,9 +81,7 @@ textarea {
   height: 90px;
 }
 
-/* ============================= */
 /* File Input */
-/* ============================= */
 
 input[type="file"] {
   border: none;

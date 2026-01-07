@@ -1,4 +1,6 @@
 import React from "react";
+import calendarIcon from "../../assets/icons/calendar.svg";
+import clockIcon from "../../assets/icons/clock.svg";
 
 function EventDetailHeader({
   imageUrl,
@@ -25,11 +27,26 @@ function EventDetailHeader({
           <h1 className="event-detail-title">{title}</h1>
         )}
 
-        <div className="event-meta">
-          <span>{date}</span>
-          <span>
-            {startTime} – {endTime}
-          </span>
+        <div className="event-detail-meta">
+          <div className="event-detail-info">
+            <img
+              src={calendarIcon}
+              alt="Date"
+              className="event-detail-icon"
+            />
+            <span>{date}</span>
+          </div>
+
+          <div className="event-detail-info">
+            <img
+              src={clockIcon}
+              alt="Time"
+              className="event-detail-icon"
+            />
+            <span>
+              {startTime} – {endTime}
+            </span>
+          </div>
         </div>
       </div>
 

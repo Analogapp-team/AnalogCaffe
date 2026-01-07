@@ -15,12 +15,14 @@ function EventCard({ event, isAdmin, onJoin, onLeave, onDelete }) {
   const endTime = event.get("endTime");
   const maxAttendees = event.get("maxAttendees") || 0;
 
+  // ✅ participants = array of userId strings
   const participants = event.get("participants") || [];
   const participantCount = participants.length;
 
   const image = event.get("image");
   const imageUrl = image?.url?.() ?? "/default-event.png";
 
+  // ✅ CORRECT CHECK
   const isJoined =
     currentUser && participants.includes(currentUser.id);
 
@@ -31,13 +33,20 @@ function EventCard({ event, isAdmin, onJoin, onLeave, onDelete }) {
     isJoined ? onLeave(event.id) : onJoin(event.id);
   };
 
+  const truncateText = (text, maxLength = 125) => {
+    if (!text) return "";
+    return text.length > maxLength
+      ? text.slice(0, maxLength) + "…"
+      : text;
+  };
+
   return (
     <div className="event-card">
       <img src={imageUrl} alt={title} className="event-card__image" />
 
       <div className="event-card__content">
         <h3>{title}</h3>
-        <p>{description}</p>
+        <p>{truncateText(description)}</p>
 
         <div className="event-card__bottom">
           <div>

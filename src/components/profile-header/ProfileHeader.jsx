@@ -16,6 +16,9 @@ const ProfileHeader = ({ user }) => {
   const studyCourse = useUser?.get("studyCourse") || "";
   const bio = useUser?.get("bio") || "";
 
+  const isOwnProfile =
+    currentUser && useUser && currentUser.id === useUser.id;
+
   const handleSettingsClick = () => {
     navigate("/profile/settings");
   };
@@ -31,7 +34,9 @@ const ProfileHeader = ({ user }) => {
       </div>
 
       <div className="profile-right">
-        <ProfileSettingsButton onClick={handleSettingsClick} />
+        {isOwnProfile && (
+          <ProfileSettingsButton onClick={handleSettingsClick} />
+        )}
       </div>
     </div>
   );
