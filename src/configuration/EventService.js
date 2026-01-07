@@ -1,5 +1,5 @@
 import Parse from "./Back4App";
-import { isUserAdmin } from "../utils/roles";
+import { isUserAdmin } from "../utils/Roles";
 
 /**
  * Parse class name
@@ -70,7 +70,7 @@ export async function createEvent(data) {
   event.set("startTime", data.startTime || "");
   event.set("endTime", data.endTime || "");
   event.set("maxAttendees", Number(data.maxAttendees) || 0);
-  event.set("participants", []); 
+  event.set("participants", []);
   event.set("createdBy", currentUser);
 
   if (data.imageFile) {
@@ -162,7 +162,8 @@ export async function updateEvent(eventId, data) {
   const event = await fetchEvent(eventId);
 
   if (data.title !== undefined) event.set("title", data.title);
-  if (data.description !== undefined) event.set("description", data.description);
+  if (data.description !== undefined)
+    event.set("description", data.description);
   if (data.date !== undefined) event.set("date", data.date);
   if (data.startTime !== undefined) event.set("startTime", data.startTime);
   if (data.endTime !== undefined) event.set("endTime", data.endTime);

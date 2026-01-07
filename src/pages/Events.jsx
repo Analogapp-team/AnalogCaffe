@@ -17,7 +17,7 @@ import {
 } from "../configuration/EventService";
 import EventList from "../components/events/EventList";
 import CreateEventForm from "../components/events/CreateEventForm";
-import { isUserAdmin } from "../utils/roles";
+import { isUserAdmin } from "../utils/Roles";
 
 function Events() {
   const { currentUser } = useAuth();
@@ -99,9 +99,7 @@ function Events() {
     try {
       const updated = await joinEvent(eventId);
 
-      setEvents((prev) =>
-        prev.map((e) => (e.id === updated.id ? updated : e))
-      );
+      setEvents((prev) => prev.map((e) => (e.id === updated.id ? updated : e)));
     } catch (err) {
       console.error("Join failed:", err);
       alert(err.message || "Could not join event.");
@@ -112,9 +110,7 @@ function Events() {
     try {
       const updated = await leaveEvent(eventId);
 
-      setEvents((prev) =>
-        prev.map((e) => (e.id === updated.id ? updated : e))
-      );
+      setEvents((prev) => prev.map((e) => (e.id === updated.id ? updated : e)));
     } catch (err) {
       console.error("Leave failed:", err);
       alert(err.message || "Could not leave event.");
@@ -136,9 +132,7 @@ function Events() {
       <h1>Events</h1>
 
       {/* Admin-only UI */}
-      {isAdmin && (
-        <CreateEventForm onEventCreated={handleEventCreated} />
-      )}
+      {isAdmin && <CreateEventForm onEventCreated={handleEventCreated} />}
 
       {loading && <div>Loading events…</div>}
       {error && <div>{error}</div>}

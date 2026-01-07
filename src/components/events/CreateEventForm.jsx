@@ -2,7 +2,17 @@ import React, { useState } from "react";
 import "./CreateEventForm.css";
 import { createEvent } from "../../configuration/EventService";
 
+/*
+ * CreateEventForm component
+ *
+ * - Allow admins to create new events
+ * - Collect event data and send it to the backend
+ * - Notify parent component when an event is created
+ */
 function CreateEventForm({ onEventCreated }) {
+  /*
+   * Form state holding all event input fields
+   */
   const [eventData, setEventData] = useState({
     title: "",
     description: "",
@@ -13,45 +23,58 @@ function CreateEventForm({ onEventCreated }) {
     imageFile: null,
   });
 
+  /*
+   * UI state for form submission feedback
+   */
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // UI-only state (preview image)
+  /*
+   * UI-only state for previewing selected image
+   */
   const [imagePreview, setImagePreview] = useState(null);
 
-  // Handling all inputs in one place (works for text + file inputs)
+  /*
+   * Handle all input changes (text + file inputs)
+   */
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-
-    // Handle image input
+    
+     //Handle image file input separately
     if (files && files[0]) {
       const file = files[0];
 
-      // Basic validation
+      // Basic client-side validation
       if (!file.type.startsWith("image/")) {
         setError("Please select a valid image file.");
         return;
       }
-
       setEventData((prev) => ({
         ...prev,
         [name]: file,
       }));
 
-      // UI preview only
+      // Preview image in UI only (not saved to backend yet)
       setImagePreview(URL.createObjectURL(file));
       return;
     }
 
-    // Handle normal inputs
+    /*
+     * Handle normal text / number inputs
+     */
     setEventData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  // Submit the form and send the data to the backend
+  /*
+   * Submit form:
+   * - Send data to backend
+   * - Create event in Parse
+   * - Update UI optimistically via callback
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -69,12 +92,16 @@ function CreateEventForm({ onEventCreated }) {
         imageFile: eventData.imageFile,
       });
 
-      // Notify parent so UI updates instantly
+      /*
+       * Notify parent (Events page) so UI updates immediately
+       */
       onEventCreated?.(createdEvent);
 
       setSuccess("Event created successfully!");
 
-      // Resetting the form after saving
+      /*
+       * Reset form state after successful save
+       */
       setEventData({
         title: "",
         description: "",

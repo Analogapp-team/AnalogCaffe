@@ -8,34 +8,45 @@ import {
   updateEvent,
 } from "../../configuration/EventService";
 import { useAuth } from "../../configuration/AuthContext";
-import { isUserAdmin } from "../../utils/roles";
+import { isUserAdmin } from "../../utils/Roles";
 
 import EventDetailHeader from "./EventDetailHeader";
 import EventDetailDescription from "./EventDetailDescription";
 import EventAdminControls from "./EventAdminControls";
 
 function EventDetailPage() {
+  // Read eventId from the URL (/events/:eventId)
   const { eventId } = useParams();
+
+  // Get currently logged-in user from global auth context
   const { currentUser } = useAuth();
 
+  // Holds the event object fetched from the backend
   const [event, setEvent] = useState(null);
+
+  // Controls loading state while fetching event
   const [loading, setLoading] = useState(true);
 
+  // Toggles admin edit mode
   const [isEditing, setIsEditing] = useState(false);
+
+  // Temporary state for editable fields
   const [editData, setEditData] = useState({
     title: "",
     description: "",
   });
 
+  // UI-only admin flag
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // LOAD EVENT
+  // Load event data when page mounts or eventId changes
   useEffect(() => {
     const loadEvent = async () => {
       try {
         const result = await getEventById(eventId);
         setEvent(result);
 
+        // Initialize edit fields with current event values
         setEditData({
           title: result.get("title") || "",
           description: result.get("description") || "",
@@ -50,7 +61,7 @@ function EventDetailPage() {
     loadEvent();
   }, [eventId]);
 
-  // ADMIN CHECK (UI ONLY)
+  // Check if the current user is an admin (UI-only)
   useEffect(() => {
     const checkAdminRole = async () => {
       if (!currentUser) {
@@ -70,10 +81,13 @@ function EventDetailPage() {
     checkAdminRole();
   }, [currentUser]);
 
+  // Render loading state
   if (loading) return <div>Loading event...</div>;
+
+  // Render error state
   if (!event) return <div>Event not found.</div>;
 
-  // DERIVED DATA
+  // Extract event fields for cleaner JSX
   const title = event.get("title") || "Untitled event";
   const description = event.get("description") || "";
   const date = event.get("date") || "Date TBA";
@@ -81,19 +95,30 @@ function EventDetailPage() {
   const endTime = event.get("endTime") || "";
   const maxAttendees = event.get("maxAttendees") || 0;
 
+  // Participants are stored as an array of userId strings
   const participants = event.get("participants") || [];
   const participantCount = participants.length;
 
+  // Resolve event image URL
   const imageFile = event.get("image");
   const imageUrl = imageFile ? imageFile.url() : "/default-event.png";
 
+  // Determine if the current user joined the event
   const isJoined = currentUser && participants.includes(currentUser.id);
+
+  // Determine if event is full
   const isFull = maxAttendees > 0 && participantCount >= maxAttendees;
 
-  const joinLeaveLabel = isJoined ? "Leave Event" : isFull ? "Full" : "Attend Event";
+  // Compute button label and disabled state
+  const joinLeaveLabel = isJoined
+    ? "Leave Event"
+    : isFull
+    ? "Full"
+    : "Attend Event";
+
   const joinLeaveDisabled = isFull && !isJoined;
 
-  // HANDLERS
+  // Handle attend / leave button click
   const handleJoinLeave = async () => {
     try {
       if (isJoined) {
@@ -102,6 +127,7 @@ function EventDetailPage() {
         await joinEvent(eventId);
       }
 
+      // Re-fetch event to keep UI in sync with backend
       const updated = await getEventById(eventId);
       setEvent(updated);
     } catch (err) {
@@ -109,6 +135,7 @@ function EventDetailPage() {
     }
   };
 
+  // Save admin edits to backend
   const handleSaveEdit = async () => {
     try {
       await updateEvent(eventId, editData);
@@ -122,10 +149,10 @@ function EventDetailPage() {
     }
   };
 
+  // Cancel editing and restore original values
   const handleCancelEdit = () => {
     setIsEditing(false);
 
-    // Reset edit fields back to current event values (so cancel truly cancels)
     setEditData({
       title: event.get("title") || "",
       description: event.get("description") || "",

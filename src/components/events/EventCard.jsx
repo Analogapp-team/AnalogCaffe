@@ -4,10 +4,28 @@ import clockIcon from "../../assets/icons/clock.svg";
 import { useAuth } from "../../configuration/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+/*
+ * EventCard component
+ *
+ * Purpose:
+ * - Display a single event preview
+ * - Allow users to join/leave
+ * - Allow admins to delete
+ */
 function EventCard({ event, isAdmin, onJoin, onLeave, onDelete }) {
+  /**
+   * Get current logged-in user from AuthContext
+   */
   const { currentUser } = useAuth();
+
+  /*
+   * Used to navigate to event detail page
+   */
   const navigate = useNavigate();
 
+  /*
+   * Read event fields from Parse.Object
+   */
   const title = event.get("title");
   const description = event.get("description");
   const date = event.get("date");
@@ -15,24 +33,42 @@ function EventCard({ event, isAdmin, onJoin, onLeave, onDelete }) {
   const endTime = event.get("endTime");
   const maxAttendees = event.get("maxAttendees") || 0;
 
-  // ✅ participants = array of userId strings
+  /*
+   * Participants array
+   * Stored as array of userId strings
+   */
   const participants = event.get("participants") || [];
   const participantCount = participants.length;
 
+  /*
+   * Event image handling
+   */
   const image = event.get("image");
   const imageUrl = image?.url?.() ?? "/default-event.png";
 
-  // ✅ CORRECT CHECK
+  /*
+   * Check if current user is already joined
+   */
   const isJoined =
     currentUser && participants.includes(currentUser.id);
 
+  /*
+   * Check if event has reached capacity
+   */
   const isFull =
     maxAttendees > 0 && participantCount >= maxAttendees;
 
+  /*
+   * Handle join / leave button click
+   * Delegates logic to parent via callbacks
+   */
   const handleJoinClick = () => {
     isJoined ? onLeave(event.id) : onJoin(event.id);
   };
 
+  /*
+   * Utility: shorten long descriptions for card view
+   */
   const truncateText = (text, maxLength = 125) => {
     if (!text) return "";
     return text.length > maxLength

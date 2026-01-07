@@ -14,9 +14,9 @@ const saveAndRefresh = async (user) => {
   return await user.fetch();
 };
 
-// ======================================================
+//
 // PUBLIC FUNCTIONS
-// ======================================================
+// 
 
 // Get the current logged-in user's profile (fresh Parse.User)
 export const getCurrentUserProfile = async () => {

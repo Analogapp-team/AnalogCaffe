@@ -7,7 +7,7 @@ export function getFullName(user) {
   const lastName = typeof user.get === "function" ? user.get("lastName") : user.lastName;
   const email = typeof user.get === "function" ? user.get("email") : user.email;
   
-  // ✅ FIXED: No ternary needed here. 'id' is usually a top-level property on both standard objects and Models (like Parse/Backbone).
+  // FIXED: No ternary needed here. 'id' is usually a top-level property on both standard objects and Models (like Parse/Backbone).
   const id = user.id;
 
   const fn = firstName || "";
@@ -27,7 +27,7 @@ export function getDisplayInitials(user) {
   const lastName = typeof user.get === "function" ? user.get("lastName") : user.lastName;
   const email = typeof user.get === "function" ? user.get("email") : user.email;
   
-  // ✅ FIXED: Simplified here too
+  // Simplified here too
   const id = user.id;
 
   if (firstName || lastName) {
