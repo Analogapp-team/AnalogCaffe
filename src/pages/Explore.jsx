@@ -12,12 +12,14 @@ function Explore() {
   useEffect(() => {
     let mounted = true;
     const q = new Parse.Query(Parse.User);
+    
     q.limit(7);
+    q.descending("createdAt"); 
 
     q.find()
       .then((results) => {
-        if (!mounted) return;
-        const mapped = results.map((u) => ({
+        if (!mounted) return; //Prevents memory leak if component unmounts before fetch completes
+        const mapped = results.map((u) => ({ //Mapps Parse.User data to ExploreUserItem props
           id: u.id,
           userId: u.id,
           displayName: getFullName(u),
@@ -26,21 +28,21 @@ function Explore() {
             parseFileToUrl(u.get("profilePicture")) ||
             profilePicture,
         }));
-        setUsers(mapped);
+        setUsers(mapped); //maps the constant above to Users
       })
       .catch((err) => {
         console.error("Failed to load users", err);
       })
       .finally(() => {
-        if (mounted) setLoading(false);
+        if (mounted) setLoading(false); //stops loading again
       });
 
     return () => {
-      mounted = false;
+      mounted = false; //Cleanup that unmounts 
     };
-  }, []);
+  }, []); //Dependency array - Runs ONE time when the component first appears
 
-  if (loading) return <div>Loading profiles…</div>;
+  if (loading) return <div>Loading profiles…</div>; 
 
   return (
     <div>
@@ -50,7 +52,7 @@ function Explore() {
       </div>
       <br />
       <br />
-      {users.map((u) => (
+      {users.map((u) => ( //Mapss users to ExploreUserItem components
         <ExploreUserItem
           key={u.id}
           imgSrc={u.imgSrc}
