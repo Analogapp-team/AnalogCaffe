@@ -39,6 +39,7 @@ function ExploreUserItem({ imgSrc, userId, desc, displayName }) {
       type="button"
       role="switch"
       title="See profile"
+      onClick={handleNavigate}
       >
         See Profile
     </button>
