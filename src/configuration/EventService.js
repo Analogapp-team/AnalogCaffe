@@ -70,7 +70,7 @@ export async function createEvent(data) {
   event.set("startTime", data.startTime || "");
   event.set("endTime", data.endTime || "");
   event.set("maxAttendees", Number(data.maxAttendees) || 0);
-  event.set("participants", []); // ✅ userId strings
+  event.set("participants", []); 
   event.set("createdBy", currentUser);
 
   if (data.imageFile) {
