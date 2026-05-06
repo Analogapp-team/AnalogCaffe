@@ -1,0 +1,34 @@
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-align: left;
+}
+
+/* Name */
+.profile-name {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-width-bold);
+  color: var(--text-color-heading);
+  margin: 0px;
+  margin-top: 30px;
+}
+
+/* Study / subtitle */
+.profile-study {
+  font-size: var(--font-size-body-lg);
+  font-weight: var(--font-width-regular);
+  color: var(--text-color-heading);
+  margin: 0px;
+  margin-top: 10px;
+}
+
+/* Bio / description */
+.profile-bio {
+  font-size: var(--font-size-body-md);
+  font-weight: var(--font-width-regular);
+  color: var(--text-color-body);
+  margin: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

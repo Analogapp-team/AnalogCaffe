@@ -1,0 +1,73 @@
+.layoutContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+  background-color: #f7f5f1;
+  overflow-x: hidden; /* prevent horizontal overflow */
+}
+
+/* Three-column layout inside */
+.mainBody {
+  display: grid;
+  width: 100%;
+  max-width: 1170px;
+  grid-template-columns: minmax(200px, 250px) minmax(0, 1fr) minmax(200px, 250px); /* menu | content | recommended */
+  height: calc(100vh - 60px);
+  overflow: hidden;
+  margin: 0 auto; /* centers all of our content*/
+  background-color: #f7f5f1;
+}
+
+/* Middle page content area */
+.pageArea {
+  min-width: 0; /* allow grid children to shrink properly */
+  padding: 28px 24px;
+  height: 100%;
+  overflow-y: auto;
+  background-color: var(--white-bg);
+  overflow-wrap: break-word;
+}
+
+/* Right recommended column */
+.recommendedSidebar {
+  background-color: #f7f5f1;
+  border-left: 1px solid #ebe8df;
+  overflow-y: auto;
+  padding-left: 10px;
+}
+
+/* Ensure recommended sidebar doesn't grow beyond viewport and allow scrolling */
+.recommendedSidebar {
+  max-height: calc(100vh - 60px);
+}
+
+/* Keep recommended column visible on larger screens */
+@media (min-width: 900px) {
+  .recommendedSidebar {
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    align-self: start;
+    overflow-y: auto;
+  }
+}
+
+/* Responsive: collapse to single column on narrow screens */
+@media (max-width: 900px) {
+  .mainBody {
+    grid-template-columns: 1fr;
+    padding: 0 12px;
+    height: auto;
+  }
+
+  .menubar {
+    width: 100%;
+    border-right: none; /* remove vertical divider */
+    border-bottom: 1px solid #ebe8df;
+  }
+
+  .recommendedSidebar {
+    display: none; /* hide recommended section on mobile */
+  }
+}

@@ -1,0 +1,103 @@
+.container {
+  width: 100%;
+  max-width: 240px;
+  padding-left: 8px;
+  padding-top: 20px;
+  box-sizing: border-box;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #3d2c23;
+  margin: 0;
+}
+
+/* Profile list container */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Profile row */
+.profileRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Avatar image */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Name + secondary link grouped */
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #3d2c23;
+}
+
+.link {
+  font-size: 13px;
+  color: #5b3a29;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* See more button */
+.moreButton {
+  margin-top: 4px;
+  background: #e8d9cf;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #4a3227;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+}
+
+.moreButton:hover {
+  background: #d8c7b9;
+}

@@ -1,0 +1,80 @@
+.userItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 8px;
+  border-radius: 8px;
+  transition: background-color 150ms ease;
+  max-width: 900px;
+}
+
+.userItem:hover {
+  background-color: #f2f2f2; 
+}
+
+.userItem:focus-within {
+  background-color: #f2f2f2;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer; 
+  flex: 1 1 auto;   
+  min-width: 0;  
+}
+
+/* focus state, maybe not necessary if we don't do tabulation */
+.userInfo:focus {
+  outline: 2px solid rgba(44, 24, 16, 0.12);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.profileAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.userName {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: var(--text-color-heading);
+}
+
+.userDescription {
+  margin: 0;
+  font-size: 14px;
+  color: #666666;
+}
+
+.seeProfileButton {
+  padding: 6px 8px;
+  background-color: var(--button-default-bg);
+  color: var(--text-color-white);
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  flex: 0 0 auto;
+  margin-left: 12px;
+}
+
+.followbutton:hover {
+  background-color: var(--button-hover-bg);
+}

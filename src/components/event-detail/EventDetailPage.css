@@ -1,0 +1,144 @@
+.event-detail-page {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+
+  font-family: var(--font-family);
+  background-color: var(--white-bg);
+}
+
+/* 
+   BACK LINK
+*/
+
+.event-back-link {
+  display: inline-block;
+  margin-bottom: 20px;
+
+  font-size: var(--font-size-body-sm);
+  color: var(--text-color-menu);
+  text-decoration: none;
+}
+
+/* 
+   HEADER LAYOUT
+ */
+
+.event-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.event-detail-image {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.event-detail-header-info {
+  flex: 1;
+}
+
+.event-detail-title {
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-width-bold);
+  color: var(--text-color-heading);
+  margin-bottom: 8px;
+}
+
+/* 
+   META (date + time)
+*/
+
+.event-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  font-size: var(--font-size-body-sm);
+  color: var(--text-color-body);
+}
+
+/* 
+   ATTEND BUTTON
+ */
+
+.event-attend-btn {
+  background-color: var(--button-default-bg);
+  color: var(--text-color-white);
+
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+
+  font-size: var(--font-size-body-md);
+  font-weight: var(--font-width-bold);
+  font-family: inherit;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.event-attend-btn:hover {
+  background-color: var(--button-hover-bg);
+}
+
+/* 
+   ABOUT SECTION
+*/
+
+.event-section-title {
+  margin-top: 35px;
+
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-width-semibold);
+  color: var(--text-color-heading);
+}
+
+.event-description {
+  margin-top: 10px;
+
+  font-size: var(--font-size-body-md);
+  line-height: var(--font-line-body-md);
+  color: var(--text-color-body);
+}
+
+/* 
+   ATTENDEES
+ */
+
+.event-attendees-title {
+  margin-top: 35px;
+
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-width-semibold);
+  color: var(--text-color-heading);
+}
+
+.event-detail-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.event-detail-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-width-semibold);
+  color: var(--text-color-heading);
+}
+
+.event-detail-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}

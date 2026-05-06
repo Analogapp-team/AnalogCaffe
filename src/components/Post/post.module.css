@@ -1,0 +1,175 @@
+.post {
+  width: 100%;
+  border-radius: 10px;
+  background-color: rgba(234, 222, 219, 0.863);
+  border: rgba(0, 0, 0, 0.1) 0.5px solid;
+  margin-bottom: 30px;
+}
+
+.postWrapper {
+  padding: 20px;
+  padding-bottom: 12px;
+}
+
+.postTop {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.postTopLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.postProfileImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.postUsername {
+  font-size: 16px;
+  font-weight: 600;
+  color: #252b33;
+  line-height: 1.2;
+}
+
+.postProgramme {
+  font-size: 14px;
+  color: #687384;
+  line-height: 1.2;
+}
+
+.postDate {
+  font-size: 14px;
+  color: #999;
+  line-height: 1.2;
+}
+
+.postCenter {
+  margin: 0;
+  padding-top: 8px;
+}
+
+.postText {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #252b33;
+  display: block;
+}
+
+.loadingState {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+.postImages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.postImage {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.postImages.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.postImages.grid .postImage {
+  height: 200px;
+}
+
+.postActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 0.5px solid white;
+  width: 100%;
+}
+
+.likeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  min-width: 110px;
+  border: none;
+  border-radius: 8px;
+  background: #4d3333;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.likeButton:hover:not(:disabled) {
+  background: #4d3333bb;
+}
+
+.likeButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.likeIcon {
+  font-size: 16px;
+}
+
+.likeCount {
+  font-weight: 400;
+  font-family: inherit;
+  color: #ececec;
+  font-size: 14px;
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  min-width: 110px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: #eeeeee;
+}
+
+.deleteButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

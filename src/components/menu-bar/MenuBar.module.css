@@ -1,0 +1,158 @@
+.menubar {
+  min-width: 200px;
+  max-width: 250px;
+  background-color: #f7f5f1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-right: 1px solid #ebe8df;
+  box-sizing: border-box;
+}
+
+/* Nav section */
+.navSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+@media (max-width: 900px) {
+  .menubar {
+    min-width: 200px;
+    max-width: 250px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ebe8df;
+  }
+
+  .navSection {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .menubarButton {
+    padding: 8px 10px;
+    font-size: 14px;
+    border-radius: 6px;
+  }
+
+  .bottomSection {
+    display: none;
+  }
+}
+
+/* Keep the menu and logout/profile visible on larger screens */
+@media (min-width: 900px) {
+  .menubar {
+    position: sticky;
+    top: 60px; /* account for TopBar height */
+    height: calc(100vh - 60px);
+    align-self: start;
+    overflow-y: auto; /* allows menu to scroll if needed */
+  }
+
+  .bottomSection {
+    position: sticky;
+    bottom: 12px; /* keep the logout button near the bottom within the menu */
+    margin-top: auto;
+  }
+}
+
+.menubarButton {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 17px;
+  text-decoration: none;
+  color: black;
+  background-color: white;
+  padding: 12px 15px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.menubarButton:hover {
+  background-color: #e6e1da;
+}
+
+.active {
+  background-color: rgba(234, 222, 219, 0.863);
+}
+
+/* Bottom section */
+.bottomSection {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: auto;
+  /* margin-left: 100px; */
+}
+
+/* User info card */
+.userCard {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.userAvatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #d6c7b3;
+  margin-right: 15px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-weight: 400;
+  font-size: 15px;
+  color: #3d2c23;
+  margin: 0;
+}
+
+.userDetails {
+  font-size: 12px;
+  color: black;
+  margin: 0;
+  font-weight: 200;
+}
+
+/* Logout button */
+.logoutButton {
+  background: white;
+  border: none;
+  color: #3d2c23;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-radius: 10px;
+  padding: 10px 15px;
+  transition: background-color 0.2s ease;
+  margin-bottom: 30px;
+  gap: 10px;
+}
+
+.logoutButton:hover {
+  background-color: #e6e1da;
+}

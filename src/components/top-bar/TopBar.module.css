@@ -1,0 +1,48 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 60px;
+  padding: 0 30px;
+  background: #472d20; /* darken slightly */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: sticky;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.logoContainer {
+  width: 100%;
+  max-width: 1170px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 0;
+}
+
+.topBar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.topBar img {
+  position: relative;
+}
+
+/* Logo styling */
+.logo {
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.logo:hover {
+  opacity: 0.85;
+}

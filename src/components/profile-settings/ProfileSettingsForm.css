@@ -1,0 +1,158 @@
+/* ---- Base container ---- */
+.profile-settings-container {
+  background-color: var(--white-bg);
+  border: 1px solid var(--post-border);
+  border-radius: 10px;
+  padding: 3px 30px 40px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  color: var(--text-color-body);
+}
+
+/* ---- Section heading ---- */
+.profile-settings-container h2 {
+  font-size: var(--font-size-h5);
+  line-height: var(--font-line-h5);
+  font-weight: var(--font-width-semibold);
+  color: var(--text-color-heading);
+  margin-bottom: -16px;
+}
+
+.profile-settings-container p.section-description {
+  font-size: var(--font-size-body-sm);
+  line-height: var(--font-line-body-sm);
+  color: var(--text-color-body);
+  margin-bottom: 0;
+}
+
+/* ---- Divider ---- */
+.profile-divider {
+  height: 1px;
+  background-color: var(--post-border);
+  opacity: 0.5;
+  margin-bottom: 0;
+}
+
+/* ---- Avatar + Buttons ---- */
+.profile-header-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Avatar container */
+.profile-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: var(--post-bg);
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Loading state for avatar */
+.profile-avatar.loading {
+  background-color: var(--post-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-loading {
+  font-size: var(--font-size-body-xsm);
+  color: var(--text-color-body);
+}
+
+/* ---- Button group ---- */
+.button-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+/* ---- Input fields ---- */
+.profile-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.name-fields {
+  display: flex;
+  gap: 16px;
+}
+
+.form-input,
+.form-select {
+  flex: 1;
+}
+
+/* ---- Save section ---- */
+.save-section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* ---- Loading state ---- */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+
+  font-size: var(--font-size-body-md);
+  color: var(--text-color-body);
+}
+
+/* ---- Upload text ---- */
+.upload-text {
+  font-size: var(--font-size-body-sm);
+  color: var(--text-color-body);
+  font-style: italic;
+  margin-left: 0;
+}
+
+/* ---- Disabled buttons (global safety net) ---- */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .profile-settings-container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .name-fields {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .button-group {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,96 @@
+/* 
+   Base UI Button (shared)
+   Fixed size, uses existing tokens
+   */
+
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  /* Fixed, consistent size */
+  height: 36px;
+  min-width: 100px;
+  padding: 0 16px;
+
+  font-family: var(--font-family);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-width-regular); /* REGULAR */
+
+  border-radius: 6px;
+  border: 1px solid transparent;
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+/* Disabled state */
+.ui-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 
+   Primary Button
+   (Save, Attend, Confirm)
+   */
+
+.ui-button--primary {
+  background-color: var(--button-default-bg);
+  color: var(--text-color-white);
+}
+
+.ui-button--primary:hover:not(:disabled) {
+  background-color: var(--button-hover-bg);
+}
+
+/* 
+   Secondary Button
+   (Edit, Cancel, View)
+   */
+
+.ui-button--secondary {
+  background-color: var(--white-bg);
+  color: var(--text-color-default);
+  border-color: var(--post-border);
+}
+
+.ui-button--secondary:hover:not(:disabled) {
+  background-color: var(--menu-active-bg);
+}
+
+/* 
+   Danger Button
+   (Delete / Remove)
+   */
+
+.ui-button--danger {
+  background-color: #fff2f2;
+  color: #a82222;
+  border-color: #fde6e6;
+}
+
+.ui-button--danger:hover:not(:disabled) {
+  background-color: #ffeaea;
+}
+
+/*
+   Icon Support (unchanged)
+    */
+
+.ui-button--with-icon {
+  gap: 6px;
+}
+
+.ui-button--with-icon img {
+  width: 16px;
+  height: 16px;
+  display: block;
+}

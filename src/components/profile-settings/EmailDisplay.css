@@ -1,0 +1,45 @@
+.email-display {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+/* Label */
+.email-display__label {
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-width-medium);
+  color: var(--text-color-body);
+}
+
+/* Read-only field */
+.email-display__field {
+  display: flex;
+  align-items: center;
+
+  height: 64px;
+  padding: 0 12px;
+
+  border: 1px solid var(--post-border);
+  border-radius: 8px;
+  background-color: var(--white-bg);
+
+  font-size: var(--font-size-body-md);
+  color: var(--text-color-menu);
+
+  cursor: not-allowed;
+}
+
+/* Icon */
+.email-display__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+/* Text */
+.email-display__text {
+  color: var(--text-color-menu);
+  user-select: none;
+}
