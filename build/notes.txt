@@ -1,0 +1,221 @@
+
+What are Hooks 
+
+A hook in React is a special function that lets you "hook into" React's state and lifecycle features 
+from function components. Unlike class components that use lifecycle methods like componentDidMount, 
+hooks allow function components to manage state (useState), perform side effects (useEffect), 
+access context (useContext), create references (useRef), and more. Introduced in React 16.8, hooks enable function 
+components to have the same capabilities as class components while providing cleaner, more reusable code patterns. 
+They follow a strict rule: hooks must be called at the top level of React functions and cannot be used conditionally or in loops, 
+ensuring consistent behavior across renders.
+
+
+useAuth() - Authentication Hook
+
+What is useAuth()?
+useAuth() is a custom React hook that provides easy access to the authentication context throughout the application. 
+It's a convenience wrapper around React's useContext hook specifically for authentication.
+
+
+isAuthenticated - Authentication State Variable
+What is isAuthenticated?
+isAuthenticated is a boolean value derived from the authentication context that indicates whether 
+a user is currently logged into the application.
+
+Behind the Scenes Flow:
+1. App loads → AuthProvider mounts
+2. useEffect runs → Parse.User.currentAsync() checks localStorage
+3. If token exists → Parse SDK validates with server
+4. Server responds with user data → setCurrentUser(user)
+5. isAuthenticated = !!user → becomes true
+6. All components using useAuth() re-render with new value
+
+
+
+
+
+Components Using Hooks
+
+1. EventDetailPage
+Hooks Used:
+
+useState - Manage event data, loading, editing states
+useEffect - Fetch event data on mount, check admin permissions
+useParams - Get eventId from URL
+useAuth - Access current user for permissions/attendance
+
+Connections:
+
+Fetches from: EventService (getEventById, joinEvent, leaveEvent, updateEvent)
+Uses components: EventDetailHeader, EventDetailDescription, EventAdminControls
+Auth dependency: Uses current user to check attendance status and admin rights
+
+
+CreateEventForm
+Hooks Used:
+
+useState - Form data, loading, error states, image preview
+Custom handleChange - Unified input handler for all form fields
+
+Connections:
+
+Calls: EventService.createEvent()
+Parent callback: onEventCreated for immediate UI updates
+Form structure: Two-column layout with image preview
+
+MenuBar
+Hooks Used:
+
+useState - Local user state (separate from auth context)
+useEffect (2) - Load detailed user profile on mount, sync with auth changes
+useAuth - Access current user and logout function
+useNavigate - Programmatic navigation for logout
+
+Connections:
+
+Fetches from: UserService.getCurrentUserProfile()
+Uses components: ProfileAvatar for user image
+Auth sync: Dual-effect pattern for auth state synchronization
+
+
+
+Post (Individual Post Component)
+Hooks Used:
+
+useState - Like status, like count, deleting state
+useEffect - Initialize like data from post and current user
+useAuth - Check if current user is author for delete button
+
+Connections:
+
+Calls: PostService.likePost(), PostService.deletePost()
+Uses utilities: formatRelativeTime, extractPostContent, extractPostImages
+Parent callback: onDelete for feed updates
+
+RecommendedProfiles
+Hooks Used:
+
+useState - Profiles list, loading state
+useEffect - Fetch 4 newest users on mount
+useNavigate - "See more" button navigation
+
+Connections:
+
+Fetches from: Parse directly (Parse.Query on User class)
+Uses utilities: parseFileToUrl, getFullName
+Navigation: Links to individual profiles
+
+
+ShareTop & ShareBottom (Post Creation)
+ShareTop Hooks:
+
+Props only (stateless)
+
+ShareBottom Hooks:
+
+useRef - Reference to hidden file input (via prop)
+Props for all state
+
+Connections:
+
+Parent container: ShareBox manages all state
+Child components: ImagePreview for image thumbnails
+Form orchestration: Split UI responsibilities
+
+
+ Explore (Page)
+Hooks Used:
+
+useState - Users list, loading state
+useEffect - Fetch 7 newest users with cleanup pattern
+Mounted flag pattern to prevent memory leaks
+
+Connections:
+
+Fetches from: Parse directly
+Renders: ExploreUserItem components
+Utilities: parseFileToUrl, getFullName
+
+
+Profile (Page)
+Hooks Used:
+
+useState - Profile user data, user posts
+useEffect (2) - Fetch user data, then dependent posts fetch
+useParams - Get userId from URL (optional)
+useAuth - Get current user for "own profile" scenario
+
+Connections:
+
+Fetches from: UserService.getUserById(), PostService.getUserPosts()
+Renders: ProfileHeader, Post components
+Callback propagation: handlePostDelete passed to Post components
+
+
+AuthProvider (Context Provider)
+Hooks Used:
+
+useState - currentUser, loading states
+useEffect - Check persisted session on mount
+createContext - Create auth context
+useContext - Custom useAuth hook
+
+Connections:
+
+Backend: Parse/Back4App authentication
+Provides: Global auth state to entire app
+Methods: login, register, logout, refreshCurrentUser
+
+
+
+
+
+
+
+
+Database Structure (Parse Classes = Tables)
+Tables are created automatically via Parse's schema-on-write:
+
+First write operation creates the table
+Columns are dynamic - created when you first set data
+
+Common classes used:
+_User (built-in) - User authentication & profiles
+Event - Custom class for events
+Post - Custom class for social posts
+
+
+// First time saving an Event creates the "Event" table
+const Event = Parse.Object.extend("Event");  // References/creates class
+const event = new Event();                   // Creates instance
+event.set("title", "My Event");              // Creates "title" column
+event.set("participants", []);               // Creates "participants" column
+await event.save();                          // Table created if doesn't exist
+
+Service Layer Architecture
+Each domain has a dedicated service file:
+
+UserService.js - Manages _User table
+
+// Built-in User class (special permissions)
+const q = new Parse.Query(Parse.User);  // Query _User table
+const user = await q.get(userId);       // Fetch user by ID
+
+Special characteristics:
+_User table is built-in
+Authentication handled automatically
+ACL (Access Control) for security
+
+
+
+Data Relationships
+Pointer Relationships (Foreign Keys)
+
+// In PostService.js - Creating a relationship
+post.set("user", currentUser);  // currentUser is Parse.User object
+
+// In queries - Include related data
+query.include("user");  // Fetches full user object, not just pointer
+
+
+
