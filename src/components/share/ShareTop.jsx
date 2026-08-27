@@ -3,6 +3,12 @@ import ProfileAvatar from "../profile-header/ProfileAvatar";
 import styles from "./share.module.css";
 import ImagePreview from "./ImagePreview";
 
+/* A component that provides:
+   User identity display (profile avatar)
+   Text input area for post content
+   Image preview display for attached files
+   Loading state management across all inputs
+*/ 
 function ShareTop({
   user,
   content,
@@ -13,10 +19,12 @@ function ShareTop({
 }) {
   return (
     <div className={styles.shareTop}>
+      {/* Left: Profile Avatar */}
       <div className={styles.shareProfileImgWrapper}>
         {user && <ProfileAvatar user={user} size={40} />}
       </div>
 
+      {/* Center: Text Input */}
       <textarea
         placeholder="What's on your mind?"
         className={styles.shareInput}
@@ -26,7 +34,7 @@ function ShareTop({
         rows="1"
       />
 
-      {/* Image previews */}
+      {/* Bottom: Image Previews */}
       {imagePreviews && imagePreviews.length > 0 && (
         <div className={styles.imagePreviews}>
           {imagePreviews.map((preview, index) => (

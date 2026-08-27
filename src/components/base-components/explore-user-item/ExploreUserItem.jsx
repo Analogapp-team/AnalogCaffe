@@ -1,9 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";// React router's hook hook for programmatic navigation
 import "./ExploreUserItem.css";
 
 function ExploreUserItem({ imgSrc, userId, desc, displayName }) {
   const navigate = useNavigate();
 
+
+  //Navigates to /profile/{userId} when a specific user exists
+  // encodeURIComponent() safely encodes the userId for URLs
   const handleNavigate = () => {
     if (userId) {
       navigate(`/profile/${encodeURIComponent(userId)}`);
@@ -16,11 +19,11 @@ function ExploreUserItem({ imgSrc, userId, desc, displayName }) {
     <div className="userItem">
       <div
         className="userInfo"
-        role="link"
-        tabIndex={0}
-        aria-label={`Open profile of ${displayName || userId || "user"}`}
+        role="link"   // Treats the div as a link for screen readers
+        tabIndex={0}  // Makes it focusable via keyboard
+        aria-label={`Open profile of ${displayName || userId || "user"}`} // Provides descriptive text for screen readers
         onClick={handleNavigate}
-        onKeyDown={(e) => {
+        onKeyDown={(e) => {    // Allows triggering navigation with Enter or Space keys
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             handleNavigate();
@@ -47,3 +50,11 @@ function ExploreUserItem({ imgSrc, userId, desc, displayName }) {
 }
 
 export default ExploreUserItem;
+
+
+//  USER EXPERIENCE FLOW
+
+/*User sees a card with another user's info
+Can click anywhere on the user info area OR the "See Profile" button
+Both actions navigate to that user's profile page
+Keyboard users can tab to the element and press Enter/Space*/ 

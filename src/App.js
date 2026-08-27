@@ -15,6 +15,20 @@ import MainLayout from "./layouts/MainLayout";
 import ProfileSettings from "./pages/ProfileSettings";
 import EventDetailPage from "./components/event-detail/EventDetailPage";
 
+/* the App component - the main routing configuration and entry point 
+for the entire React application. The central router configuration that:
+Defines all application routes and their components
+Manages authentication-based access control (protected vs public routes)
+Organizes layout structure with nested routes
+Handles redirects for unauthorized access
+Sets up the SPA (Single Page Application) routing foundation
+
+Router: Wraps entire app, provides routing context (BrowserRouter for web apps)
+Routes: Container for Route definitions (React Router v6)
+Route: Defines a path-to-component mapping
+Navigate: Programmatic navigation/redirect component
+*/ 
+
 function App() {
   const { isAuthenticated } = useAuth();
 

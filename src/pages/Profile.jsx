@@ -8,6 +8,13 @@ import { getUserPosts } from "../configuration/PostService";
 import Post from "../components/Post/Post";
 // Removed unused imports
 
+/* Profile page component - a dynamic page that displays a user's 
+profile and their posts, A dynamic container component that:
+Displays user profiles (either current user or other users)
+Fetches and displays user's posts
+Handles post deletion with real-time UI updates
+Manages dual data fetching (user info + posts)*/
+
 const Profile = () => {
   const { userId } = useParams();
   const { currentUser } = useAuth();
@@ -37,9 +44,9 @@ const Profile = () => {
   // EFFECT TO FETCH USER POSTS
   useEffect(() => {
     const fetchUserPosts = async () => {
-      if (!profileUser) return;
+      if (!profileUser) return; // Wait until we have a user
       try {
-        const posts = await getUserPosts(profileUser.id);
+        const posts = await getUserPosts(profileUser.id); // Fetch user's post
         setUserPosts(posts);
       } catch (error) {
         console.error("Error fetching user posts:", error);

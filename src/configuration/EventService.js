@@ -1,6 +1,13 @@
 import Parse from "./Back4App";
 import { isUserAdmin } from "../utils/Roles";
 
+/* A service layer/module that provides:
+CRUD operations for events (Create, Read, Update, Delete)
+Event participation management (Join/Leave)
+Admin-only operations with role validation
+Image upload handling for event banners
+Data access abstraction from Parse database*/ 
+
 /**
  * Parse class name
  */

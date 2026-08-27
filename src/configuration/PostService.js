@@ -1,7 +1,8 @@
 import Parse from "./Back4App";
 import { parseImagesToUrls } from "../utils/Parse";
 
-// PostService handles creating, fetching, liking, and deleting posts. Call these functions when making a component to interact with posts.
+// PostService handles creating, fetching, liking, and deleting posts. 
+// Call these functions when making a component to interact with posts.
 
 // createPost creates a new post with optional images.
 export const createPost = async ({ content, images = [] }) => {
@@ -110,7 +111,7 @@ export const getPosts = async (options = {}) => {
     //user information
     query.include("user");
 
-    // ✅ CRITICAL FIX 2: Select specific user fields to ensure they're fetched
+    // CRITICAL FIX: Select specific user fields to ensure they're fetched
     // Without this, user data might be incomplete
     query.select([
       "content",
@@ -139,12 +140,12 @@ export const getPosts = async (options = {}) => {
     // Execute the query
     const posts = await query.find();
 
-    // ✅ EXTENSIVE DEBUGGING
+    // EXTENSIVE DEBUGGING
     console.log("=== POST FETCH DEBUG ===");
     console.log(`Total posts fetched: ${posts.length}`);
 
     if (posts.length === 0) {
-      console.warn("⚠️ No posts found!");
+      console.warn("No posts found!");
       return posts;
     }
 
@@ -160,7 +161,7 @@ export const getPosts = async (options = {}) => {
       console.log("Has 'user' field:", !!user);
 
       if (user) {
-        console.log("✅ User object found!");
+        console.log("User object found!");
         console.log("User ID:", user.id);
         console.log("User className:", user.className);
         console.log("User firstName:", user.get("firstName"));
@@ -174,11 +175,11 @@ export const getPosts = async (options = {}) => {
 
         // If firstName/lastName are missing, try to fetch fresh
         if (!user.get("firstName") && !user.get("lastName")) {
-          console.warn("⚠️ User object missing name data!");
+          console.warn("User object missing name data!");
           console.log("Raw user data from post:", postJson.user);
         }
       } else {
-        console.error("❌ NO USER OBJECT FOUND!");
+        console.error("NO USER OBJECT FOUND!");
         console.log("Post JSON structure:", Object.keys(postJson));
         console.log("Post raw user field:", postJson.user);
 
@@ -229,7 +230,7 @@ export const getUserPosts = async (userId) => {
 
     const posts = await query.find();
 
-    console.log(`✅ Fetched ${posts.length} posts for user ${userId}`);
+    console.log(`Fetched ${posts.length} posts for user ${userId}`);
 
     if (posts.length > 0) {
       const firstUser = posts[0].get("user");

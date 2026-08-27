@@ -5,24 +5,32 @@ import profilePicture from "../assets/images/ProfilePicture.png";
 import { parseFileToUrl } from "../utils/Parse";
 import { getFullName } from "../utils/User";
 
+
+/* Explore page component - a page that displays a list of user profiles for discovery.
+A page/container component that: Fetches and displays user profiles from the database
+Provides user discovery functionality (browse other users), transforms raw user data into display-friendly format
+Handles loading and error states gracefully*/ 
+
 function Explore() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]); // Array of user objects for display
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let mounted = true;
-    const q = new Parse.Query(Parse.User);
+    const q = new Parse.Query(Parse.User); // Queries the User class/table
     
     q.limit(7);
-    q.descending("createdAt"); 
+    q.descending("createdAt"); // Newest users first
 
     q.find()
       .then((results) => {
-        if (!mounted) return; //Prevents memory leak if component unmounts before fetch completes
-        const mapped = results.map((u) => ({ //Mapps Parse.User data to ExploreUserItem props
+        if (!mounted) return; // Prevent state updates if unmounted
+
+        // Transform Parse users to display objects
+        const mapped = results.map((u) => ({
           id: u.id,
           userId: u.id,
-          displayName: getFullName(u),
+          displayName: getFullName(u), // Formatted name "John D."
           desc: u.get("headline") || u.get("desc") || "",
           imgSrc:
             parseFileToUrl(u.get("profilePicture")) ||

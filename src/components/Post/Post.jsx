@@ -10,11 +10,20 @@ import styles from "./post.module.css";
 import ProfileAvatar from "../profile-header/ProfileAvatar";
 import { formatRelativeTime } from "../../utils/Time";
 
+
+/* Post component displays a single social media post with interactive features. 
+   post display component that handles: 
+   Post content rendering (text + images)
+   Interactive actions (likes, deletion)
+   Author information display
+   Real-time state synchronization with backend
+*/ 
+
 function Post({ post, onDelete }) {
   const { currentUser } = useAuth();
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isLiked, setIsLiked] = useState(false); // Like status for current user
+  const [likeCount, setLikeCount] = useState(0); // Total like count
+  const [isDeleting, setIsDeleting] = useState(false); // Deletion in progress
 
   // Get the author object from the USER column
   const user = post?.get?.("user") || null;
@@ -26,12 +35,12 @@ function Post({ post, onDelete }) {
       setLikeCount(likes.length);
       setIsLiked(likes.some((like) => like === currentUser.id));
     }
-  }, [post, currentUser]);
+  }, [post, currentUser]); // Re-run when post data or user changes
 
   const handleLike = async () => {
     try {
       const updatedPost = await likePost(post.id);
-      const likes = updatedPost.get?.("likes") || [];
+      const likes = updatedPost.get?.("likes") || []; // Extract fresh data
       setLikeCount(likes.length);
       setIsLiked(likes.some((like) => like === currentUser.id));
     } catch (error) {
@@ -45,7 +54,7 @@ function Post({ post, onDelete }) {
     setIsDeleting(true);
     try {
       await deletePost(post.id);
-      if (onDelete) onDelete(post.id);
+      if (onDelete) onDelete(post.id); // Notify parent
     } catch (error) {
       console.error("Error deleting post:", error);
       alert("Error deleting post: " + error.message);
@@ -69,7 +78,7 @@ function Post({ post, onDelete }) {
       console.log("Name debug:", { firstName, lastName });
 
       if (firstName && lastName) {
-        return `${firstName} ${lastName.charAt(0)}.`;
+        return `${firstName} ${lastName.charAt(0)}.`; // "John D."
       }
 
       if (firstName) {

@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import Parse from "./Back4App";
 
-// Creates a react context object that can store authentication states and methods (currentUser, login, logout, isAuthenticated etc)
+// Creates a react context object that can store authentication states and methods 
+// (currentUser, login, logout, isAuthenticated etc)
+
 const AuthContext = createContext();
 
-// Just so we don't need to import useContext and AuthContext every time
+// Custom hook for easy access instead of useContext(AuthContext)
 export function useAuth() {
   return useContext(AuthContext);
 }
@@ -12,14 +14,15 @@ export function useAuth() {
 // AuthProvider component that wraps the app and provides authentication context.
 // Speaks with Back4App through Parse to manage user authentication.
 function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null); // No user logged in
   const [loading, setLoading] = useState(true);
 
-  // On mount, check if user is already logged in
+  // On mount, check if user is already logged in. 
+  // useEffect is a React Hook that lets you perform side effects in function components.
   useEffect(() => {
     const checkCurrentUser = async () => {
       try {
-        const user = await Parse.User.currentAsync();
+        const user = await Parse.User.currentAsync(); // Parse.User.currentAsync() checks localStorage/cookies
         setCurrentUser(user);
       } catch (error) {
         console.error("Error checking current user:", error);

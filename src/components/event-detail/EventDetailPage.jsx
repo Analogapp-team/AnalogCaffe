@@ -14,6 +14,12 @@ import EventDetailHeader from "./EventDetailHeader";
 import EventDetailDescription from "./EventDetailDescription";
 import EventAdminControls from "./EventAdminControls";
 
+/* Defines the main EventDetailPage component. 
+   page that displays and manages a single event. 
+   It's the container/parent component that orchestrates multiple sub-components.
+   Creates a complete event detail page that:Fetches and displays event data, Allows users to join/leave events
+   Provides admin-only editing capabilities, Manages all event-related state and API calls*/ 
+
 function EventDetailPage() {
   // Read eventId from the URL (/events/:eventId)
   const { eventId } = useParams();
@@ -36,17 +42,20 @@ function EventDetailPage() {
     description: "",
   });
 
-  // UI-only admin flag
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); // Admin status
 
-  // Load event data when page mounts or eventId changes
+  /* LOAD EVENT / Data Fetching Effects, Fetches event data on 
+     component mount/URL change, Initializes edit form with current values, 
+     Handles loading and error states.
+
+*/
   useEffect(() => {
     const loadEvent = async () => {
       try {
         const result = await getEventById(eventId);
         setEvent(result);
 
-        // Initialize edit fields with current event values
+        // Initialize edit form with current values
         setEditData({
           title: result.get("title") || "",
           description: result.get("description") || "",
@@ -59,7 +68,7 @@ function EventDetailPage() {
     };
 
     loadEvent();
-  }, [eventId]);
+  }, [eventId]);  // Re-run when eventId change
 
   // Check if the current user is an admin (UI-only)
   useEffect(() => {
@@ -79,7 +88,9 @@ function EventDetailPage() {
     };
 
     checkAdminRole();
-  }, [currentUser]);
+  }, [currentUser]);  
+  /*Re-run when user changes, Checks if current user has admin privileges
+    Runs whenever currentUser changes (login/logout)*/ 
 
   // Render loading state
   if (loading) return <div>Loading event...</div>;
@@ -87,7 +98,8 @@ function EventDetailPage() {
   // Render error state
   if (!event) return <div>Event not found.</div>;
 
-  // Extract event fields for cleaner JSX
+  // DERIVED DATA
+  // Extract data from event object (Parse/Object)
   const title = event.get("title") || "Untitled event";
   const description = event.get("description") || "";
   const date = event.get("date") || "Date TBA";
@@ -103,10 +115,10 @@ function EventDetailPage() {
   const imageFile = event.get("image");
   const imageUrl = imageFile ? imageFile.url() : "/default-event.png";
 
-  // Determine if the current user joined the event
+  // Check if user has joined
   const isJoined = currentUser && participants.includes(currentUser.id);
 
-  // Determine if event is full
+  // Check if event is full
   const isFull = maxAttendees > 0 && participantCount >= maxAttendees;
 
   // Compute button label and disabled state
@@ -127,9 +139,9 @@ function EventDetailPage() {
         await joinEvent(eventId);
       }
 
-      // Re-fetch event to keep UI in sync with backend
-      const updated = await getEventById(eventId);
-      setEvent(updated);
+      // Refresh event data after action
+      const updated = await getEventById(eventId); 
+      setEvent(updated); 
     } catch (err) {
       console.error("Join/Leave error:", err);
     }
@@ -138,12 +150,12 @@ function EventDetailPage() {
   // Save admin edits to backend
   const handleSaveEdit = async () => {
     try {
-      await updateEvent(eventId, editData);
+      await updateEvent(eventId, editData);  // Save edits
 
       const updated = await getEventById(eventId);
-      setEvent(updated);
+      setEvent(updated);  // Refresh data
 
-      setIsEditing(false);
+      setIsEditing(false);  // Exit edit mode
     } catch (err) {
       console.error("Update error:", err);
     }
@@ -161,10 +173,13 @@ function EventDetailPage() {
 
   return (
     <div className="event-detail-page">
+
+       {/* Back navigation */}
       <Link to="/events" className="event-back-link">
         ← Back to all events
       </Link>
 
+      {/* Header Component */}
       <EventDetailHeader
         imageUrl={imageUrl}
         title={title}
@@ -182,6 +197,7 @@ function EventDetailPage() {
         joinLeaveDisabled={joinLeaveDisabled}
       />
 
+      {/* Description Component */}
       <EventDetailDescription
         isEditing={isEditing}
         description={description}
@@ -191,6 +207,7 @@ function EventDetailPage() {
         }
       />
 
+      {/* Attendees count */}
       <h2 className="event-attendees-title">
         Attendees {participantCount} / {maxAttendees}
       </h2>

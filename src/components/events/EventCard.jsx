@@ -4,14 +4,11 @@ import clockIcon from "../../assets/icons/clock.svg";
 import { useAuth } from "../../configuration/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-/*
- * EventCard component
- *
- * Purpose:
- * - Display a single event preview
- * - Allow users to join/leave
- * - Allow admins to delete
- */
+/*EventCard component - a reusable card UI component that displays event information 
+  in a list/grid view with interactive actions. Creates a visually appealing,
+  interactive card that: Displays key event information,Allows users to view details, join/leave events
+  Provides admin-only delete functionality, Shows real-time attendance status*/ 
+
 function EventCard({ event, isAdmin, onJoin, onLeave, onDelete }) {
   /**
    * Get current logged-in user from AuthContext
@@ -129,3 +126,4 @@ function EventCard({ event, isAdmin, onJoin, onLeave, onDelete }) {
 }
 
 export default EventCard;
+

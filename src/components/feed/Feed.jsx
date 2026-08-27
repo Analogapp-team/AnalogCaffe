@@ -2,8 +2,16 @@ import React from "react";
 import Post from "../Post/Post";
 import styles from "./Feed.module.css";
 
+/*Feed component - a presentational container that displays a list of posts 
+  with loading, error, and empty states receiving all data via props for clean separation 
+  of concerns, making it reusable, testable, and focused solely on UI rendering.*/ 
+
 function Feed({ posts, loading, error, onPostDelete, onRefresh }) {
-  // Remove all useState and useEffect hooks - they come from props now
+  /*posts: Array of post objects to display
+  loading: Boolean, whether data is currently loading
+  error: String | null, Error message if loading failed
+  onPostDelete: Function, Callback when a post is deleted
+  onRefresh: Function [Note: Declared but not used in this version]*/ 
 
   if (loading) {
     return (

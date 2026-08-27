@@ -3,6 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../configuration/AuthContext";
 import styles from "./LandingPage.module.css";
 
+/* LoginForm component that handles user authentication in a React application.
+   clear separation of concerns—it manages only UI state (email, password, loading, error)
+  while delegating actual authentication to the useAuth hook, 
+  and it provides immediate user feedback via disabled buttons and error messages.
+  useState: Manages local form state (email, password, loading, error)
+  useNavigate: React Router hook for programmatic navigation (SPA-friendly routing)
+  useAuth: Custom authentication context hook (likely provides login() method)
+  CSS Modules: Scoped styling to prevent class name collisions*/ 
+
 export default function LoginForm() {
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -13,19 +22,19 @@ export default function LoginForm() {
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+    e.preventDefault();   // Prevent default form submission
+    setLoading(true);     // Show loading state
+    setError("");        // Clear previous errors
 
-    const result = await login(email, password);
+    const result = await login(email, password); // Call authentication API
 
     if (result.success) {
-      navigate("/");
+      navigate("/");  // Redirect to home page
     } else {
       setError(result.error || "Login failed");
     }
 
-    setLoading(false);
+    setLoading(false); // Reset loading state
   };
 
   return (
@@ -65,3 +74,4 @@ export default function LoginForm() {
     </form>
   );
 }
+

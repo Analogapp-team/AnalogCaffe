@@ -2,6 +2,12 @@ import React from "react";
 import calendarIcon from "../../assets/icons/calendar.svg";
 import clockIcon from "../../assets/icons/clock.svg";
 
+
+/* React component that displays the main header section of an event detail page,
+ with support for editing the title and an attendance button. Core Purpose
+Renders the visual header for an event page, including:Event image,Title (editable in edit mode)
+Date and time information, Conditional attendance button*/ 
+
 function EventDetailHeader({
   imageUrl,
   title,
@@ -18,7 +24,7 @@ function EventDetailHeader({
 }) {
   return (
     <div className="event-detail-header">
-      <img src={imageUrl} alt={title} className="event-detail-image" />
+      <img src={imageUrl} alt={title} className="event-detail-image" /> 
 
       <div className="event-detail-header-info">
         {isEditing ? (
@@ -64,3 +70,4 @@ function EventDetailHeader({
 }
 
 export default EventDetailHeader;
+

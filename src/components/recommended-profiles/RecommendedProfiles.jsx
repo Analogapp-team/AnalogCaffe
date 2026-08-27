@@ -6,32 +6,39 @@ import { parseFileToUrl } from "../../utils/Parse";
 import { getFullName } from "../../utils/User";
 import defaultAvatar from "../../assets/images/profileimage.png";
 
+/* A component that fetches user profiles from the backend (Parse/Back4App)
+   displays them in a list with avatars and names, provides navigation to individual profiles
+   Offers exploration with a "See more" button and handles loading and error states*/ 
+
 function RecommendedProfiles() {
   const navigate = useNavigate();
-  const [profiles, setProfiles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [profiles, setProfiles] = useState([]); // Array of profile objects
+  const [loading, setLoading] = useState(true); // Data fetching status
 
+  // Data fetching effect
   useEffect(() => {
     const fetchProfiles = async () => {
-      const q = new Parse.Query(Parse.User);
+      const q = new Parse.Query(Parse.User); // Create Parse query, Query the User class.
       q.limit(4);
-      q.descending("createdAt");
+      q.descending("createdAt"); // Newest users first
       try {
-        const results = await q.find();
+        const results = await q.find(); // Execute query
+
+        // Transform Parse objects to simple profile objects
         const mapped = results.map((u) => ({
           userId: u.id,
           name: getFullName(u),
           image: parseFileToUrl(u.get("profilePicture")) || defaultAvatar,
         }));
-        setProfiles(mapped);
+        setProfiles(mapped); // Update state
       } catch (err) {
         console.error("Failed to load recommended profiles", err);
       } finally {
-        setLoading(false);
+        setLoading(false); // Always stop loading
       }
     };
     fetchProfiles();
-  }, []);
+  }, []); // Empty dependency array = runs once on mount
 
   if (loading) return <div>Loading recommended profiles...</div>;
 

@@ -9,8 +9,11 @@ import { getFullName } from "../../utils/User";
 
 const ProfileHeader = ({ user }) => {
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
-  const useUser = user || currentUser;
+  const { currentUser } = useAuth(); // useAuth() is a custom hook that provides authentication state
+  const useUser = user || currentUser; // currentUser represents the currently logged-in user (or null if logged out)
+  /*Creates a variable useUser that represents which user's profile to display
+    Uses the logical OR (||) operator for fallback logic
+    Follows this priority: user prop → currentUser → undefined*/ 
 
   const fullName = getFullName(useUser);
   const studyCourse = useUser?.get("studyCourse") || "";
@@ -43,3 +46,11 @@ const ProfileHeader = ({ user }) => {
 };
 
 export default ProfileHeader;
+
+/* This initialization block determines the component's behavior. It:
+   Sets up dependencies (navigation, authentication)
+   Resolves the core question: "Whose profile are we showing?"
+   Enables multiple use cases with simple, clean logic
+   Follows React best practices with hooks and prop-based design
+   The elegance is in its simplicity—three lines of code that handle 
+   complex business logic about user identity and profile viewing permissions.*/

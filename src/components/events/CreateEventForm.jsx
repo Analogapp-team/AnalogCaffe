@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import "./CreateEventForm.css";
 import { createEvent } from "../../configuration/EventService";
 
-/*
- * CreateEventForm component
- *
- * - Allow admins to create new events
- * - Collect event data and send it to the backend
- * - Notify parent component when an event is created
- */
-function CreateEventForm({ onEventCreated }) {
-  /*
-   * Form state holding all event input fields
-   */
-  const [eventData, setEventData] = useState({
+
+/* CreateEventForm component,for creating new events with image upload, 
+   validation, and real-time preview. Provides a user-friendly form interface 
+   to create new events with: All necessary event fields, Image upload with preview
+   Form validation, Submission to backend API, Visual feedback and state management*/ 
+
+function CreateEventForm({ onEventCreated }) {  
+  // Optional callback after successful creation.
+  // Parent component can listen for successful event creation
+  //Useful for refreshing event lists or navigating
+
+  const [eventData, setEventData] = useState({ 
     title: "",
     description: "",
     date: "",
@@ -23,12 +23,9 @@ function CreateEventForm({ onEventCreated }) {
     imageFile: null,
   });
 
-  /*
-   * UI state for form submission feedback
-   */
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [saving, setSaving] = useState(false); // Loading state during submission
+  const [error, setError] = useState("");  // Success message display
+  const [success, setSuccess] = useState(""); // Client-side image preview
 
   /*
    * UI-only state for previewing selected image
@@ -50,6 +47,8 @@ function CreateEventForm({ onEventCreated }) {
         setError("Please select a valid image file.");
         return;
       }
+
+      // Update event data with file
       setEventData((prev) => ({
         ...prev,
         [name]: file,
@@ -60,9 +59,7 @@ function CreateEventForm({ onEventCreated }) {
       return;
     }
 
-    /*
-     * Handle normal text / number inputs
-     */
+    // Handle normal text/number inputs
     setEventData((prev) => ({
       ...prev,
       [name]: value,
@@ -82,6 +79,7 @@ function CreateEventForm({ onEventCreated }) {
     setSaving(true);
 
     try {
+      // API call to create event
       const createdEvent = await createEvent({
         title: eventData.title,
         description: eventData.description,
@@ -99,9 +97,7 @@ function CreateEventForm({ onEventCreated }) {
 
       setSuccess("Event created successfully!");
 
-      /*
-       * Reset form state after successful save
-       */
+      // Resetting the form to initial state after saving
       setEventData({
         title: "",
         description: "",
@@ -117,7 +113,7 @@ function CreateEventForm({ onEventCreated }) {
     } catch (err) {
       setError(err.message || "Failed to create event.");
     } finally {
-      setSaving(false);
+      setSaving(false); // Re-enable form
     }
   };
 
@@ -159,6 +155,8 @@ function CreateEventForm({ onEventCreated }) {
                 />
               </label>
 
+              {/*Real-time image preview. Shows uploaded image immediately
+                 Provides visual feedback*/}
               <div className="event-image-preview">
                 {imagePreview ? (
                   <img
@@ -250,3 +248,4 @@ function CreateEventForm({ onEventCreated }) {
 }
 
 export default CreateEventForm;
+

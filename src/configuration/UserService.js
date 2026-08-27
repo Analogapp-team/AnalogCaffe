@@ -1,6 +1,9 @@
 // src/configuration/UserService.js
 import Parse from "./Back4App";
 
+/* UserService module - a clean, focused service layer for managing 
+user profiles and profile pictures.*/ 
+
 // Get current user or throw error
 const getUserOrThrow = () => {
   const user = Parse.User.current();

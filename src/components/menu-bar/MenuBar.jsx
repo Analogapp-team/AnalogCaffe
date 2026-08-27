@@ -13,8 +13,8 @@ import Events from "../../assets/icons/events.svg";
 import Logout from "../../assets/icons/logout.svg";
 
 function MenuBar() {
-  const { logout, currentUser } = useAuth();
-  const [user, setUser] = useState(currentUser);
+  const { logout, currentUser } = useAuth(); // From AuthContext
+  const [user, setUser] = useState(currentUser); // Local copy with potential updates
 
   // Loads user on mount and when currentUser changes
   useEffect(() => {
@@ -24,26 +24,26 @@ function MenuBar() {
         setUser(freshUser);
       } catch (err) {
         console.error("Error loading user in MenuBar:", err);
-        setUser(currentUser);
+        setUser(currentUser);  // Fallback to auth context user
       }
     };
 
     if (currentUser) {
       loadUser();
     }
-  }, []);
+  }, []); // Empty dependency = runs once on mount
 
   // Update user when currentUser changes
   useEffect(() => {
     if (currentUser) {
       setUser(currentUser);
     }
-  }, [currentUser]);
+  }, [currentUser]); // Keep in sync with auth state
 
   // Extract user details for display
   const fullName = getFullName(user);
   // Extract study course or provide default
-  const studyCourse = user?.get("studyCourse") || "";
+  const studyCourse = user?.get("studyCourse") || ""; // Parse/Back4App data access pattern
 
   return (
     <div className={styles.menubar}>

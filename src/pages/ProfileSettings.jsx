@@ -8,8 +8,17 @@ import {
 } from "../configuration/UserService";
 import { useAuth } from "../configuration/AuthContext";
 
+/* a ProfileSettings page component - a container component that manages 
+user profile editing with form state, image uploads, and data synchronization.
+A stateful container component that orchestrates:
+User profile data loading from API
+Form state management for profile editing
+Image upload/removal handling
+Global user state synchronization with AuthContext
+Temporary workaround for avatar refresh issues*/ 
+
 const ProfileSettings = () => {
-  const { refreshCurrentUser } = useAuth();
+  const { refreshCurrentUser } = useAuth(); // Auth context integration, Function to update global auth. 
 
   const [user, setUser] = useState(null);
   const [formData, setFormData] = useState(null);
